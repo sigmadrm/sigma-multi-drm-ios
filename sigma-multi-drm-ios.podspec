@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'sigma-multi-drm-ios'
+  s.name             = 'sigmaDrm'
   s.version          = '0.1.0'
   s.summary          = 'This library help you integrate sigma multidrm to application'
 
@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'sigma-multi-drm-ios/Classes/**/*'
+  s.source_files = 'Classes/**/*'
   
   # s.resource_bundles = {
   #   'sigma-multi-drm-ios' => ['sigma-multi-drm-ios/Assets/*.png']
