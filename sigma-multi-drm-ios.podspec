@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint SigmaMultiDRM.podspec' to ensure this is a
+# Be sure to run `pod lib lint ${POD_NAME}.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'SigmaMultiDRM'
-  s.version          = '1.0.0'
-  s.summary          = 'A short description of SigmaMultiDRM.'
+  s.name             = 'sigmaDrm'
+  s.version          = '0.1.0'
+  s.summary          = 'This library help you integrate sigma multidrm to application'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -28,15 +28,15 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/sigmadrm/sigma-multi-drm-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.3'
+  s.ios.deployment_target = '8.0'
 
-  s.source_files = 'SigmaMultiDRM/Classes/**/*'
+  s.source_files = 'Classes/**/*'
   
   # s.resource_bundles = {
-  #   'SigmaMultiDRM' => ['SigmaMultiDRM/Assets/*.png']
+  #   'sigma-multi-drm-ios' => ['sigma-multi-drm-ios/Assets/*.png']
   # }
 
-   s.public_header_files = 'Pod/Classes/**/*.h'
-   s.frameworks = 'UIKit', 'MapKit'
+  s.public_header_files = 'Pod/Classes/SigmaMultiDRM.h'
+  s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
