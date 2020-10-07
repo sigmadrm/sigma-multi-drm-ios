@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'sigmaDrm'
+  s.name             = 'SigmaMultiDRM'
   s.version          = '0.1.0'
   s.summary          = 'This library help you integrate sigma multidrm to application'
 
