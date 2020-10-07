@@ -134,10 +134,10 @@
 -(NSString *)certUrl
 {
     if (_debugMode) {//STAGING MODE
-        return [NSString stringWithFormat:@"https://cert-staging.sigmadrm.com/app/%@/%@", _merchant, _appId];
+        return [NSString stringWithFormat:@"https://cert-staging.sigmadrm.com/app/fairplay/%@/%@", _merchant, _appId];
     }
     else { // PRODUCTION MODE
-        return [NSString stringWithFormat:@"https://cert.sigmadrm.com/app/%@/%@", _merchant, _appId];
+        return [NSString stringWithFormat:@"https://cert.sigmadrm.com/app/fairplay/%@/%@", _merchant, _appId];
     }
 }
 -(NSString *)licenseUrl
