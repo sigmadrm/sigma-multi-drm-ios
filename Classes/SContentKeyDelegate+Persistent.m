@@ -54,11 +54,11 @@
     NSString *contentKeyIdentifierString = keyRequest.identifier;
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
-    NSString *variantId = [queries objectForKey:@"variantId"];
+    NSString *keyId = [queries objectForKey:@"keyId"];
     NSData *certificate = [self serverCetificate];
     [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
         // Check validate
-        NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString variantId:variantId];
+        NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
         NSError *err = nil;
         NSData *persistentKey = [keyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&err];
         if (err == nil)
