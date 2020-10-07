@@ -96,7 +96,7 @@
     NSString *body = [NSString stringWithFormat:@"spc=%@&assetId=%@&variantId=%@", spcEncoding, assetId, variantId];
     request.HTTPBody = [NSData dataWithBytes:[body UTF8String] length:[body length]];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request addValue:[self customData] forHTTPHeaderField:@"x-dt-custom-data"];
+    [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *result = nil;
