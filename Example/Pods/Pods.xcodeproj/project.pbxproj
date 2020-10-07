@@ -1,0 +1,797 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		118B9662166FCEAAD82C8C0BC8BC2848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		616F45A5819925596E5588BFB8816825 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		9335C44F96DF5BCB171AAE19CEA2F40F /* Pods-SigmaMultiDRM_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CDD96450D939184CE328FC07E7B01B4 /* Pods-SigmaMultiDRM_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9A4C8BCDD0A053A19714529908121EEF /* SigmaMultiDRM-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 500AB73D13CA7E608CADBB63516BC880 /* SigmaMultiDRM-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF73BC8204E8AC95361C17C9086B5070 /* Pods-SigmaMultiDRM_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F18C4307880319037FD96CD90F034775 /* Pods-SigmaMultiDRM_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D5125AB603B35FDA272955A65C2E8944 /* Pods-SigmaMultiDRM_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B939BD79394C46532AE85373771FC4 /* Pods-SigmaMultiDRM_Example-dummy.m */; };
+		E01058C7A0A8B2783B643B81DDDE66FE /* Pods-SigmaMultiDRM_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 025E1F96DEF087087DE7BEADBCE01D1A /* Pods-SigmaMultiDRM_Tests-dummy.m */; };
+		ED7E8754451CA1141CE62752186DFCA1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		F62CEDDA9E3113CEF48DB3066FE19506 /* SigmaMultiDRM-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B9A84211249D5DF7BB28D2A92CE42A /* SigmaMultiDRM-dummy.m */; };
+		FDB4A38C252DB3570071DFB9 /* SContentKeyDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB4A384252DB3560071DFB9 /* SContentKeyDelegate.m */; };
+		FDB4A38D252DB3570071DFB9 /* SContentKeyDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FDB4A385252DB3560071DFB9 /* SContentKeyDelegate.h */; };
+		FDB4A38E252DB3570071DFB9 /* SContentKeySession.h in Headers */ = {isa = PBXBuildFile; fileRef = FDB4A386252DB3570071DFB9 /* SContentKeySession.h */; };
+		FDB4A38F252DB3570071DFB9 /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB4A387252DB3570071DFB9 /* SContentKeySession.m */; };
+		FDB4A390252DB3570071DFB9 /* SigmaMultiDRM.h in Headers */ = {isa = PBXBuildFile; fileRef = FDB4A388252DB3570071DFB9 /* SigmaMultiDRM.h */; };
+		FDB4A391252DB3570071DFB9 /* SigmaMultiDRM.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB4A389252DB3570071DFB9 /* SigmaMultiDRM.m */; };
+		FDB4A392252DB3570071DFB9 /* SContentKeyDelegate+Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = FDB4A38A252DB3570071DFB9 /* SContentKeyDelegate+Persistent.h */; };
+		FDB4A393252DB3570071DFB9 /* SContentKeyDelegate+Persistent.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB4A38B252DB3570071DFB9 /* SContentKeyDelegate+Persistent.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		63D664E3A5963DF7874E4D72DBB19968 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FF34C71FEE4EF4341CEBA0A7A240621;
+			remoteInfo = SigmaMultiDRM;
+		};
+		694FBB0EA60995374F863B02FFEDA484 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E147372E235DFB150F87EC53CBA48D68;
+			remoteInfo = "Pods-SigmaMultiDRM_Example";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		025E1F96DEF087087DE7BEADBCE01D1A /* Pods-SigmaMultiDRM_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SigmaMultiDRM_Tests-dummy.m"; sourceTree = "<group>"; };
+		0809FD375D7A99A69960B3F418A1A705 /* Pods-SigmaMultiDRM_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SigmaMultiDRM_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		0A8FFDEA7BA5304950846E074F60030D /* SigmaMultiDRM.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SigmaMultiDRM.xcconfig; sourceTree = "<group>"; };
+		0D777B3C3E6BE2C5D2BD0AC86400EBCF /* SigmaMultiDRM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SigmaMultiDRM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F3673996E77416B6C385DC13E56C639 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		12EB361E5CB8AC0553694B6E04900576 /* Pods-SigmaMultiDRM_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SigmaMultiDRM_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		18B2B104E3BDECAA7500C230C833E6FC /* Pods-SigmaMultiDRM_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SigmaMultiDRM_Example-frameworks.sh"; sourceTree = "<group>"; };
+		1A2D69394536D9DDCF456C52B02FB20C /* Pods-SigmaMultiDRM_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SigmaMultiDRM_Example-Info.plist"; sourceTree = "<group>"; };
+		28995C97023234C7E6F0FA7CCBE442FE /* Pods-SigmaMultiDRM_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SigmaMultiDRM_Tests.modulemap"; sourceTree = "<group>"; };
+		318C4E09ABA77EEB117CEAC0025CEF60 /* SigmaMultiDRM-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SigmaMultiDRM-prefix.pch"; sourceTree = "<group>"; };
+		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		446DA1E2212C8C35BA49EAB99BE737D9 /* Pods-SigmaMultiDRM_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SigmaMultiDRM_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		4ABAF73352037757AB4D53FE79F2F113 /* Pods_SigmaMultiDRM_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SigmaMultiDRM_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E0F19AD4C7ECF600446E7567DBA597C /* Pods-SigmaMultiDRM_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SigmaMultiDRM_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		500AB73D13CA7E608CADBB63516BC880 /* SigmaMultiDRM-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SigmaMultiDRM-umbrella.h"; sourceTree = "<group>"; };
+		5FE9DE43B4A697E2893A5EBA6C012E03 /* SigmaMultiDRM.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SigmaMultiDRM.modulemap; sourceTree = "<group>"; };
+		63A739554F1B9512D4B7EFE091CFADAA /* Pods-SigmaMultiDRM_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SigmaMultiDRM_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		66D689BCB59334539BB9D25194D48DA4 /* SigmaMultiDRM-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SigmaMultiDRM-Info.plist"; sourceTree = "<group>"; };
+		74B939BD79394C46532AE85373771FC4 /* Pods-SigmaMultiDRM_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SigmaMultiDRM_Example-dummy.m"; sourceTree = "<group>"; };
+		7BF083737E9FA8E3ACEC2D4F8312012E /* Pods-SigmaMultiDRM_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SigmaMultiDRM_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		7CDD96450D939184CE328FC07E7B01B4 /* Pods-SigmaMultiDRM_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SigmaMultiDRM_Tests-umbrella.h"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9F3DEA7282852F5B293DAFD87E0BF37B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		A3A316D0A081011D0BC8DF256E6B5194 /* Pods_SigmaMultiDRM_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SigmaMultiDRM_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBFAF78646CA2B8FCCB7588724BA6BA9 /* SigmaMultiDRM.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = SigmaMultiDRM.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BC3246E0D7A4D8096384B200BAED30B6 /* Pods-SigmaMultiDRM_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SigmaMultiDRM_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BDEF83D2776EA1AAD8033540BFC84E30 /* Pods-SigmaMultiDRM_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SigmaMultiDRM_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		C2237FE118E7F3DB5A237FC0E3982DF1 /* Pods-SigmaMultiDRM_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SigmaMultiDRM_Example.modulemap"; sourceTree = "<group>"; };
+		D58E4D7D0253A320C4CE81FA61C79ED1 /* Pods-SigmaMultiDRM_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SigmaMultiDRM_Tests-Info.plist"; sourceTree = "<group>"; };
+		F18C4307880319037FD96CD90F034775 /* Pods-SigmaMultiDRM_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SigmaMultiDRM_Example-umbrella.h"; sourceTree = "<group>"; };
+		F1B9A84211249D5DF7BB28D2A92CE42A /* SigmaMultiDRM-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SigmaMultiDRM-dummy.m"; sourceTree = "<group>"; };
+		FDB4A384252DB3560071DFB9 /* SContentKeyDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SContentKeyDelegate.m; path = SigmaMultiDRM/Classes/SContentKeyDelegate.m; sourceTree = "<group>"; };
+		FDB4A385252DB3560071DFB9 /* SContentKeyDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SContentKeyDelegate.h; path = SigmaMultiDRM/Classes/SContentKeyDelegate.h; sourceTree = "<group>"; };
+		FDB4A386252DB3570071DFB9 /* SContentKeySession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SContentKeySession.h; path = SigmaMultiDRM/Classes/SContentKeySession.h; sourceTree = "<group>"; };
+		FDB4A387252DB3570071DFB9 /* SContentKeySession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SContentKeySession.m; path = SigmaMultiDRM/Classes/SContentKeySession.m; sourceTree = "<group>"; };
+		FDB4A388252DB3570071DFB9 /* SigmaMultiDRM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SigmaMultiDRM.h; path = SigmaMultiDRM/Classes/SigmaMultiDRM.h; sourceTree = "<group>"; };
+		FDB4A389252DB3570071DFB9 /* SigmaMultiDRM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SigmaMultiDRM.m; path = SigmaMultiDRM/Classes/SigmaMultiDRM.m; sourceTree = "<group>"; };
+		FDB4A38A252DB3570071DFB9 /* SContentKeyDelegate+Persistent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SContentKeyDelegate+Persistent.h"; path = "SigmaMultiDRM/Classes/SContentKeyDelegate+Persistent.h"; sourceTree = "<group>"; };
+		FDB4A38B252DB3570071DFB9 /* SContentKeyDelegate+Persistent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SContentKeyDelegate+Persistent.m"; path = "SigmaMultiDRM/Classes/SContentKeyDelegate+Persistent.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0581F4B0C661004B94E2CB38333417C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED7E8754451CA1141CE62752186DFCA1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7040C7585252F42301506AC47A3198C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				616F45A5819925596E5588BFB8816825 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9134B32CE11F26CAD07D5E9C44BA4FC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				118B9662166FCEAAD82C8C0BC8BC2848 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		36803A4267DCEBAB4BB39A49A2A7F937 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5FE9DE43B4A697E2893A5EBA6C012E03 /* SigmaMultiDRM.modulemap */,
+				0A8FFDEA7BA5304950846E074F60030D /* SigmaMultiDRM.xcconfig */,
+				F1B9A84211249D5DF7BB28D2A92CE42A /* SigmaMultiDRM-dummy.m */,
+				66D689BCB59334539BB9D25194D48DA4 /* SigmaMultiDRM-Info.plist */,
+				318C4E09ABA77EEB117CEAC0025CEF60 /* SigmaMultiDRM-prefix.pch */,
+				500AB73D13CA7E608CADBB63516BC880 /* SigmaMultiDRM-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/SigmaMultiDRM";
+			sourceTree = "<group>";
+		};
+		5C94FE6FCCCDB4570D031DF2D1F0056A /* Pods-SigmaMultiDRM_Example */ = {
+			isa = PBXGroup;
+			children = (
+				C2237FE118E7F3DB5A237FC0E3982DF1 /* Pods-SigmaMultiDRM_Example.modulemap */,
+				4E0F19AD4C7ECF600446E7567DBA597C /* Pods-SigmaMultiDRM_Example-acknowledgements.markdown */,
+				446DA1E2212C8C35BA49EAB99BE737D9 /* Pods-SigmaMultiDRM_Example-acknowledgements.plist */,
+				74B939BD79394C46532AE85373771FC4 /* Pods-SigmaMultiDRM_Example-dummy.m */,
+				18B2B104E3BDECAA7500C230C833E6FC /* Pods-SigmaMultiDRM_Example-frameworks.sh */,
+				1A2D69394536D9DDCF456C52B02FB20C /* Pods-SigmaMultiDRM_Example-Info.plist */,
+				F18C4307880319037FD96CD90F034775 /* Pods-SigmaMultiDRM_Example-umbrella.h */,
+				7BF083737E9FA8E3ACEC2D4F8312012E /* Pods-SigmaMultiDRM_Example.debug.xcconfig */,
+				BC3246E0D7A4D8096384B200BAED30B6 /* Pods-SigmaMultiDRM_Example.release.xcconfig */,
+			);
+			name = "Pods-SigmaMultiDRM_Example";
+			path = "Target Support Files/Pods-SigmaMultiDRM_Example";
+			sourceTree = "<group>";
+		};
+		68A3238BC6F6577633ACEB192F890D3E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3A316D0A081011D0BC8DF256E6B5194 /* Pods_SigmaMultiDRM_Example.framework */,
+				4ABAF73352037757AB4D53FE79F2F113 /* Pods_SigmaMultiDRM_Tests.framework */,
+				0D777B3C3E6BE2C5D2BD0AC86400EBCF /* SigmaMultiDRM.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8D49847619F128DC4717B7F83CE925CA /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA941EBF4FC7AB46E8882F5743D29D05 /* SigmaMultiDRM */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		9D0511D2FBD2211EBF99535B3F288A4F /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5C94FE6FCCCDB4570D031DF2D1F0056A /* Pods-SigmaMultiDRM_Example */,
+				D9BB98706260FEECD8440267380EC6A7 /* Pods-SigmaMultiDRM_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		C0834CEBB1379A84116EF29F93051C60 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				8D49847619F128DC4717B7F83CE925CA /* Development Pods */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				68A3238BC6F6577633ACEB192F890D3E /* Products */,
+				9D0511D2FBD2211EBF99535B3F288A4F /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0834CEBB1379A84116EF29F93051C60 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9BB98706260FEECD8440267380EC6A7 /* Pods-SigmaMultiDRM_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				28995C97023234C7E6F0FA7CCBE442FE /* Pods-SigmaMultiDRM_Tests.modulemap */,
+				12EB361E5CB8AC0553694B6E04900576 /* Pods-SigmaMultiDRM_Tests-acknowledgements.markdown */,
+				BDEF83D2776EA1AAD8033540BFC84E30 /* Pods-SigmaMultiDRM_Tests-acknowledgements.plist */,
+				025E1F96DEF087087DE7BEADBCE01D1A /* Pods-SigmaMultiDRM_Tests-dummy.m */,
+				D58E4D7D0253A320C4CE81FA61C79ED1 /* Pods-SigmaMultiDRM_Tests-Info.plist */,
+				7CDD96450D939184CE328FC07E7B01B4 /* Pods-SigmaMultiDRM_Tests-umbrella.h */,
+				0809FD375D7A99A69960B3F418A1A705 /* Pods-SigmaMultiDRM_Tests.debug.xcconfig */,
+				63A739554F1B9512D4B7EFE091CFADAA /* Pods-SigmaMultiDRM_Tests.release.xcconfig */,
+			);
+			name = "Pods-SigmaMultiDRM_Tests";
+			path = "Target Support Files/Pods-SigmaMultiDRM_Tests";
+			sourceTree = "<group>";
+		};
+		DA941EBF4FC7AB46E8882F5743D29D05 /* SigmaMultiDRM */ = {
+			isa = PBXGroup;
+			children = (
+				FDB4A385252DB3560071DFB9 /* SContentKeyDelegate.h */,
+				FDB4A384252DB3560071DFB9 /* SContentKeyDelegate.m */,
+				FDB4A38A252DB3570071DFB9 /* SContentKeyDelegate+Persistent.h */,
+				FDB4A38B252DB3570071DFB9 /* SContentKeyDelegate+Persistent.m */,
+				FDB4A386252DB3570071DFB9 /* SContentKeySession.h */,
+				FDB4A387252DB3570071DFB9 /* SContentKeySession.m */,
+				FDB4A388252DB3570071DFB9 /* SigmaMultiDRM.h */,
+				FDB4A389252DB3570071DFB9 /* SigmaMultiDRM.m */,
+				DF211379E73E7A8A54DAAD6B4B5A7868 /* Pod */,
+				36803A4267DCEBAB4BB39A49A2A7F937 /* Support Files */,
+			);
+			name = SigmaMultiDRM;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		DF211379E73E7A8A54DAAD6B4B5A7868 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				9F3DEA7282852F5B293DAFD87E0BF37B /* LICENSE */,
+				0F3673996E77416B6C385DC13E56C639 /* README.md */,
+				BBFAF78646CA2B8FCCB7588724BA6BA9 /* SigmaMultiDRM.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		003C02A9F1E7DCE7DE846C071378830F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDB4A390252DB3570071DFB9 /* SigmaMultiDRM.h in Headers */,
+				FDB4A38E252DB3570071DFB9 /* SContentKeySession.h in Headers */,
+				9A4C8BCDD0A053A19714529908121EEF /* SigmaMultiDRM-umbrella.h in Headers */,
+				FDB4A392252DB3570071DFB9 /* SContentKeyDelegate+Persistent.h in Headers */,
+				FDB4A38D252DB3570071DFB9 /* SContentKeyDelegate.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1DDE314DA5EDD5970F30DFA9CB655E33 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF73BC8204E8AC95361C17C9086B5070 /* Pods-SigmaMultiDRM_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CDD591F75D20B8224FF2244C251F7CB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9335C44F96DF5BCB171AAE19CEA2F40F /* Pods-SigmaMultiDRM_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4FF34C71FEE4EF4341CEBA0A7A240621 /* SigmaMultiDRM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11965F82ACA9A622805133E7314C41D6 /* Build configuration list for PBXNativeTarget "SigmaMultiDRM" */;
+			buildPhases = (
+				003C02A9F1E7DCE7DE846C071378830F /* Headers */,
+				BF15D2866E72122E361B5031A5325791 /* Sources */,
+				9134B32CE11F26CAD07D5E9C44BA4FC3 /* Frameworks */,
+				5A5CB6A092F678EDD945F6803B1498FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SigmaMultiDRM;
+			productName = SigmaMultiDRM;
+			productReference = 0D777B3C3E6BE2C5D2BD0AC86400EBCF /* SigmaMultiDRM.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8AB79F14DC9013AB77B6ED0E8DC60A89 /* Pods-SigmaMultiDRM_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8AD8CD0BBB0CA2BD337DADAAEB46A5D /* Build configuration list for PBXNativeTarget "Pods-SigmaMultiDRM_Tests" */;
+			buildPhases = (
+				2CDD591F75D20B8224FF2244C251F7CB /* Headers */,
+				39E224D30F2A23E581E8D992FD1FA337 /* Sources */,
+				7040C7585252F42301506AC47A3198C8 /* Frameworks */,
+				E6E6340FEFA6F1E90FD2FF703771B1B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F3A7BEF5131A419809C7321161DDF5DE /* PBXTargetDependency */,
+			);
+			name = "Pods-SigmaMultiDRM_Tests";
+			productName = "Pods-SigmaMultiDRM_Tests";
+			productReference = 4ABAF73352037757AB4D53FE79F2F113 /* Pods_SigmaMultiDRM_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E147372E235DFB150F87EC53CBA48D68 /* Pods-SigmaMultiDRM_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C8C1FA0B39C1E69EDC36A672CF4A0CF7 /* Build configuration list for PBXNativeTarget "Pods-SigmaMultiDRM_Example" */;
+			buildPhases = (
+				1DDE314DA5EDD5970F30DFA9CB655E33 /* Headers */,
+				7AFCD875C8C55BDBF375809ECE8FE382 /* Sources */,
+				0581F4B0C661004B94E2CB38333417C4 /* Frameworks */,
+				1EC155665F74833BA9E6B50977586053 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E9BB448B107505654B63EC111D63C5EA /* PBXTargetDependency */,
+			);
+			name = "Pods-SigmaMultiDRM_Example";
+			productName = "Pods-SigmaMultiDRM_Example";
+			productReference = A3A316D0A081011D0BC8DF256E6B5194 /* Pods_SigmaMultiDRM_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 68A3238BC6F6577633ACEB192F890D3E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E147372E235DFB150F87EC53CBA48D68 /* Pods-SigmaMultiDRM_Example */,
+				8AB79F14DC9013AB77B6ED0E8DC60A89 /* Pods-SigmaMultiDRM_Tests */,
+				4FF34C71FEE4EF4341CEBA0A7A240621 /* SigmaMultiDRM */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1EC155665F74833BA9E6B50977586053 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A5CB6A092F678EDD945F6803B1498FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6E6340FEFA6F1E90FD2FF703771B1B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		39E224D30F2A23E581E8D992FD1FA337 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E01058C7A0A8B2783B643B81DDDE66FE /* Pods-SigmaMultiDRM_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7AFCD875C8C55BDBF375809ECE8FE382 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5125AB603B35FDA272955A65C2E8944 /* Pods-SigmaMultiDRM_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF15D2866E72122E361B5031A5325791 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDB4A38C252DB3570071DFB9 /* SContentKeyDelegate.m in Sources */,
+				FDB4A391252DB3570071DFB9 /* SigmaMultiDRM.m in Sources */,
+				FDB4A38F252DB3570071DFB9 /* SContentKeySession.m in Sources */,
+				FDB4A393252DB3570071DFB9 /* SContentKeyDelegate+Persistent.m in Sources */,
+				F62CEDDA9E3113CEF48DB3066FE19506 /* SigmaMultiDRM-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E9BB448B107505654B63EC111D63C5EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SigmaMultiDRM;
+			target = 4FF34C71FEE4EF4341CEBA0A7A240621 /* SigmaMultiDRM */;
+			targetProxy = 63D664E3A5963DF7874E4D72DBB19968 /* PBXContainerItemProxy */;
+		};
+		F3A7BEF5131A419809C7321161DDF5DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-SigmaMultiDRM_Example";
+			target = E147372E235DFB150F87EC53CBA48D68 /* Pods-SigmaMultiDRM_Example */;
+			targetProxy = 694FBB0EA60995374F863B02FFEDA484 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0C526BCA280FE55ED3D47889B93BE4CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BF083737E9FA8E3ACEC2D4F8312012E /* Pods-SigmaMultiDRM_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SigmaMultiDRM_Example/Pods-SigmaMultiDRM_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SigmaMultiDRM_Example/Pods-SigmaMultiDRM_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		0C8C070B8E44AE2A6DEF58DB42676EDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A8FFDEA7BA5304950846E074F60030D /* SigmaMultiDRM.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SigmaMultiDRM/SigmaMultiDRM-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SigmaMultiDRM/SigmaMultiDRM-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SigmaMultiDRM/SigmaMultiDRM.modulemap";
+				PRODUCT_MODULE_NAME = SigmaMultiDRM;
+				PRODUCT_NAME = SigmaMultiDRM;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		22E5EBA9995E904273980E92D08C0F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63A739554F1B9512D4B7EFE091CFADAA /* Pods-SigmaMultiDRM_Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SigmaMultiDRM_Tests/Pods-SigmaMultiDRM_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SigmaMultiDRM_Tests/Pods-SigmaMultiDRM_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4BE66A09A74FD25164AAB3C2645B9B93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		597793553596324498A268A4C91C9385 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A8FFDEA7BA5304950846E074F60030D /* SigmaMultiDRM.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SigmaMultiDRM/SigmaMultiDRM-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SigmaMultiDRM/SigmaMultiDRM-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SigmaMultiDRM/SigmaMultiDRM.modulemap";
+				PRODUCT_MODULE_NAME = SigmaMultiDRM;
+				PRODUCT_NAME = SigmaMultiDRM;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		68A53D19EB7A88DE50BD0A9BA4D5C4A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0809FD375D7A99A69960B3F418A1A705 /* Pods-SigmaMultiDRM_Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SigmaMultiDRM_Tests/Pods-SigmaMultiDRM_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SigmaMultiDRM_Tests/Pods-SigmaMultiDRM_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7EF7227D9B20A1D549000096ACCB23D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		D7002AE5533EB1C8142FF8547CE9879A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC3246E0D7A4D8096384B200BAED30B6 /* Pods-SigmaMultiDRM_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SigmaMultiDRM_Example/Pods-SigmaMultiDRM_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SigmaMultiDRM_Example/Pods-SigmaMultiDRM_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		11965F82ACA9A622805133E7314C41D6 /* Build configuration list for PBXNativeTarget "SigmaMultiDRM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				597793553596324498A268A4C91C9385 /* Debug */,
+				0C8C070B8E44AE2A6DEF58DB42676EDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EF7227D9B20A1D549000096ACCB23D7 /* Debug */,
+				4BE66A09A74FD25164AAB3C2645B9B93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C8C1FA0B39C1E69EDC36A672CF4A0CF7 /* Build configuration list for PBXNativeTarget "Pods-SigmaMultiDRM_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C526BCA280FE55ED3D47889B93BE4CE /* Debug */,
+				D7002AE5533EB1C8142FF8547CE9879A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8AD8CD0BBB0CA2BD337DADAAEB46A5D /* Build configuration list for PBXNativeTarget "Pods-SigmaMultiDRM_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				68A53D19EB7A88DE50BD0A9BA4D5C4A1 /* Debug */,
+				22E5EBA9995E904273980E92D08C0F72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

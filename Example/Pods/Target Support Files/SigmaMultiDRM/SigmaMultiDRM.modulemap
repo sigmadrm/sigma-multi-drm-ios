@@ -1,0 +1,6 @@
+framework module SigmaMultiDRM {
+  umbrella header "SigmaMultiDRM-umbrella.h"
+
+  export *
+  module * { export * }
+}
