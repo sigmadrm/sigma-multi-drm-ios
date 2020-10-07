@@ -134,19 +134,19 @@
 -(NSString *)certUrl
 {
     if (_debugMode) {//STAGING MODE
-        return @"https://sdrm-test.gviet.vn/public/fairplay.cer";
+        return [NSString stringWithFormat:@"https://cert-staging.sigmadrm.com/app/%@/%@", _merchant, _appId];
     }
     else { // PRODUCTION MODE
-        return @"https://sdrm-test.gviet.vn/public/fairplay.cer";
+        return [NSString stringWithFormat:@"https://cert.sigmadrm.com/app/%@/%@", _merchant, _appId];
     }
 }
 -(NSString *)licenseUrl
 {
     if (_debugMode) {//STAGING MODE
-        return  @"http://staging.sigmadrm.com:8080/license/verify/fairplay";
+        return  @"https://license-staging.sigmadrm.com/license/verify/fairplay";
     }
     else { // PRODUCTION MODE
-        return  @"http://staging.sigmadrm.com:8080/license/verify/fairplay";
+        return  @"https://staging.sigmadrm.com/license/verify/fairplay";
     }
 }
 @end
