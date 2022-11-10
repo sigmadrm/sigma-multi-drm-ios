@@ -33,15 +33,15 @@
 }
 - (void)contentKeySession:(AVContentKeySession *)session contentKeyRequestDidSucceed:(AVContentKeyRequest *)keyRequest
 {
-    
+
 }
 - (void)contentKeySessionContentProtectionSessionIdentifierDidChange:(AVContentKeySession *)session
 {
-    
+
 }
 - (void)contentKeySessionDidGenerateExpiredSessionReport:(AVContentKeySession *)session
 {
-    
+
 }
 
 /// Implement
@@ -97,7 +97,7 @@
     request.HTTPBody = [NSData dataWithBytes:[body UTF8String] length:[body length]];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
-    
+
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *result = nil;
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -152,7 +152,7 @@
         return [NSString stringWithFormat:@"https://license-staging.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
     }
     else { // PRODUCTION MODE
-        return [NSString stringWithFormat:@"https://staging.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
+        return [NSString stringWithFormat:@"https://license.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
     }
 }
 @end
