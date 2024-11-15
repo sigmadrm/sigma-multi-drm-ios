@@ -18,9 +18,10 @@ let package = Package(
             name: "SigmaMultiDRM",
             dependencies: [],
             path: "Classes",
-            publicHeadersPath: "Classes/SigmaMultiDRM.h",
+            publicHeadersPath: "Classes",
             cSettings: [
-                .headerSearchPath("Classes")
+                .headerSearchPath("Classes"),
+                .define("SWIFT_PACKAGE")
             ]
         ),
     ],
