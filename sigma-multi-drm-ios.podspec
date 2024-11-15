@@ -30,13 +30,13 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'ObjCSources/**/*'
   
   # s.resource_bundles = {
   #   'sigma-multi-drm-ios' => ['sigma-multi-drm-ios/Assets/*.png']
   # }
 
-  s.public_header_files = 'Pod/Classes/SigmaMultiDRM.h'
+  s.public_header_files = 'Pod/ObjCSources/include/SigmaMultiDRM.h'
   s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

@@ -15,15 +15,15 @@ let package = Package(
     dependencies: [],
     targets: [
         .target(
+            name: "ObjCSources",
+            dependencies: []),
+            path: "ObjCSources/", // 3
+            exclude: ["Swift"], // 4
+        )
+        .target(
             name: "SigmaMultiDRM",
-            dependencies: [],
-            path: "Classes",
-            publicHeadersPath: "Classes",
-            cSettings: [
-                .headerSearchPath("Classes"),
-                .define("SWIFT_PACKAGE")
-            ]
-        ),
+            dependencies: ["ObjCSources"]),
+             path: "SwiftSources" 
     ],
     swiftLanguageVersions: [.v5]
 )
