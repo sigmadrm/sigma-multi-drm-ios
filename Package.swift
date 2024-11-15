@@ -17,8 +17,8 @@ let package = Package(
         .target(
             name: "SimaMultiDRMObjC",
             dependencies: [],
-            path: "ObjCSources", // 3
-            exclude: ["SwiftSources"], // 4
+            path: "ObjCSources",
+            exclude: ["SwiftSources"]
         )
         .target(
             name: "SigmaMultiDRM",
