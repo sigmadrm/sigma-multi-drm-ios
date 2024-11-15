@@ -22,8 +22,9 @@ let package = Package(
         )
         .target(
             name: "SigmaMultiDRM",
-            dependencies: ["ObjCSources"]),
-             path: "SwiftSources" 
+            dependencies: ["ObjCSources"]
+            path: "SwiftSources" 
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )
