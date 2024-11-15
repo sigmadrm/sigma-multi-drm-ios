@@ -15,14 +15,14 @@ let package = Package(
     dependencies: [],
     targets: [
         .target(
-            name: "ObjCSources",
+            name: "SimaMultiDRMObjC",
             dependencies: [],
-            path: "ObjCSources/", // 3
-            exclude: ["Swift"], // 4
+            path: "ObjCSources", // 3
+            exclude: ["SwiftSources"], // 4
         )
         .target(
             name: "SigmaMultiDRM",
-            dependencies: ["ObjCSources"]
+            dependencies: ["SimaMultiDRMObjC"]
             path: "SwiftSources" 
         ),
     ],
