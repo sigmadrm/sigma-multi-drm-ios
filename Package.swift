@@ -19,11 +19,11 @@ let package = Package(
             dependencies: [],
             path: "ObjCSources",
             exclude: ["SwiftSources"]
-        )
+        ),
         .target(
             name: "SigmaMultiDRM",
-            dependencies: ["SimaMultiDRMObjC"]
-            path: "SwiftSources" 
+            dependencies: ["SimaMultiDRMObjC"],
+            path: "SwiftSources"
         ),
     ],
     swiftLanguageVersions: [.v5]
