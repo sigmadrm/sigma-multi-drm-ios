@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .target(
             name: "ObjCSources",
-            dependencies: []),
+            dependencies: [],
             path: "ObjCSources/", // 3
             exclude: ["Swift"], // 4
         )
