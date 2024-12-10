@@ -73,12 +73,11 @@
     NSData *certificate = [self serverCetificate];
     [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
         // Check validate
-        NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
         if (error){
             NSLog(@"License Data Error!");
             [keyRequest processContentKeyResponseError:error];
-        }
-        else {
+        } else {
+            NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
             AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
             [keyRequest processContentKeyResponse:response];
         }
@@ -99,15 +98,16 @@
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block NSData *result = nil;
+    __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         do {
             if (error) break;
             if (!data) break;
             NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
             NSLog(@"NSData: %@", licenseObj);
-            if (!licenseObj) break;
+            if(!licenseObj) break;
             NSString *license = [licenseObj objectForKey:@"license"];
+            if(!license) break;
             result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
         }
         while (FALSE);

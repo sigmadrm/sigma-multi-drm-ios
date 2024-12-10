@@ -1,0 +1,945 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8446841F2CE7405600D75B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446841E2CE7405600D75B4B /* AppDelegate.swift */; };
+		844684212CE7405600D75B4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684202CE7405600D75B4B /* SceneDelegate.swift */; };
+		844684232CE7405600D75B4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684222CE7405600D75B4B /* ViewController.swift */; };
+		844684262CE7405600D75B4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844684242CE7405600D75B4B /* Main.storyboard */; };
+		844684282CE7405900D75B4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844684272CE7405900D75B4B /* Assets.xcassets */; };
+		8446842B2CE7405900D75B4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844684292CE7405900D75B4B /* LaunchScreen.storyboard */; };
+		844684362CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684352CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift */; };
+		844684402CE7405900D75B4B /* sigma_multidrm_ios_sdkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446843F2CE7405900D75B4B /* sigma_multidrm_ios_sdkUITests.swift */; };
+		844684422CE7405900D75B4B /* sigma_multidrm_ios_sdkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684412CE7405900D75B4B /* sigma_multidrm_ios_sdkUITestsLaunchTests.swift */; };
+		844684982CE7491700D75B4B /* SigmaMultiDRMFramework.docc in Sources */ = {isa = PBXBuildFile; fileRef = 844684972CE7491700D75B4B /* SigmaMultiDRMFramework.docc */; };
+		8446849E2CE7491700D75B4B /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
+		844684A52CE7491800D75B4B /* SigmaMultiDRMFrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 844684A42CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.m */; };
+		844684A62CE7491800D75B4B /* SigmaMultiDRMFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		844684AA2CE7491800D75B4B /* SigmaMultiDRMFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		844684B12CE7492B00D75B4B /* SContentKeyDelegate+Persistent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */; };
+		844684B22CE7492B00D75B4B /* SigmaMultiDRM.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */; };
+		844684B32CE7492B00D75B4B /* SContentKeyDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */; };
+		844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845D2CE7409700D75B4B /* SContentKeySession.m */; };
+		844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684652CE740A900D75B4B /* SigmaMultiDRM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		844684322CE7405900D75B4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8446841A2CE7405600D75B4B;
+			remoteInfo = "sigma-multidrm-ios-sdk";
+		};
+		8446843C2CE7405900D75B4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8446841A2CE7405600D75B4B;
+			remoteInfo = "sigma-multidrm-ios-sdk";
+		};
+		844684A12CE7491700D75B4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8446841A2CE7405600D75B4B;
+			remoteInfo = "sigma-multidrm-ios-sdk";
+		};
+		84DB3CAD2D08276E004D948A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844684932CE7491700D75B4B;
+			remoteInfo = SigmaMultiDRMFramework;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8446848B2CE7460400D75B4B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				844684AA2CE7491800D75B4B /* SigmaMultiDRMFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8446841B2CE7405600D75B4B /* sigma-multidrm-ios-sdk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sigma-multidrm-ios-sdk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8446841E2CE7405600D75B4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		844684202CE7405600D75B4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		844684222CE7405600D75B4B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		844684252CE7405600D75B4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		844684272CE7405900D75B4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8446842A2CE7405900D75B4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8446842C2CE7405900D75B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		844684312CE7405900D75B4B /* sigma-multidrm-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sigma-multidrm-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		844684352CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sigma_multidrm_ios_sdkTests.swift; sourceTree = "<group>"; };
+		8446843B2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sigma-multidrm-ios-sdkUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8446843F2CE7405900D75B4B /* sigma_multidrm_ios_sdkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sigma_multidrm_ios_sdkUITests.swift; sourceTree = "<group>"; };
+		844684412CE7405900D75B4B /* sigma_multidrm_ios_sdkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sigma_multidrm_ios_sdkUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SContentKeyDelegate+Persistent.m"; sourceTree = "<group>"; };
+		8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SContentKeyDelegate.m; sourceTree = "<group>"; };
+		8446845D2CE7409700D75B4B /* SContentKeySession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SContentKeySession.m; sourceTree = "<group>"; };
+		8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRM.m; sourceTree = "<group>"; };
+		844684632CE740A900D75B4B /* SContentKeyDelegate+Persistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SContentKeyDelegate+Persistent.h"; sourceTree = "<group>"; };
+		844684642CE740A900D75B4B /* SContentKeySession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SContentKeySession.h; sourceTree = "<group>"; };
+		844684652CE740A900D75B4B /* SigmaMultiDRM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SigmaMultiDRM.h; sourceTree = "<group>"; };
+		844684662CE740A900D75B4B /* SContentKeyDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SContentKeyDelegate.h; sourceTree = "<group>"; };
+		844684812CE7460400D75B4B /* SigmaMultiDRMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRMTests.m; sourceTree = "<group>"; };
+		844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SigmaMultiDRMFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SigmaMultiDRMFramework.h; sourceTree = "<group>"; };
+		844684972CE7491700D75B4B /* SigmaMultiDRMFramework.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SigmaMultiDRMFramework.docc; sourceTree = "<group>"; };
+		8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SigmaMultiDRMFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		844684A42CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRMFrameworkTests.m; sourceTree = "<group>"; };
+		844684C72CEACEFF00D75B4B /* sigma-multidrm-spm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "sigma-multidrm-spm"; path = "/Users/admin/Library/Developer/Xcode/DerivedData/sigma-multidrm-ios-sdk-clfkvospckgadxdgvyyigpfljqtp/SourcePackages/checkouts/sigma-multidrm-spm"; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		844684182CE7405600D75B4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8446842E2CE7405900D75B4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684382CE7405900D75B4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684912CE7491700D75B4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8446849A2CE7491700D75B4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8446849E2CE7491700D75B4B /* SigmaMultiDRMFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		844684122CE7405600D75B4B = {
+			isa = PBXGroup;
+			children = (
+				8446841D2CE7405600D75B4B /* sigma-multidrm-ios-sdk */,
+				844684342CE7405900D75B4B /* sigma-multidrm-ios-sdkTests */,
+				8446843E2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests */,
+				844684802CE7460400D75B4B /* SigmaMultiDRMTests */,
+				844684952CE7491700D75B4B /* SigmaMultiDRMFramework */,
+				844684A32CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */,
+				8446841C2CE7405600D75B4B /* Products */,
+				844684692CE7419F00D75B4B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8446841C2CE7405600D75B4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8446841B2CE7405600D75B4B /* sigma-multidrm-ios-sdk.app */,
+				844684312CE7405900D75B4B /* sigma-multidrm-ios-sdkTests.xctest */,
+				8446843B2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests.xctest */,
+				844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */,
+				8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8446841D2CE7405600D75B4B /* sigma-multidrm-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				8446841E2CE7405600D75B4B /* AppDelegate.swift */,
+				844684202CE7405600D75B4B /* SceneDelegate.swift */,
+				844684222CE7405600D75B4B /* ViewController.swift */,
+				844684242CE7405600D75B4B /* Main.storyboard */,
+				844684272CE7405900D75B4B /* Assets.xcassets */,
+				844684292CE7405900D75B4B /* LaunchScreen.storyboard */,
+				8446842C2CE7405900D75B4B /* Info.plist */,
+			);
+			path = "sigma-multidrm-ios-sdk";
+			sourceTree = "<group>";
+		};
+		844684342CE7405900D75B4B /* sigma-multidrm-ios-sdkTests */ = {
+			isa = PBXGroup;
+			children = (
+				844684352CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift */,
+			);
+			path = "sigma-multidrm-ios-sdkTests";
+			sourceTree = "<group>";
+		};
+		8446843E2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8446843F2CE7405900D75B4B /* sigma_multidrm_ios_sdkUITests.swift */,
+				844684412CE7405900D75B4B /* sigma_multidrm_ios_sdkUITestsLaunchTests.swift */,
+			);
+			path = "sigma-multidrm-ios-sdkUITests";
+			sourceTree = "<group>";
+		};
+		844684692CE7419F00D75B4B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				844684C72CEACEFF00D75B4B /* sigma-multidrm-spm */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		844684802CE7460400D75B4B /* SigmaMultiDRMTests */ = {
+			isa = PBXGroup;
+			children = (
+				844684812CE7460400D75B4B /* SigmaMultiDRMTests.m */,
+			);
+			path = SigmaMultiDRMTests;
+			sourceTree = "<group>";
+		};
+		844684952CE7491700D75B4B /* SigmaMultiDRMFramework */ = {
+			isa = PBXGroup;
+			children = (
+				844684662CE740A900D75B4B /* SContentKeyDelegate.h */,
+				8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */,
+				844684632CE740A900D75B4B /* SContentKeyDelegate+Persistent.h */,
+				8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */,
+				844684642CE740A900D75B4B /* SContentKeySession.h */,
+				8446845D2CE7409700D75B4B /* SContentKeySession.m */,
+				844684652CE740A900D75B4B /* SigmaMultiDRM.h */,
+				8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */,
+				844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */,
+				844684972CE7491700D75B4B /* SigmaMultiDRMFramework.docc */,
+			);
+			path = SigmaMultiDRMFramework;
+			sourceTree = "<group>";
+		};
+		844684A32CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				844684A42CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.m */,
+			);
+			path = SigmaMultiDRMFrameworkTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8446848F2CE7491700D75B4B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */,
+				844684A62CE7491800D75B4B /* SigmaMultiDRMFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844684452CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdk" */;
+			buildPhases = (
+				844684172CE7405600D75B4B /* Sources */,
+				844684182CE7405600D75B4B /* Frameworks */,
+				844684192CE7405600D75B4B /* Resources */,
+				8446848B2CE7460400D75B4B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84DB3CAE2D08276E004D948A /* PBXTargetDependency */,
+			);
+			name = "sigma-multidrm-ios-sdk";
+			packageProductDependencies = (
+			);
+			productName = "sigma-multidrm-ios-sdk";
+			productReference = 8446841B2CE7405600D75B4B /* sigma-multidrm-ios-sdk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		844684302CE7405900D75B4B /* sigma-multidrm-ios-sdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844684482CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdkTests" */;
+			buildPhases = (
+				8446842D2CE7405900D75B4B /* Sources */,
+				8446842E2CE7405900D75B4B /* Frameworks */,
+				8446842F2CE7405900D75B4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				844684332CE7405900D75B4B /* PBXTargetDependency */,
+			);
+			name = "sigma-multidrm-ios-sdkTests";
+			productName = "sigma-multidrm-ios-sdkTests";
+			productReference = 844684312CE7405900D75B4B /* sigma-multidrm-ios-sdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8446843A2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8446844B2CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdkUITests" */;
+			buildPhases = (
+				844684372CE7405900D75B4B /* Sources */,
+				844684382CE7405900D75B4B /* Frameworks */,
+				844684392CE7405900D75B4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8446843D2CE7405900D75B4B /* PBXTargetDependency */,
+			);
+			name = "sigma-multidrm-ios-sdkUITests";
+			productName = "sigma-multidrm-ios-sdkUITests";
+			productReference = 8446843B2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		844684932CE7491700D75B4B /* SigmaMultiDRMFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844684AB2CE7491800D75B4B /* Build configuration list for PBXNativeTarget "SigmaMultiDRMFramework" */;
+			buildPhases = (
+				8446848F2CE7491700D75B4B /* Headers */,
+				844684902CE7491700D75B4B /* Sources */,
+				844684912CE7491700D75B4B /* Frameworks */,
+				844684922CE7491700D75B4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SigmaMultiDRMFramework;
+			productName = SigmaMultiDRMFramework;
+			productReference = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8446849C2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844684AE2CE7491800D75B4B /* Build configuration list for PBXNativeTarget "SigmaMultiDRMFrameworkTests" */;
+			buildPhases = (
+				844684992CE7491700D75B4B /* Sources */,
+				8446849A2CE7491700D75B4B /* Frameworks */,
+				8446849B2CE7491700D75B4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				844684A22CE7491700D75B4B /* PBXTargetDependency */,
+			);
+			name = SigmaMultiDRMFrameworkTests;
+			productName = SigmaMultiDRMFrameworkTests;
+			productReference = 8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		844684132CE7405600D75B4B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					8446841A2CE7405600D75B4B = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					844684302CE7405900D75B4B = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 8446841A2CE7405600D75B4B;
+					};
+					8446843A2CE7405900D75B4B = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 8446841A2CE7405600D75B4B;
+					};
+					844684932CE7491700D75B4B = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					8446849C2CE7491700D75B4B = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 8446841A2CE7405600D75B4B;
+					};
+				};
+			};
+			buildConfigurationList = 844684162CE7405600D75B4B /* Build configuration list for PBXProject "sigma-multidrm-ios-sdk" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 844684122CE7405600D75B4B;
+			packageReferences = (
+			);
+			productRefGroup = 8446841C2CE7405600D75B4B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */,
+				844684302CE7405900D75B4B /* sigma-multidrm-ios-sdkTests */,
+				8446843A2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests */,
+				844684932CE7491700D75B4B /* SigmaMultiDRMFramework */,
+				8446849C2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		844684192CE7405600D75B4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8446842B2CE7405900D75B4B /* LaunchScreen.storyboard in Resources */,
+				844684282CE7405900D75B4B /* Assets.xcassets in Resources */,
+				844684262CE7405600D75B4B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8446842F2CE7405900D75B4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684392CE7405900D75B4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684922CE7491700D75B4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8446849B2CE7491700D75B4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		844684172CE7405600D75B4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844684232CE7405600D75B4B /* ViewController.swift in Sources */,
+				8446841F2CE7405600D75B4B /* AppDelegate.swift in Sources */,
+				844684212CE7405600D75B4B /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8446842D2CE7405900D75B4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844684362CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684372CE7405900D75B4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844684402CE7405900D75B4B /* sigma_multidrm_ios_sdkUITests.swift in Sources */,
+				844684422CE7405900D75B4B /* sigma_multidrm_ios_sdkUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684902CE7491700D75B4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844684B12CE7492B00D75B4B /* SContentKeyDelegate+Persistent.m in Sources */,
+				844684982CE7491700D75B4B /* SigmaMultiDRMFramework.docc in Sources */,
+				844684B32CE7492B00D75B4B /* SContentKeyDelegate.m in Sources */,
+				844684B22CE7492B00D75B4B /* SigmaMultiDRM.m in Sources */,
+				844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844684992CE7491700D75B4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844684A52CE7491800D75B4B /* SigmaMultiDRMFrameworkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		844684332CE7405900D75B4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */;
+			targetProxy = 844684322CE7405900D75B4B /* PBXContainerItemProxy */;
+		};
+		8446843D2CE7405900D75B4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */;
+			targetProxy = 8446843C2CE7405900D75B4B /* PBXContainerItemProxy */;
+		};
+		844684A22CE7491700D75B4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */;
+			targetProxy = 844684A12CE7491700D75B4B /* PBXContainerItemProxy */;
+		};
+		84DB3CAE2D08276E004D948A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844684932CE7491700D75B4B /* SigmaMultiDRMFramework */;
+			targetProxy = 84DB3CAD2D08276E004D948A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		844684242CE7405600D75B4B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				844684252CE7405600D75B4B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		844684292CE7405900D75B4B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8446842A2CE7405900D75B4B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		844684432CE7405900D75B4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		844684442CE7405900D75B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		844684462CE7405900D75B4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sigma-multidrm-ios-sdk/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdk";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		844684472CE7405900D75B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sigma-multidrm-ios-sdk/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdk";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		844684492CE7405900D75B4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sigma-multidrm-ios-sdk.app/sigma-multidrm-ios-sdk";
+			};
+			name = Debug;
+		};
+		8446844A2CE7405900D75B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sigma-multidrm-ios-sdk.app/sigma-multidrm-ios-sdk";
+			};
+			name = Release;
+		};
+		8446844C2CE7405900D75B4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdkUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "sigma-multidrm-ios-sdk";
+			};
+			name = Debug;
+		};
+		8446844D2CE7405900D75B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdkUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "sigma-multidrm-ios-sdk";
+			};
+			name = Release;
+		};
+		844684AC2CE7491800D75B4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sigmadrm.ios.sdk.SigmaMultiDRMFramework;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		844684AD2CE7491800D75B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sigmadrm.ios.sdk.SigmaMultiDRMFramework;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		844684AF2CE7491800D75B4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sigmadrm.ios.sdk.SigmaMultiDRMFrameworkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sigma-multidrm-ios-sdk.app/sigma-multidrm-ios-sdk";
+			};
+			name = Debug;
+		};
+		844684B02CE7491800D75B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sigmadrm.ios.sdk.SigmaMultiDRMFrameworkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sigma-multidrm-ios-sdk.app/sigma-multidrm-ios-sdk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		844684162CE7405600D75B4B /* Build configuration list for PBXProject "sigma-multidrm-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844684432CE7405900D75B4B /* Debug */,
+				844684442CE7405900D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844684452CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844684462CE7405900D75B4B /* Debug */,
+				844684472CE7405900D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844684482CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844684492CE7405900D75B4B /* Debug */,
+				8446844A2CE7405900D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8446844B2CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8446844C2CE7405900D75B4B /* Debug */,
+				8446844D2CE7405900D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844684AB2CE7491800D75B4B /* Build configuration list for PBXNativeTarget "SigmaMultiDRMFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844684AC2CE7491800D75B4B /* Debug */,
+				844684AD2CE7491800D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844684AE2CE7491800D75B4B /* Build configuration list for PBXNativeTarget "SigmaMultiDRMFrameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844684AF2CE7491800D75B4B /* Debug */,
+				844684B02CE7491800D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 844684132CE7405600D75B4B /* Project object */;
+}
