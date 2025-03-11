@@ -20,15 +20,19 @@
 {
     self = [super init];
     if (self){
-        if (@available(iOS 11.0, *)) {
-            _sessionKey = [AVContentKeySession contentKeySessionWithKeySystem:AVContentKeySystemFairPlayStreaming];
-        } else {
-            // Fallback on earlier versions
-            NSArray *paths = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-            NSURL *documentsURL = [paths lastObject];
-            _sessionKey = [AVContentKeySession contentKeySessionWithKeySystem:AVContentKeySystemFairPlayStreaming storageDirectoryAtURL:documentsURL];
-        }
-        _keyQueue = dispatch_queue_create("com.sigma.fairplay", nil);
+#if TARGET_OS_SIMULATOR
+    NSLog(@"FairPlay Streaming is not supported on simulators.");
+#else
+    if (@available(iOS 11.0, *)) {
+        _sessionKey = [AVContentKeySession contentKeySessionWithKeySystem:AVContentKeySystemFairPlayStreaming];
+    } else {
+        // Fallback on earlier versions
+        NSArray *paths = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+        NSURL *documentsURL = [paths lastObject];
+        _sessionKey = [AVContentKeySession contentKeySessionWithKeySystem:AVContentKeySystemFairPlayStreaming storageDirectoryAtURL:documentsURL];
+    }
+    _keyQueue = dispatch_queue_create("com.sigma.fairplay", nil);
+#endif
     }
     return self;
 }
