@@ -10,14 +10,21 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         sdk = SigmaMultiDRM()
-        sdk.setMerchant("sctv")
-        sdk.setAppId("RedTV")
+//        sdk.setMerchant("sctv")
+//        sdk.setAppId("RedTV")
+//        sdk.setUserId("fairplay_userId")
+//        sdk.setSessionId("fairplay_sessionId")
+//        sdk.setDebugMode(true)
+//        let urlString = "https://sdrm-test.gviet.vn:9080/static/vod_staging/the_box/master.m3u8"
+        
+        sdk.setMerchant("sigma_packager_lite")
+        sdk.setAppId("demo")
         sdk.setUserId("fairplay_userId")
         sdk.setSessionId("fairplay_sessionId")
-        sdk.setDebugMode(true)
+        sdk.setDebugMode(false)
+        let urlString = "https://sdrm-test.gviet.vn:9080/static/vod_production/big_bug_bunny/master.m3u8"
         
         // Tạo URL và chuẩn bị asset
-        let urlString = "https://sdrm-test.gviet.vn:9080/static/vod_staging/the_box/master.m3u8"
         guard let url = URL(string: urlString) else { return }
         
         let asset = sdk.asset(withUrl: url.absoluteString)

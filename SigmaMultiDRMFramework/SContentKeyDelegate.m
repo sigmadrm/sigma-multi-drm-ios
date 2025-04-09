@@ -84,13 +84,17 @@
             return;
         }
 
-        if (!data) {
-            NSLog(@"[Cert Request Error] URL: %@ | Error: Data is nil", url);
-            NSError *dataError = [NSError errorWithDomain:@"com.sigma.cert" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Certificate data is nil"}];
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSInteger statusCode = httpResponse.statusCode;
+        if (!data || statusCode != 200) {
+            NSLog(@"[Cert Request Error] URL: %@ | Status Code: %ld | Error: Data is nil or invalid status code", url, (long)statusCode);
+            NSError *dataError = [NSError errorWithDomain:@"com.sigma.cert"
+                                                     code:statusCode
+                                                 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Certificate request failed with status code %ld", (long)statusCode]}];
             [keyRequest processContentKeyResponseError:dataError];
             return;
         }
-        
+
         NSData* certificate = data;
         [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
             if (error){
