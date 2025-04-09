@@ -86,6 +86,7 @@
 -(NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *) assetId keyId:(NSString *)keyId
 {
     NSString *url = [self licenseUrl:assetId keyId:keyId];
+    NSLog(@"requestKeyFromServer: %@" ,url);
     NSCharacterSet *queryCharacter = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSMutableCharacterSet *allowUrlCharacter = [NSMutableCharacterSet characterSetWithBitmapRepresentation:[queryCharacter bitmapRepresentation]];
     [allowUrlCharacter removeCharactersInString:@"+/=\\"];
@@ -93,6 +94,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     request.HTTPMethod = @"POST";
     NSString *body = [NSString stringWithFormat:@"spc=%@&assetId=%@&keyId=%@", spcEncoding, assetId, keyId];
+    NSLog(@"Data Body: %@", body);
     request.HTTPBody = [NSData dataWithBytes:[body UTF8String] length:[body length]];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
@@ -135,7 +137,12 @@
     [sigma setObject:_merchant forKey:@"merchantId"];
     [sigma setObject:_appId forKey:@"appId"];
     NSData *data = [NSJSONSerialization dataWithJSONObject:sigma options:NSJSONWritingPrettyPrinted error:nil];
-    return [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    
+    NSString *base64String = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    NSLog(@"Encoded Base64 String: %@", base64String);
+    
+    return base64String;
+//    return [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
 }
 -(NSString *)certUrl
 {

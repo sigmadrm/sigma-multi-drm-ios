@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F88D8322D813B420050D97C /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
+		4F88D8332D813B420050D97C /* SigmaMultiDRMFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F88D83C2D81415F0050D97C /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8446841F2CE7405600D75B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446841E2CE7405600D75B4B /* AppDelegate.swift */; };
 		844684212CE7405600D75B4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684202CE7405600D75B4B /* SceneDelegate.swift */; };
 		844684232CE7405600D75B4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684222CE7405600D75B4B /* ViewController.swift */; };
@@ -26,10 +29,30 @@
 		844684B32CE7492B00D75B4B /* SContentKeyDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */; };
 		844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845D2CE7409700D75B4B /* SContentKeySession.m */; };
 		844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684652CE740A900D75B4B /* SigmaMultiDRM.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4F88D8182D8134F40050D97C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F88D8042D8134F20050D97C;
+			remoteInfo = "sigma-multidrm-appletv";
+		};
+		4F88D8222D8134F40050D97C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F88D8042D8134F20050D97C;
+			remoteInfo = "sigma-multidrm-appletv";
+		};
+		4F88D8342D813B420050D97C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844684932CE7491700D75B4B;
+			remoteInfo = SigmaMultiDRMFramework;
+		};
 		844684322CE7405900D75B4B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 844684132CE7405600D75B4B /* Project object */;
@@ -61,6 +84,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4F88D8362D813B420050D97C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4F88D8332D813B420050D97C /* SigmaMultiDRMFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8446848B2CE7460400D75B4B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,6 +109,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F88D8052D8134F20050D97C /* sigma-multidrm-appletv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sigma-multidrm-appletv.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F88D8172D8134F40050D97C /* sigma-multidrm-appletvTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sigma-multidrm-appletvTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F88D8212D8134F40050D97C /* sigma-multidrm-appletvUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sigma-multidrm-appletvUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446841B2CE7405600D75B4B /* sigma-multidrm-ios-sdk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sigma-multidrm-ios-sdk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446841E2CE7405600D75B4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		844684202CE7405600D75B4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,12 +142,50 @@
 		844684C72CEACEFF00D75B4B /* sigma-multidrm-spm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "sigma-multidrm-spm"; path = "/Users/admin/Library/Developer/Xcode/DerivedData/sigma-multidrm-ios-sdk-clfkvospckgadxdgvyyigpfljqtp/SourcePackages/checkouts/sigma-multidrm-spm"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F88D83B2D81402E0050D97C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4F88D8042D8134F20050D97C /* sigma-multidrm-appletv */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4F88D8062D8134F30050D97C /* sigma-multidrm-appletv */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4F88D83B2D81402E0050D97C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "sigma-multidrm-appletv"; sourceTree = "<group>"; };
+		4F88D81A2D8134F40050D97C /* sigma-multidrm-appletvTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "sigma-multidrm-appletvTests"; sourceTree = "<group>"; };
+		4F88D8242D8134F40050D97C /* sigma-multidrm-appletvUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "sigma-multidrm-appletvUITests"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		4F88D8022D8134F20050D97C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F88D8322D813B420050D97C /* SigmaMultiDRMFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F88D8142D8134F40050D97C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F88D81E2D8134F40050D97C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		844684182CE7405600D75B4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */,
+				4F88D83C2D81415F0050D97C /* SigmaMultiDRMFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +230,9 @@
 				844684802CE7460400D75B4B /* SigmaMultiDRMTests */,
 				844684952CE7491700D75B4B /* SigmaMultiDRMFramework */,
 				844684A32CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */,
+				4F88D8062D8134F30050D97C /* sigma-multidrm-appletv */,
+				4F88D81A2D8134F40050D97C /* sigma-multidrm-appletvTests */,
+				4F88D8242D8134F40050D97C /* sigma-multidrm-appletvUITests */,
 				8446841C2CE7405600D75B4B /* Products */,
 				844684692CE7419F00D75B4B /* Frameworks */,
 			);
@@ -168,6 +246,9 @@
 				8446843B2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests.xctest */,
 				844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */,
 				8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */,
+				4F88D8052D8134F20050D97C /* sigma-multidrm-appletv.app */,
+				4F88D8172D8134F40050D97C /* sigma-multidrm-appletvTests.xctest */,
+				4F88D8212D8134F40050D97C /* sigma-multidrm-appletvUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -259,6 +340,76 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4F88D8042D8134F20050D97C /* sigma-multidrm-appletv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F88D8292D8134F40050D97C /* Build configuration list for PBXNativeTarget "sigma-multidrm-appletv" */;
+			buildPhases = (
+				4F88D8012D8134F20050D97C /* Sources */,
+				4F88D8022D8134F20050D97C /* Frameworks */,
+				4F88D8032D8134F20050D97C /* Resources */,
+				4F88D8362D813B420050D97C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F88D8352D813B420050D97C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4F88D8062D8134F30050D97C /* sigma-multidrm-appletv */,
+			);
+			name = "sigma-multidrm-appletv";
+			packageProductDependencies = (
+			);
+			productName = "sigma-multidrm-appletv";
+			productReference = 4F88D8052D8134F20050D97C /* sigma-multidrm-appletv.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4F88D8162D8134F40050D97C /* sigma-multidrm-appletvTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F88D82C2D8134F40050D97C /* Build configuration list for PBXNativeTarget "sigma-multidrm-appletvTests" */;
+			buildPhases = (
+				4F88D8132D8134F40050D97C /* Sources */,
+				4F88D8142D8134F40050D97C /* Frameworks */,
+				4F88D8152D8134F40050D97C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F88D8192D8134F40050D97C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4F88D81A2D8134F40050D97C /* sigma-multidrm-appletvTests */,
+			);
+			name = "sigma-multidrm-appletvTests";
+			packageProductDependencies = (
+			);
+			productName = "sigma-multidrm-appletvTests";
+			productReference = 4F88D8172D8134F40050D97C /* sigma-multidrm-appletvTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4F88D8202D8134F40050D97C /* sigma-multidrm-appletvUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F88D82F2D8134F40050D97C /* Build configuration list for PBXNativeTarget "sigma-multidrm-appletvUITests" */;
+			buildPhases = (
+				4F88D81D2D8134F40050D97C /* Sources */,
+				4F88D81E2D8134F40050D97C /* Frameworks */,
+				4F88D81F2D8134F40050D97C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F88D8232D8134F40050D97C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4F88D8242D8134F40050D97C /* sigma-multidrm-appletvUITests */,
+			);
+			name = "sigma-multidrm-appletvUITests";
+			packageProductDependencies = (
+			);
+			productName = "sigma-multidrm-appletvUITests";
+			productReference = 4F88D8212D8134F40050D97C /* sigma-multidrm-appletvUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 844684452CE7405900D75B4B /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sdk" */;
@@ -359,9 +510,20 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					4F88D8042D8134F20050D97C = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					4F88D8162D8134F40050D97C = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 4F88D8042D8134F20050D97C;
+					};
+					4F88D8202D8134F40050D97C = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 4F88D8042D8134F20050D97C;
+					};
 					8446841A2CE7405600D75B4B = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -402,11 +564,35 @@
 				8446843A2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests */,
 				844684932CE7491700D75B4B /* SigmaMultiDRMFramework */,
 				8446849C2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */,
+				4F88D8042D8134F20050D97C /* sigma-multidrm-appletv */,
+				4F88D8162D8134F40050D97C /* sigma-multidrm-appletvTests */,
+				4F88D8202D8134F40050D97C /* sigma-multidrm-appletvUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F88D8032D8134F20050D97C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F88D8152D8134F40050D97C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F88D81F2D8134F40050D97C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		844684192CE7405600D75B4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -448,6 +634,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F88D8012D8134F20050D97C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F88D8132D8134F40050D97C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F88D81D2D8134F40050D97C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		844684172CE7405600D75B4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -498,6 +705,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4F88D8192D8134F40050D97C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F88D8042D8134F20050D97C /* sigma-multidrm-appletv */;
+			targetProxy = 4F88D8182D8134F40050D97C /* PBXContainerItemProxy */;
+		};
+		4F88D8232D8134F40050D97C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F88D8042D8134F20050D97C /* sigma-multidrm-appletv */;
+			targetProxy = 4F88D8222D8134F40050D97C /* PBXContainerItemProxy */;
+		};
+		4F88D8352D813B420050D97C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844684932CE7491700D75B4B /* SigmaMultiDRMFramework */;
+			targetProxy = 4F88D8342D813B420050D97C /* PBXContainerItemProxy */;
+		};
 		844684332CE7405900D75B4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */;
@@ -540,6 +762,175 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F88D82A2D8134F40050D97C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sigma-multidrm-appletv/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "VTNet Sigma Multi DRM";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sigmadrm.sigma-multidrm-appletv";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 15.6;
+			};
+			name = Debug;
+		};
+		4F88D82B2D8134F40050D97C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sigma-multidrm-appletv/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "VTNet Sigma Multi DRM";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sigmadrm.sigma-multidrm-appletv";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 15.6;
+			};
+			name = Release;
+		};
+		4F88D82D2D8134F40050D97C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sigmadrm.sigma-multidrm-appletvTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sigma-multidrm-appletv.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sigma-multidrm-appletv";
+				TVOS_DEPLOYMENT_TARGET = 18.2;
+			};
+			name = Debug;
+		};
+		4F88D82E2D8134F40050D97C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sigmadrm.sigma-multidrm-appletvTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sigma-multidrm-appletv.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sigma-multidrm-appletv";
+				TVOS_DEPLOYMENT_TARGET = 18.2;
+			};
+			name = Release;
+		};
+		4F88D8302D8134F40050D97C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sigmadrm.sigma-multidrm-appletvUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = "sigma-multidrm-appletv";
+				TVOS_DEPLOYMENT_TARGET = 15.6;
+			};
+			name = Debug;
+		};
+		4F88D8312D8134F40050D97C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sigmadrm.sigma-multidrm-appletvUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = "sigma-multidrm-appletv";
+				TVOS_DEPLOYMENT_TARGET = 15.6;
+			};
+			name = Release;
+		};
 		844684432CE7405900D75B4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -666,6 +1057,7 @@
 				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "sigma-multidrm-ios-sdk/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "VTNet Sigma Multi DRM";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -678,6 +1070,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdk";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -695,6 +1090,7 @@
 				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "sigma-multidrm-ios-sdk/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "VTNet Sigma Multi DRM";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -707,6 +1103,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sigmadrm.ios.sdk.sigma-multidrm-ios-sdk";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -812,8 +1211,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sigmadrm.ios.sdk.SigmaMultiDRMFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -841,8 +1242,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sigmadrm.ios.sdk.SigmaMultiDRMFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -885,6 +1288,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F88D8292D8134F40050D97C /* Build configuration list for PBXNativeTarget "sigma-multidrm-appletv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F88D82A2D8134F40050D97C /* Debug */,
+				4F88D82B2D8134F40050D97C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F88D82C2D8134F40050D97C /* Build configuration list for PBXNativeTarget "sigma-multidrm-appletvTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F88D82D2D8134F40050D97C /* Debug */,
+				4F88D82E2D8134F40050D97C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F88D82F2D8134F40050D97C /* Build configuration list for PBXNativeTarget "sigma-multidrm-appletvUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F88D8302D8134F40050D97C /* Debug */,
+				4F88D8312D8134F40050D97C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		844684162CE7405600D75B4B /* Build configuration list for PBXProject "sigma-multidrm-ios-sdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
