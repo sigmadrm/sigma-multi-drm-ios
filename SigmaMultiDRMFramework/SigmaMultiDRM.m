@@ -13,12 +13,12 @@
 {
     BOOL _debug;
 }
-@property (nonatomic, assign) NSString *userId;
-@property (nonatomic, assign) NSString *sessionId;
-@property (nonatomic, retain) NSString *merchant;
-@property (nonatomic, retain) NSString *appId;
-@property (nonatomic, retain) SContentKeySession *contentKey;
-@property (nonatomic, retain) SContentKeyDelegate *contentKeyDelegate;
+@property (nonatomic, strong) NSString *userId;
+@property (nonatomic, strong) NSString *sessionId;
+@property (nonatomic, strong) NSString *merchant;
+@property (nonatomic, strong) NSString *appId;
+@property (nonatomic, strong) SContentKeySession *contentKey;
+@property (nonatomic, strong) SContentKeyDelegate *contentKeyDelegate;
 
 @end
 static SigmaMultiDRM *gSigmaSDK = nil;

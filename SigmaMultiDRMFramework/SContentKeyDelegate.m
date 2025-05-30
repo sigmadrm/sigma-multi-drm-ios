@@ -51,6 +51,8 @@
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     [self processOnlineKey:session request:keyRequest];
 }
+
+/// Deprecated: This method blocks the thread and does not handle errors.
 -(NSData *)serverCetificate
 {
     NSString *url = [self certUrl];
@@ -64,25 +66,49 @@
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
     return result;
 }
+
 -(void)processOnlineKey:(AVContentKeySession *)session request:(AVContentKeyRequest *)keyRequest
 {
     NSString *contentKeyIdentifierString = keyRequest.identifier;
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
-    NSData *certificate = [self serverCetificate];
-    [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-        // Check validate
-        NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-        if (error){
-            NSLog(@"License Data Error!");
+    NSString *url = [self certUrl];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"[Cert Request Error] URL: %@ | Error: %@", url, error.localizedDescription);
             [keyRequest processContentKeyResponseError:error];
+            return;
         }
-        else {
-            AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
-            [keyRequest processContentKeyResponse:response];
+
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSInteger statusCode = httpResponse.statusCode;
+        if (!data || statusCode != 200) {
+            NSLog(@"[Cert Request Error] URL: %@ | Status Code: %ld | Error: Data is nil or invalid status code", url, (long)statusCode);
+            NSError *dataError = [NSError errorWithDomain:@"com.sigma.cert"
+                                                     code:statusCode
+                                                 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Certificate request failed with status code %ld", (long)statusCode]}];
+            [keyRequest processContentKeyResponseError:dataError];
+            return;
         }
+
+        NSData* certificate = data;
+        [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
+            if (error){
+                NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
+                [keyRequest processContentKeyResponseError:error];
+            } else {
+                NSData *licenseData = [weakSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+                AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
+                [keyRequest processContentKeyResponse:response];
+            }
+        }];
     }];
+    
+    [task resume];
 }
 -(NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *) assetId keyId:(NSString *)keyId
 {
@@ -99,18 +125,27 @@
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block NSData *result = nil;
+    __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];  // default empty license
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        do {
-            if (error) break;
-            if (!data) break;
-            NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
-            NSLog(@"NSData: %@", licenseObj);
-            if (!licenseObj) break;
-            NSString *license = [licenseObj objectForKey:@"license"];
-            result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        
+        @try {
+            do {
+                if (error || !data) break;
+                
+                NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
+                NSLog(@"NSData: %@", licenseObj);
+                if(!licenseObj) break;
+                
+                NSString *license = [licenseObj objectForKey:@"license"];
+                if(!license) break;
+                
+                result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            }
+            while (FALSE);
+        } @catch (NSException *exception) {
+            NSLog(@"Exception while parsing license: %@ - %@", exception.name, exception.reason);
         }
-        while (FALSE);
+        
         dispatch_semaphore_signal(semaphore);
     }];
     [dataTask resume];

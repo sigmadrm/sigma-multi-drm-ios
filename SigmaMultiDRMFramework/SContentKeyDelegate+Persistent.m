@@ -61,7 +61,7 @@
         NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
         NSError *err = nil;
         NSData *persistentKey = [keyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&err];
-        if (err == nil)
+        if (err != nil)
         {
             NSLog(@"Persisten Error: %@", err);
         }
