@@ -55,20 +55,62 @@
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
-    NSData *certificate = [self serverCetificate];
-    [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-        // Check validate
-        NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-        NSError *err = nil;
-        NSData *persistentKey = [keyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&err];
-        if (err != nil)
-        {
-            NSLog(@"Persisten Error: %@", err);
+    NSData *certificate = [self serverCertificate];
+    
+    AVPersistableContentKeyRequest *strongKeyRequest = keyRequest;
+    SContentKeyDelegate *strongSelf = self;
+    [strongKeyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
+        if(!strongSelf || !strongKeyRequest) {
+            NSLog(@"Cancel persistent key request: strongSelf or strongKeyRequest is nil");
+            return;
         }
-        // Save key
-        [self saveContentKey:persistentKey withName:assetIDString];
-        AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
-        [keyRequest processContentKeyResponse:response];
+        
+        if (error) {
+            NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
+            [strongKeyRequest processContentKeyResponseError:error];
+            return;
+        }
+        
+        @try {
+            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+            if (!licenseData || licenseData.length == 0) {
+                NSLog(@"[License Error] Empty or nil license data received");
+                NSError *licenseError = [NSError errorWithDomain:@"com.sigma.license" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Empty or nil license data"}];
+                [strongKeyRequest processContentKeyResponseError:licenseError];
+                return;
+            }
+            
+            NSError *err = nil;
+            NSData *persistentKey = [strongKeyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&err];
+            
+            if (err != nil) {
+                NSLog(@"[Persistent Error] Failed to create persistent key: %@", err.localizedDescription);
+                [strongKeyRequest processContentKeyResponseError:err];
+                return;
+            }
+            
+            if (!persistentKey || persistentKey.length == 0) {
+                NSLog(@"[Persistent Error] Empty or nil persistent key generated");
+                NSError *persistentError = [NSError errorWithDomain:@"com.sigma.persistent" code:-2 userInfo:@{NSLocalizedDescriptionKey: @"Empty or nil persistent key"}];
+                [strongKeyRequest processContentKeyResponseError:persistentError];
+                return;
+            }
+            
+            // Save persistent key to disk
+            NSString *contentKeyName = [strongSelf keyNameWithAssetId:assetIDString];
+            [strongSelf saveContentKey:persistentKey withName:contentKeyName];
+            
+            // Create response and process
+            AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
+            [strongKeyRequest processContentKeyResponse:response];
+            
+            NSLog(@"[Persistent Success] Key saved and processed for asset: %@", assetIDString);
+            
+        } @catch(NSException* exception) {
+            NSLog(@"[Persistent Exception] Error processing persistent key: %@ - %@", exception.name, exception.reason);
+            NSError *exceptionError = [NSError errorWithDomain:@"com.sigma.persistent" code:-3 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Exception: %@", exception.reason]}];
+            [strongKeyRequest processContentKeyResponseError:exceptionError];
+        }
     }];
 }
 
@@ -86,10 +128,28 @@
 {
     return [[NSFileManager defaultManager] fileExistsAtPath:[self fullPathWithName:[self keyNameWithAssetId:assetId]]];
 }
--(void)saveContentKey:(NSData *)contentKey withName:(NSString *)contentKeyName
+-(BOOL)saveContentKey:(NSData *)contentKey withName:(NSString *)contentKeyName
 {
+    if (!contentKey || contentKey.length == 0) {
+        NSLog(@"[Save Error] Cannot save empty or nil content key");
+        return NO;
+    }
+    
+    if (!contentKeyName || contentKeyName.length == 0) {
+        NSLog(@"[Save Error] Cannot save with empty or nil key name");
+        return NO;
+    }
+    
     NSString *fullPath = [self fullPathWithName:contentKeyName];
-    [contentKey writeToFile:fullPath atomically:NSDataWritingAtomic];
+    BOOL success = [contentKey writeToFile:fullPath atomically:NSDataWritingAtomic];
+    
+    if (success) {
+        NSLog(@"[Save Success] Content key saved to: %@", fullPath);
+    } else {
+        NSLog(@"[Save Error] Failed to save content key to: %@", fullPath);
+    }
+    
+    return success;
 }
 -(NSString *)fullPathWithAssetId:(NSString *)assetId
 {

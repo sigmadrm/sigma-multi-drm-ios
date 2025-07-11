@@ -24,9 +24,19 @@
 		844684B12CE7492B00D75B4B /* SContentKeyDelegate+Persistent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */; };
 		844684B22CE7492B00D75B4B /* SigmaMultiDRM.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */; };
 		844684B32CE7492B00D75B4B /* SContentKeyDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */; };
-		844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845D2CE7409700D75B4B /* SContentKeySession.m */; };
 		844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684652CE740A900D75B4B /* SigmaMultiDRM.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
+		84DD44F42E1E6636007B14DC /* ContentKeyManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 84DD44F22E1E6636007B14DC /* ContentKeyManager.h */; };
+		84DD44F52E1E6636007B14DC /* ContentKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD44F32E1E6636007B14DC /* ContentKeyManager.m */; };
+		84DD44FE2E1F7AE4007B14DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD44FD2E1F7AE4007B14DC /* AppDelegate.m */; };
+		84DD45012E1F7AE4007B14DC /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD45002E1F7AE4007B14DC /* SceneDelegate.m */; };
+		84DD45042E1F7AE4007B14DC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD45032E1F7AE4007B14DC /* ViewController.m */; };
+		84DD45072E1F7AE4007B14DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DD45052E1F7AE4007B14DC /* Main.storyboard */; };
+		84DD45092E1F7AE6007B14DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84DD45082E1F7AE6007B14DC /* Assets.xcassets */; };
+		84DD450C2E1F7AE6007B14DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DD450A2E1F7AE6007B14DC /* LaunchScreen.storyboard */; };
+		84DD450F2E1F7AE6007B14DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD450E2E1F7AE6007B14DC /* main.m */; };
+		84DD45192E1FB02B007B14DC /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
+		84DD45192E1FB093007B14DC /* SigmaMultiDRMFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84DD451D2E1FB335007B14DC /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +68,20 @@
 			remoteGlobalIDString = 844684932CE7491700D75B4B;
 			remoteInfo = SigmaMultiDRMFramework;
 		};
+		84DD45132E1F7C25007B14DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844684932CE7491700D75B4B;
+			remoteInfo = SigmaMultiDRMFramework;
+		};
+		84DD451B2E1FB2E5007B14DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844684132CE7405600D75B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844684932CE7491700D75B4B;
+			remoteInfo = SigmaMultiDRMFramework;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +92,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				844684AA2CE7491800D75B4B /* SigmaMultiDRMFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84DD45182E1FB02B007B14DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84DD45192E1FB093007B14DC /* SigmaMultiDRMFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,10 +125,8 @@
 		844684412CE7405900D75B4B /* sigma_multidrm_ios_sdkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sigma_multidrm_ios_sdkUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SContentKeyDelegate+Persistent.m"; sourceTree = "<group>"; };
 		8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SContentKeyDelegate.m; sourceTree = "<group>"; };
-		8446845D2CE7409700D75B4B /* SContentKeySession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SContentKeySession.m; sourceTree = "<group>"; };
 		8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRM.m; sourceTree = "<group>"; };
 		844684632CE740A900D75B4B /* SContentKeyDelegate+Persistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SContentKeyDelegate+Persistent.h"; sourceTree = "<group>"; };
-		844684642CE740A900D75B4B /* SContentKeySession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SContentKeySession.h; sourceTree = "<group>"; };
 		844684652CE740A900D75B4B /* SigmaMultiDRM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SigmaMultiDRM.h; sourceTree = "<group>"; };
 		844684662CE740A900D75B4B /* SContentKeyDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SContentKeyDelegate.h; sourceTree = "<group>"; };
 		844684812CE7460400D75B4B /* SigmaMultiDRMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRMTests.m; sourceTree = "<group>"; };
@@ -103,6 +136,20 @@
 		8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SigmaMultiDRMFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		844684A42CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRMFrameworkTests.m; sourceTree = "<group>"; };
 		844684C72CEACEFF00D75B4B /* sigma-multidrm-spm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "sigma-multidrm-spm"; path = "/Users/admin/Library/Developer/Xcode/DerivedData/sigma-multidrm-ios-sdk-clfkvospckgadxdgvyyigpfljqtp/SourcePackages/checkouts/sigma-multidrm-spm"; sourceTree = "<absolute>"; };
+		84DD44F22E1E6636007B14DC /* ContentKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentKeyManager.h; sourceTree = "<group>"; };
+		84DD44F32E1E6636007B14DC /* ContentKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentKeyManager.m; sourceTree = "<group>"; };
+		84DD44FA2E1F7AE3007B14DC /* sigma-multidrm-ios-sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sigma-multidrm-ios-sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84DD44FC2E1F7AE4007B14DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		84DD44FD2E1F7AE4007B14DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		84DD44FF2E1F7AE4007B14DC /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		84DD45002E1F7AE4007B14DC /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		84DD45022E1F7AE4007B14DC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		84DD45032E1F7AE4007B14DC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		84DD45062E1F7AE4007B14DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		84DD45082E1F7AE6007B14DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84DD450B2E1F7AE6007B14DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84DD450D2E1F7AE6007B14DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84DD450E2E1F7AE6007B14DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */,
+				84DD451D2E1FB335007B14DC /* SigmaMultiDRMFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +190,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		84DD44F72E1F7AE3007B14DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84DD45192E1FB02B007B14DC /* SigmaMultiDRMFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -155,6 +210,7 @@
 				844684802CE7460400D75B4B /* SigmaMultiDRMTests */,
 				844684952CE7491700D75B4B /* SigmaMultiDRMFramework */,
 				844684A32CE7491700D75B4B /* SigmaMultiDRMFrameworkTests */,
+				84DD44FB2E1F7AE4007B14DC /* sigma-multidrm-ios-sample */,
 				8446841C2CE7405600D75B4B /* Products */,
 				844684692CE7419F00D75B4B /* Frameworks */,
 			);
@@ -168,6 +224,7 @@
 				8446843B2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests.xctest */,
 				844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */,
 				8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */,
+				84DD44FA2E1F7AE3007B14DC /* sigma-multidrm-ios-sample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,16 +279,16 @@
 		844684952CE7491700D75B4B /* SigmaMultiDRMFramework */ = {
 			isa = PBXGroup;
 			children = (
+				84DD44F22E1E6636007B14DC /* ContentKeyManager.h */,
+				84DD44F32E1E6636007B14DC /* ContentKeyManager.m */,
 				844684662CE740A900D75B4B /* SContentKeyDelegate.h */,
 				8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */,
 				844684632CE740A900D75B4B /* SContentKeyDelegate+Persistent.h */,
 				8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */,
-				844684642CE740A900D75B4B /* SContentKeySession.h */,
-				8446845D2CE7409700D75B4B /* SContentKeySession.m */,
 				844684652CE740A900D75B4B /* SigmaMultiDRM.h */,
 				8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */,
-				844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */,
 				844684972CE7491700D75B4B /* SigmaMultiDRMFramework.docc */,
+				844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */,
 			);
 			path = SigmaMultiDRMFramework;
 			sourceTree = "<group>";
@@ -244,6 +301,24 @@
 			path = SigmaMultiDRMFrameworkTests;
 			sourceTree = "<group>";
 		};
+		84DD44FB2E1F7AE4007B14DC /* sigma-multidrm-ios-sample */ = {
+			isa = PBXGroup;
+			children = (
+				84DD44FC2E1F7AE4007B14DC /* AppDelegate.h */,
+				84DD44FD2E1F7AE4007B14DC /* AppDelegate.m */,
+				84DD44FF2E1F7AE4007B14DC /* SceneDelegate.h */,
+				84DD45002E1F7AE4007B14DC /* SceneDelegate.m */,
+				84DD45022E1F7AE4007B14DC /* ViewController.h */,
+				84DD45032E1F7AE4007B14DC /* ViewController.m */,
+				84DD45052E1F7AE4007B14DC /* Main.storyboard */,
+				84DD45082E1F7AE6007B14DC /* Assets.xcassets */,
+				84DD450A2E1F7AE6007B14DC /* LaunchScreen.storyboard */,
+				84DD450D2E1F7AE6007B14DC /* Info.plist */,
+				84DD450E2E1F7AE6007B14DC /* main.m */,
+			);
+			path = "sigma-multidrm-ios-sample";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -252,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */,
+				84DD44F42E1E6636007B14DC /* ContentKeyManager.h in Headers */,
 				844684A62CE7491800D75B4B /* SigmaMultiDRMFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +348,7 @@
 			);
 			dependencies = (
 				84DB3CAE2D08276E004D948A /* PBXTargetDependency */,
+				84DD451C2E1FB2E5007B14DC /* PBXTargetDependency */,
 			);
 			name = "sigma-multidrm-ios-sdk";
 			packageProductDependencies = (
@@ -352,6 +429,25 @@
 			productReference = 8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		84DD44F92E1F7AE3007B14DC /* sigma-multidrm-ios-sample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84DD45102E1F7AE6007B14DC /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sample" */;
+			buildPhases = (
+				84DD44F62E1F7AE3007B14DC /* Sources */,
+				84DD44F72E1F7AE3007B14DC /* Frameworks */,
+				84DD44F82E1F7AE3007B14DC /* Resources */,
+				84DD45182E1FB02B007B14DC /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84DD45142E1F7C25007B14DC /* PBXTargetDependency */,
+			);
+			name = "sigma-multidrm-ios-sample";
+			productName = "sigma-multidrm-ios-sample";
+			productReference = 84DD44FA2E1F7AE3007B14DC /* sigma-multidrm-ios-sample.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -380,6 +476,9 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 8446841A2CE7405600D75B4B;
 					};
+					84DD44F92E1F7AE3007B14DC = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 				};
 			};
 			buildConfigurationList = 844684162CE7405600D75B4B /* Build configuration list for PBXProject "sigma-multidrm-ios-sdk" */;
@@ -398,6 +497,7 @@
 			projectRoot = "";
 			targets = (
 				8446841A2CE7405600D75B4B /* sigma-multidrm-ios-sdk */,
+				84DD44F92E1F7AE3007B14DC /* sigma-multidrm-ios-sample */,
 				844684302CE7405900D75B4B /* sigma-multidrm-ios-sdkTests */,
 				8446843A2CE7405900D75B4B /* sigma-multidrm-ios-sdkUITests */,
 				844684932CE7491700D75B4B /* SigmaMultiDRMFramework */,
@@ -445,6 +545,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		84DD44F82E1F7AE3007B14DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84DD450C2E1F7AE6007B14DC /* LaunchScreen.storyboard in Resources */,
+				84DD45092E1F7AE6007B14DC /* Assets.xcassets in Resources */,
+				84DD45072E1F7AE4007B14DC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -480,10 +590,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				844684B12CE7492B00D75B4B /* SContentKeyDelegate+Persistent.m in Sources */,
+				84DD44F52E1E6636007B14DC /* ContentKeyManager.m in Sources */,
 				844684982CE7491700D75B4B /* SigmaMultiDRMFramework.docc in Sources */,
 				844684B32CE7492B00D75B4B /* SContentKeyDelegate.m in Sources */,
 				844684B22CE7492B00D75B4B /* SigmaMultiDRM.m in Sources */,
-				844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +602,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				844684A52CE7491800D75B4B /* SigmaMultiDRMFrameworkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84DD44F62E1F7AE3007B14DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84DD45042E1F7AE4007B14DC /* ViewController.m in Sources */,
+				84DD44FE2E1F7AE4007B14DC /* AppDelegate.m in Sources */,
+				84DD450F2E1F7AE6007B14DC /* main.m in Sources */,
+				84DD45012E1F7AE4007B14DC /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +639,16 @@
 			target = 844684932CE7491700D75B4B /* SigmaMultiDRMFramework */;
 			targetProxy = 84DB3CAD2D08276E004D948A /* PBXContainerItemProxy */;
 		};
+		84DD45142E1F7C25007B14DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844684932CE7491700D75B4B /* SigmaMultiDRMFramework */;
+			targetProxy = 84DD45132E1F7C25007B14DC /* PBXContainerItemProxy */;
+		};
+		84DD451C2E1FB2E5007B14DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844684932CE7491700D75B4B /* SigmaMultiDRMFramework */;
+			targetProxy = 84DD451B2E1FB2E5007B14DC /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -533,6 +664,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				8446842A2CE7405900D75B4B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		84DD45052E1F7AE4007B14DC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84DD45062E1F7AE4007B14DC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		84DD450A2E1F7AE6007B14DC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84DD450B2E1F7AE6007B14DC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -882,6 +1029,60 @@
 			};
 			name = Release;
 		};
+		84DD45112E1F7AE6007B14DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sigma-multidrm-ios-sample/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigma.drm.ios.sample.sigma-multidrm-ios-sample";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84DD45122E1F7AE6007B14DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8X4ZQ26KMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sigma-multidrm-ios-sample/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sigma.drm.ios.sample.sigma-multidrm-ios-sample";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -935,6 +1136,15 @@
 			buildConfigurations = (
 				844684AF2CE7491800D75B4B /* Debug */,
 				844684B02CE7491800D75B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84DD45102E1F7AE6007B14DC /* Build configuration list for PBXNativeTarget "sigma-multidrm-ios-sample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84DD45112E1F7AE6007B14DC /* Debug */,
+				84DD45122E1F7AE6007B14DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

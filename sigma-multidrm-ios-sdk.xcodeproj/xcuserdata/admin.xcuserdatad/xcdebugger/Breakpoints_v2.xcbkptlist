@@ -3,4 +3,102 @@
    uuid = "A1521C8B-C4C8-4423-A00A-04B7E2AE27C1"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BFDA3942-D6BD-4951-AB22-F49534A608BC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SigmaMultiDRMFramework/ContentKeyManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-init"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2E3DAC77-28E6-4ABB-89A0-8C6D991D9F1C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SigmaMultiDRMFramework/SContentKeyDelegate.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "-processOnlineKey:request:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2E3DAC77-28E6-4ABB-89A0-8C6D991D9F1C - 6cbef33f50faa9d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__48-[SContentKeyDelegate processOnlineKey:request:]_block_invoke_2"
+                  moduleName = "SigmaMultiDRMFramework"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/Sources/DRM_LIB_SDK/sigma-multi-drm-ios-sdk/SigmaMultiDRMFramework/SContentKeyDelegate.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "460">
+               </Location>
+               <Location
+                  uuid = "2E3DAC77-28E6-4ABB-89A0-8C6D991D9F1C - 6cbef33f50faa9d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__48-[SContentKeyDelegate processOnlineKey:request:]_block_invoke_2"
+                  moduleName = "SigmaMultiDRMFramework"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/Sources/DRM_LIB_SDK/sigma-multi-drm-ios-sdk/SigmaMultiDRMFramework/SContentKeyDelegate.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "472">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "49AA8122-F2CE-4EF8-AAA8-511CAB01F37E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SigmaMultiDRMFramework/SContentKeyDelegate+Persistent.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "-contentKeySession:didProvidePersistableContentKeyRequest:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "57CEB836-1353-4A55-A589-7A2A15F51A29"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SigmaMultiDRMFramework/SContentKeyDelegate+Persistent.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "-requestOnlineKey:request:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

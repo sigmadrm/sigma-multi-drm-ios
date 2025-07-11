@@ -53,7 +53,7 @@
 }
 
 /// Deprecated: This method blocks the thread and does not handle errors.
--(NSData *)serverCetificate
+-(NSData *)serverCertificate
 {
     NSString *url = [self certUrl];
     __block NSData *result = nil;
@@ -71,15 +71,19 @@
 {
     NSString *contentKeyIdentifierString = keyRequest.identifier;
     NSDictionary *queries = [self query:contentKeyIdentifierString];
-    NSString *assetIDString = [queries objectForKey:@"assetId"];
-    NSString *keyId = [queries objectForKey:@"keyId"];
-    NSString *url = [self certUrl];
+    __block NSString *assetIDString = [queries objectForKey:@"assetId"];
+    __block NSString *keyId = [queries objectForKey:@"keyId"];
+    __block NSString *certificateUrl = [self certUrl];
     
-    __weak typeof(self) weakSelf = self;
-    
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    SContentKeyDelegate* strongSelf = self;
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:certificateUrl] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if(!keyRequest || !strongSelf){
+            NSLog(@"Cancel this session: Keyrequest or SContentKeyDelegate was release");
+            return;
+        }
+        
         if (error) {
-            NSLog(@"[Cert Request Error] URL: %@ | Error: %@", url, error.localizedDescription);
+            NSLog(@"[Cert Request Error] URL: %@ | Error: %@", certificateUrl, error.localizedDescription);
             [keyRequest processContentKeyResponseError:error];
             return;
         }
@@ -87,7 +91,7 @@
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         NSInteger statusCode = httpResponse.statusCode;
         if (!data || statusCode != 200) {
-            NSLog(@"[Cert Request Error] URL: %@ | Status Code: %ld | Error: Data is nil or invalid status code", url, (long)statusCode);
+            NSLog(@"[Cert Request Error] URL: %@ | Status Code: %ld | Error: Data is nil or invalid status code", certificateUrl, (long)statusCode);
             NSError *dataError = [NSError errorWithDomain:@"com.sigma.cert"
                                                      code:statusCode
                                                  userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Certificate request failed with status code %ld", (long)statusCode]}];
@@ -97,13 +101,22 @@
 
         NSData* certificate = data;
         [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-            if (error){
-                NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
-                [keyRequest processContentKeyResponseError:error];
-            } else {
-                NSData *licenseData = [weakSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-                AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
-                [keyRequest processContentKeyResponse:response];
+            @try{
+                if(!keyRequest || !strongSelf){
+                    NSLog(@"Cancel this session: Keyrequest or SContentKeyDelegate was release");
+                    return;
+                }
+                
+                if (error){
+                    NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
+                    [keyRequest processContentKeyResponseError:error];
+                } else {
+                    NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+                    AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
+                    [keyRequest processContentKeyResponse:response];
+                }
+            } @catch(NSException* exception){
+                NSLog(@"Exception while request license: %@ - %@", exception.name, exception.reason);
             }
         }];
     }];
@@ -133,11 +146,13 @@
                 if (error || !data) break;
                 
                 NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
-                NSLog(@"NSData: %@", licenseObj);
                 if(!licenseObj) break;
-                
+
                 NSString *license = [licenseObj objectForKey:@"license"];
-                if(!license) break;
+                if(!license) {
+                    NSLog(@"License Error: %@", licenseObj);
+                    break;
+                };
                 
                 result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
             }

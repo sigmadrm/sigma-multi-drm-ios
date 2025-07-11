@@ -9,16 +9,15 @@
 #import "SigmaMultiDRM.h"
 #import "SContentKeySession.h"
 #import "SContentKeyDelegate.h"
+#import "ContentKeyManager.h"
 @interface SigmaMultiDRM()
-{
-    BOOL _debug;
-}
+
+@property (nonatomic, strong) AVURLAsset* urlAsset;
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *sessionId;
 @property (nonatomic, strong) NSString *merchant;
 @property (nonatomic, strong) NSString *appId;
-@property (nonatomic, strong) SContentKeySession *contentKey;
-@property (nonatomic, strong) SContentKeyDelegate *contentKeyDelegate;
+@property (nonatomic, assign) BOOL debugMode;
 
 @end
 static SigmaMultiDRM *gSigmaSDK = nil;
@@ -36,48 +35,50 @@ static SigmaMultiDRM *gSigmaSDK = nil;
     if (self){
         _merchant = [[NSBundle mainBundle].infoDictionary objectForKey:@"merchant"];
         _appId = [[NSBundle mainBundle].infoDictionary objectForKey:@"appId"];
-        _debug = [[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] != nil ? [[[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] boolValue] : false;
+        _debugMode = [[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] != nil ? [[[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] boolValue] : false;
     }
     
     return self;
 }
 
--(AVURLAsset *)assetWithUrl:(NSString *)url
-{
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
-    SContentKeyDelegate *contentKeyDelegate = [[SContentKeyDelegate alloc] init];
-    SContentKeySession *contentKey = [[SContentKeySession alloc] init];
-    [contentKeyDelegate setUserId:_userId];
-    [contentKeyDelegate setSessionId:_sessionId];
-    [contentKeyDelegate setAppId:_appId];
-    [contentKeyDelegate setMerchant:_merchant];
-    [contentKeyDelegate setDebugMode:_debug];
-    [contentKey addDelegate:contentKeyDelegate];
-    [contentKey addAsset:asset];
-    self.contentKeyDelegate = contentKeyDelegate;
-    self.contentKey = contentKey;
-    return asset;
-}
--(void)setUserId:(NSString *)userId
-{
-    _userId = userId;
-}
--(void)setSessionId:(NSString *)sessionId
-{
-    _sessionId = sessionId;
-}
-
 -(void)setMerchant:(NSString *)merchant
 {
     _merchant = merchant;
+    [[[ContentKeyManager sharedManager] contentKeyDelegate] setMerchant:merchant];
 }
 
 -(void)setAppId:(NSString *)appId
 {
     _appId = appId;
+    [[[ContentKeyManager sharedManager] contentKeyDelegate] setAppId:appId];
 }
--(void)setDebugMode:(BOOL)debug
+
+-(void)setUserId:(NSString *)userId
 {
-    _debug = debug;
+    _userId = userId;
+    [[[ContentKeyManager sharedManager] contentKeyDelegate] setUserId:userId];
+}
+
+-(void)setSessionId:(NSString *)sessionId
+{
+    _sessionId = sessionId;
+    [[[ContentKeyManager sharedManager] contentKeyDelegate] setSessionId:sessionId];
+}
+
+-(void)setDebugMode:(BOOL)debugMode
+{
+    _debugMode = debugMode;
+    [[[ContentKeyManager sharedManager] contentKeyDelegate] setDebugMode:debugMode];
+}
+
+-(AVURLAsset *)assetWithUrl:(NSString *)url
+{
+    if(self.urlAsset){
+        [[[ContentKeyManager sharedManager] contentKeySession] removeContentKeyRecipient:self.urlAsset];
+        self.urlAsset = nil;
+    }
+    self.urlAsset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
+    [[[ContentKeyManager sharedManager] contentKeySession] addContentKeyRecipient:self.urlAsset];
+    return self.urlAsset;
 }
 @end

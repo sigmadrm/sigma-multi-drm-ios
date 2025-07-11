@@ -13,16 +13,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SigmaMultiDRM : NSObject
-{
-    
-}
-+(SigmaMultiDRM *)getInstance;
--(AVURLAsset *)assetWithUrl:(NSString *)url;
--(void)setUserId:(NSString *)userId;
--(void)setSessionId:(NSString *)sessionId;
--(void)setMerchant:(NSString *)merchant;
--(void)setAppId:(NSString *)appId;
--(void)setDebugMode:(BOOL)debug;
++ (SigmaMultiDRM *)getInstance;
+- (AVURLAsset *)assetWithUrl:(NSString *)url;
+
+- (void)setMerchant:(NSString *)merchant;
+- (void)setAppId:(NSString *)appId;
+- (void)setUserId:(NSString *)userId;
+- (void)setSessionId:(NSString *)sessionId;
+- (void)setDebugMode:(BOOL)debugMode;
 @end
 
 NS_ASSUME_NONNULL_END

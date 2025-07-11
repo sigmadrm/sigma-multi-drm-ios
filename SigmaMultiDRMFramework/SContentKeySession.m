@@ -12,8 +12,8 @@
 {
     
 }
-@property(nonatomic, nullable) AVContentKeySession *sessionKey;
-@property(nonatomic, nullable) dispatch_queue_t keyQueue;
+@property(nonatomic, weak) AVContentKeySession *sessionKey;
+@property(nonatomic, strong) dispatch_queue_t keyQueue;
 @end
 @implementation SContentKeySession
 -(instancetype) init
@@ -38,14 +38,14 @@
 }
 -(void)addAsset:(AVURLAsset *)asset
 {
-    [_sessionKey addContentKeyRecipient:asset];
+    [self.sessionKey addContentKeyRecipient:asset];
 }
 -(void)addDelegate:(id<AVContentKeySessionDelegate>) delegate
 {
-    [_sessionKey setDelegate:delegate queue:_keyQueue];
+    [self.sessionKey setDelegate:delegate queue:_keyQueue];
 }
 -(void)removeAsset:(AVURLAsset *)asset
 {
-    [_sessionKey removeContentKeyRecipient:asset];
+    [self.sessionKey removeContentKeyRecipient:asset];
 }
 @end
