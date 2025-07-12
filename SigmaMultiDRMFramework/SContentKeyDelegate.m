@@ -7,6 +7,19 @@
 //
 
 #import "SContentKeyDelegate.h"
+
+// Error Domain
+NSString *const kSigmaMultiDRMErrorDomain = @"com.sigma.multidrm";
+
+// Error Codes
+NSInteger const kSigmaMultiDRMErrorCertificateNil = -1;
+NSInteger const kSigmaMultiDRMErrorSPCNil = -2;
+NSInteger const kSigmaMultiDRMErrorLicenseNil = -3;
+NSInteger const kSigmaMultiDRMErrorPersistentKeyNil = -4;
+NSInteger const kSigmaMultiDRMErrorSaveFailed = -5;
+NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
+NSInteger const kSigmaMultiDRMErrorException = -7;
+
 @interface SContentKeyDelegate()
 
 @end
@@ -91,33 +104,83 @@
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
     
+    // Get certificate with error handling
     NSError *certError = nil;
     NSData* certificate = [self getCertificateWithError:&certError];
     if (certError) {
+        NSLog(@"[ProcessOnlineKey] Certificate error: %@", certError.localizedDescription);
         [keyRequest processContentKeyResponseError:certError];
         return;
     }
-    if(!certificate) {
+    
+    if (!certificate || certificate.length == 0) {
+        NSLog(@"[ProcessOnlineKey] Certificate is nil or empty");
+        NSError *certDataError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                      code:kSigmaMultiDRMErrorCertificateNil 
+                                                  userInfo:@{NSLocalizedDescriptionKey: @"Certificate data is nil or empty"}];
+        [keyRequest processContentKeyResponseError:certDataError];
         return;
     }
-    
-    __weak typeof(self) weakSelf = self;
-    AVContentKeySession* strongSession = session;
-    [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-        if(!strongSession){
-            NSLog(@"*** Prevent request license because ContentKeySession was released");
-            return;
-        }
-        if (error){
-            NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
-            [keyRequest processContentKeyResponseError:error];
+    // Use strong references for manual reference counting
+    SContentKeyDelegate *strongSelf = self;
+    AVContentKeySession *strongSession = session;
+    AVContentKeyRequest *strongKeyRequest = keyRequest;
+    [strongKeyRequest makeStreamingContentKeyRequestDataForApp:certificate 
+                                            contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] 
+                                                      options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} 
+                                            completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
+        if (!strongSession) {
+            NSLog(@"[ProcessOnlineKey] ContentKeySession was released");
             return;
         }
         
-        NSData *licenseData = [weakSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-        if(weakSelf && licenseData){
+        if (!strongKeyRequest) {
+            NSLog(@"[ProcessOnlineKey] ContentKeyRequest was released");
+            return;
+        }
+        
+        if (error) {
+            NSLog(@"[ProcessOnlineKey] SPC Request Error: %@", error.localizedDescription);
+            [strongKeyRequest processContentKeyResponseError:error];
+            return;
+        }
+        
+        if (!contentKeyRequestData || contentKeyRequestData.length == 0) {
+            NSLog(@"[ProcessOnlineKey] SPC data is nil or empty");
+            NSError *spcError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                     code:kSigmaMultiDRMErrorSPCNil 
+                                                 userInfo:@{NSLocalizedDescriptionKey: @"SPC data is nil or empty"}];
+            [strongKeyRequest processContentKeyResponseError:spcError];
+            return;
+        }
+    
+        @try {
+            // Request license from server
+            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+            if (!licenseData || licenseData.length == 0) {
+                NSLog(@"[ProcessOnlineKey] License data is nil or empty");
+                NSError *licenseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                             code:kSigmaMultiDRMErrorLicenseNil
+                                                         userInfo:@{NSLocalizedDescriptionKey: @"License data is nil or empty"}];
+                [strongKeyRequest processContentKeyResponseError:licenseError];
+                return;
+            }
+            
             AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
-            [keyRequest processContentKeyResponse:response];
+            if (!response) {
+                NSError *responseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                              code:kSigmaMultiDRMErrorResponseCreationFailed
+                                                          userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ContentKeyResponse"}];
+                [strongKeyRequest processContentKeyResponseError:responseError];
+                return;
+            }
+            [strongKeyRequest processContentKeyResponse:response];
+        } @catch(NSException *exception) {
+            NSLog(@"[ProcessOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
+            NSError *exceptionError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                           code:kSigmaMultiDRMErrorException 
+                                                       userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Exception: %@", exception.reason]}];
+            [strongKeyRequest processContentKeyResponseError:exceptionError];
         }
     }];
 }

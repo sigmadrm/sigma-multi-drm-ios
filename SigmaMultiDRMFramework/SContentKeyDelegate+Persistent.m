@@ -55,42 +55,121 @@
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
+    
+    NSLog(@"[RequestOnlineKey] Start processing persistent key - Asset: %@ | KeyId: %@", assetIDString, keyId);
+    
+    // Get certificate with error handling
     NSError* certError = nil;
     NSData *certificate = [self getCertificateWithError:&certError];
     if (certError) {
+        NSLog(@"[RequestOnlineKey] Certificate error: %@", certError.localizedDescription);
         [keyRequest processContentKeyResponseError:certError];
         return;
     }
-    if(!certificate){
+    
+    if (!certificate || certificate.length == 0) {
+        NSLog(@"[RequestOnlineKey] Certificate is nil or empty");
+        NSError *certDataError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                      code:kSigmaMultiDRMErrorCertificateNil 
+                                                  userInfo:@{NSLocalizedDescriptionKey: @"Certificate data is nil or empty"}];
+        [keyRequest processContentKeyResponseError:certDataError];
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
+    NSLog(@"[RequestOnlineKey] Certificate obtained - Size: %lu bytes", (unsigned long)certificate.length);
+    
+    // Use strong references for manual reference counting
+    SContentKeyDelegate *strongSelf = self;
     AVContentKeySession *strongSession = session;
-    [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-        if(!strongSession){
-            NSLog(@"*** Prevent request license because ContentKeySession was released");
-            return;
-        }
-        if (error){
-            NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
-            [keyRequest processContentKeyResponseError:error];
+    AVPersistableContentKeyRequest *strongKeyRequest = keyRequest;
+    
+    [strongKeyRequest makeStreamingContentKeyRequestDataForApp:certificate 
+                                            contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] 
+                                                      options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} 
+                                            completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
+        if (!strongSession) {
+            NSLog(@"[RequestOnlineKey] ContentKeySession was released");
             return;
         }
         
-        NSData *licenseData = [weakSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-        if(weakSelf && licenseData) {
-            NSError *pstError = nil;
-            NSData *persistentKey = [keyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&pstError];
-            if (pstError)
-            {
-                NSLog(@"Persisten Error: %@", pstError);
-                [keyRequest processContentKeyResponseError:pstError];
-            } else if(persistentKey){
-                [weakSelf saveContentKey:persistentKey withName:assetIDString];
-                AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
-                [keyRequest processContentKeyResponse:response];
+        if (!strongKeyRequest) {
+            NSLog(@"[RequestOnlineKey] ContentKeyRequest was released");
+            return;
+        }
+        
+        if (error) {
+            NSLog(@"[RequestOnlineKey] SPC Request Error: %@", error.localizedDescription);
+            [strongKeyRequest processContentKeyResponseError:error];
+            return;
+        }
+        
+        if (!contentKeyRequestData || contentKeyRequestData.length == 0) {
+            NSLog(@"[RequestOnlineKey] SPC data is nil or empty");
+            NSError *spcError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                     code:kSigmaMultiDRMErrorSPCNil 
+                                                 userInfo:@{NSLocalizedDescriptionKey: @"SPC data is nil or empty"}];
+            [strongKeyRequest processContentKeyResponseError:spcError];
+            return;
+        }
+    
+        @try {
+            // Request license from server
+            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+            if (!licenseData || licenseData.length == 0) {
+                NSLog(@"[RequestOnlineKey] License data is nil or empty");
+                NSError *licenseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                             code:kSigmaMultiDRMErrorLicenseNil 
+                                                         userInfo:@{NSLocalizedDescriptionKey: @"License data is nil or empty"}];
+                [strongKeyRequest processContentKeyResponseError:licenseError];
+                return;
             }
+            
+            // Create persistent key from license data
+            NSError *pstError = nil;
+            NSData *persistentKey = [strongKeyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&pstError];
+            if (pstError) {
+                NSLog(@"[RequestOnlineKey] Persistent key creation error: %@", pstError.localizedDescription);
+                [strongKeyRequest processContentKeyResponseError:pstError];
+                return;
+            }
+            
+            if (!persistentKey || persistentKey.length == 0) {
+                NSLog(@"[RequestOnlineKey] Persistent key is nil or empty");
+                NSError *persistentError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                                code:kSigmaMultiDRMErrorPersistentKeyNil 
+                                                            userInfo:@{NSLocalizedDescriptionKey: @"Persistent key is nil or empty"}];
+                [strongKeyRequest processContentKeyResponseError:persistentError];
+                return;
+            }
+            // Save persistent key to disk
+            NSString *contentKeyName = [strongSelf keyNameWithAssetId:assetIDString];
+            BOOL saveSuccess = [strongSelf saveContentKey:persistentKey withName:contentKeyName];
+            if (!saveSuccess) {
+                NSLog(@"[RequestOnlineKey] Failed to save persistent key to disk");
+                NSError *saveError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                          code:kSigmaMultiDRMErrorSaveFailed 
+                                                      userInfo:@{NSLocalizedDescriptionKey: @"Failed to save persistent key to disk"}];
+                [strongKeyRequest processContentKeyResponseError:saveError];
+                return;
+            }
+
+            AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
+            if (!response) {
+                NSLog(@"[RequestOnlineKey] Failed to create ContentKeyResponse");
+                NSError *responseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                              code:kSigmaMultiDRMErrorResponseCreationFailed 
+                                                          userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ContentKeyResponse"}];
+                [strongKeyRequest processContentKeyResponseError:responseError];
+                return;
+            }
+
+            [strongKeyRequest processContentKeyResponse:response];
+        } @catch(NSException *exception) {
+            NSLog(@"[RequestOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
+            NSError *exceptionError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                           code:kSigmaMultiDRMErrorException 
+                                                       userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Exception: %@", exception.reason]}];
+            [strongKeyRequest processContentKeyResponseError:exceptionError];
         }
     }];
 }
@@ -109,10 +188,10 @@
 {
     return [[NSFileManager defaultManager] fileExistsAtPath:[self fullPathWithName:[self keyNameWithAssetId:assetId]]];
 }
--(void)saveContentKey:(NSData *)contentKey withName:(NSString *)contentKeyName
+-(BOOL)saveContentKey:(NSData *)contentKey withName:(NSString *)contentKeyName
 {
     NSString *fullPath = [self fullPathWithName:contentKeyName];
-    [contentKey writeToFile:fullPath atomically:NSDataWritingAtomic];
+    return [contentKey writeToFile:fullPath atomically:NSDataWritingAtomic];
 }
 -(NSString *)fullPathWithAssetId:(NSString *)assetId
 {
