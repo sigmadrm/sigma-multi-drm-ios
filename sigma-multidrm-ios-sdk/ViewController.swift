@@ -3,52 +3,110 @@ import AVKit
 import SigmaMultiDRMFramework
 
 class ViewController: UIViewController {
-    var sdk: SigmaMultiDRM!
+    // MARK: - UI Outlets
+    @IBOutlet weak var videoContainerView: UIView!
+    @IBOutlet weak var initialBtn: UIButton!
+    @IBOutlet weak var playBtn: UIButton!
+    @IBOutlet weak var nextBtn: UIButton!
+
+    // MARK: - Player Properties
+    var player: AVPlayer!
     var playerViewController: AVPlayerViewController!
 
+    // MARK: - Media Data
+    struct MediaItem {
+        let manifestUrl: String
+        let merchantId: String
+        let appId: String
+        let userId: String
+        let sessionId: String
+    }
+
+    var mediaItems: [MediaItem] = []
+    var currentIndex: Int = 0
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        sdk = SigmaMultiDRM()
-//        sdk.setMerchant("sctv")
-//        sdk.setAppId("RedTV")
-//        sdk.setUserId("fairplay_userId")
-//        sdk.setSessionId("fairplay_sessionId")
-//        sdk.setDebugMode(true)
-//        let urlString = "https://sdrm-test.gviet.vn:9080/static/vod_staging/the_box/master.m3u8"
-        
-        sdk.setMerchant("sigma_packager_lite")
-        sdk.setAppId("demo")
-        sdk.setUserId("fairplay_userId")
-        sdk.setSessionId("fairplay_sessionId")
-        sdk.setDebugMode(false)
-        let urlString = "https://sdrm-test.gviet.vn:9080/static/vod_production/big_bug_bunny/master.m3u8"
-        
-        // Tạo URL và chuẩn bị asset
-        guard let url = URL(string: urlString) else { return }
-        
-        let asset = sdk.asset(withUrl: url.absoluteString)
-        prepareToPlayAsset(asset)
+        playBtn.isEnabled = false
+        nextBtn.isEnabled = false
+
+        // Khởi tạo danh sách media
+        mediaItems = [
+            MediaItem(
+                manifestUrl: "https://sdrm-test.gviet.vn:9080/static/vod_production/big_bug_bunny/master.m3u8",
+                merchantId: "sigma_packager_lite",
+                appId: "demo",
+                userId: "fairplay_userId",
+                sessionId: "fairplay_sessionId"
+            ),
+            MediaItem(
+                manifestUrl: "https://sdrm-test.gviet.vn:9080/static/vod_production/godzilla_kong/master.m3u8",
+                merchantId: "sigma_packager_lite",
+                appId: "demo",
+                userId: "fairplay_userId",
+                sessionId: "fairplay_sessionId"
+            )
+        ]
+        currentIndex = 0
     }
-    
-    func prepareToPlayAsset(_ asset: AVURLAsset) {
-        // Tạo AVPlayerItem
-        let playerItem = AVPlayerItem(asset: asset)
-        playerItem.preferredForwardBufferDuration = 1.0
-        
-        // Tạo AVPlayer và gán vào AVPlayerViewController
-        let player = AVPlayer(playerItem: playerItem)
-        
-        // Tạo và cấu hình AVPlayerViewController
+
+    // MARK: - Actions
+    @IBAction func initialize(_ sender: UIButton) {
+        initializePlayer()
+        initialBtn.isEnabled = false
+        playBtn.isEnabled = true
+        nextBtn.isEnabled = true
+    }
+
+    @IBAction func play(_ sender: UIButton) {
+        playCurrentIndex()
+    }
+
+    @IBAction func next(_ sender: UIButton) {
+        currentIndex += 1
+        if currentIndex == mediaItems.count {
+            currentIndex = 0
+        }
+        playCurrentIndex()
+    }
+
+    // MARK: - Player Setup
+    func initializePlayer() {
+        player = AVPlayer()
+        initializeWithAVPlayerViewController()
+    }
+
+    func initializeWithAVPlayerViewController() {
         playerViewController = AVPlayerViewController()
         playerViewController.player = player
-        
-        // Gán AVPlayerViewController vào ViewController hiện tại
-        playerViewController.view.frame = self.view.bounds  // Đặt kích thước của playerViewController để phủ toàn bộ màn hình
-        playerViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.view.addSubview(playerViewController.view)  // Thêm view của playerViewController vào view chính của ViewController
-        
-        // Bắt đầu phát video khi AVPlayerViewController sẵn sàng
-        self.playerViewController.player?.play()
+        playerViewController.showsPlaybackControls = true
+
+        addChild(playerViewController)
+        playerViewController.view.frame = videoContainerView.bounds
+        videoContainerView.addSubview(playerViewController.view)
+        playerViewController.didMove(toParent: self)
+    }
+
+    // MARK: - Play Logic
+    func playCurrentIndex() {
+        let item = mediaItems[currentIndex]
+        print("Manifest URL: \(item.manifestUrl)")
+        print("Merchant ID: \(item.merchantId)")
+        print("App ID: \(item.appId)")
+        print("User ID: \(item.userId)")
+        print("Session ID: \(item.sessionId)")
+
+        let sigmaSdk = SigmaMultiDRM.getInstance()
+        sigmaSdk.setMerchant(item.merchantId)
+        sigmaSdk.setAppId(item.appId)
+        sigmaSdk.setUserId(item.userId)
+        sigmaSdk.setSessionId(item.sessionId)
+        sigmaSdk.setDebugMode(false)
+
+        let asset = sigmaSdk.asset(withUrl: item.manifestUrl)
+        let currentItem = AVPlayerItem(asset: asset)
+        player.replaceCurrentItem(with: currentItem)
+        player.play()
     }
 }

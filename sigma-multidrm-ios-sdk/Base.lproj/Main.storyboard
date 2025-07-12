@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="I4e-Kd-fLu">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -8,20 +8,86 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--ViewController-->
+        <scene sceneID="a48-xB-D5Q">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="sigma_multidrm_ios_sdk" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <viewController id="I4e-Kd-fLu" userLabel="ViewController" customClass="ViewController" customModule="sigma_multidrm_ios_sdk" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n23-zJ-tBx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkY-1d-zSl">
+                                <rect key="frame" x="0.0" y="391" width="414" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="GPB-uM-Sqk"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="InitAVPlayer"/>
+                                <connections>
+                                    <action selector="initialize:" destination="I4e-Kd-fLu" eventType="touchUpInside" id="j38-Us-EIW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQ6-SH-4bZ">
+                                <rect key="frame" x="0.0" y="444" width="172" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="172" id="8aJ-ul-kq0"/>
+                                    <constraint firstAttribute="height" constant="36" id="zXX-80-9Tn"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Play" titleAlignment="automatic"/>
+                                <connections>
+                                    <action selector="play:" destination="I4e-Kd-fLu" eventType="touchUpInside" id="Slm-LN-nWF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-rP-Qud">
+                                <rect key="frame" x="235" y="444" width="179" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="179" id="kJP-Wm-eWl"/>
+                                    <constraint firstAttribute="height" constant="36" id="vvd-74-chP"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Next" titleAlignment="automatic"/>
+                                <connections>
+                                    <action selector="next:" destination="I4e-Kd-fLu" eventType="touchUpInside" id="Sob-EG-BMk"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xJU-he-ji6">
+                                <rect key="frame" x="-8.5" y="60" width="431" height="295"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="295" id="A25-YY-ese"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="qdv-f3-2d0"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="295" id="yfJ-C5-vkC"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CmB-6a-drJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xJU-he-ji6" firstAttribute="centerX" secondItem="CmB-6a-drJ" secondAttribute="centerX" id="FP3-9i-bN4"/>
+                            <constraint firstItem="bQ6-SH-4bZ" firstAttribute="top" secondItem="xkY-1d-zSl" secondAttribute="bottom" constant="17" id="Iek-Qn-K6x"/>
+                            <constraint firstItem="xkY-1d-zSl" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" id="Q1J-MA-CsS"/>
+                            <constraint firstItem="xJU-he-ji6" firstAttribute="width" secondItem="n23-zJ-tBx" secondAttribute="width" multiplier="1.04" id="Qyf-iP-tda"/>
+                            <constraint firstItem="xkY-1d-zSl" firstAttribute="width" secondItem="CmB-6a-drJ" secondAttribute="width" id="V2s-0a-wd1"/>
+                            <constraint firstItem="xkY-1d-zSl" firstAttribute="top" secondItem="xJU-he-ji6" secondAttribute="bottom" constant="36" id="fcf-oR-dYH"/>
+                            <constraint firstItem="xJU-he-ji6" firstAttribute="width" secondItem="CmB-6a-drJ" secondAttribute="width" multiplier="1.04" id="gNc-8H-LdG"/>
+                            <constraint firstItem="xkY-1d-zSl" firstAttribute="trailing" secondItem="CmB-6a-drJ" secondAttribute="trailing" id="kWR-mD-H5w"/>
+                            <constraint firstItem="xJU-he-ji6" firstAttribute="top" secondItem="CmB-6a-drJ" secondAttribute="top" constant="16" id="ks7-7a-3CO"/>
+                            <constraint firstItem="bQ6-SH-4bZ" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" id="rc7-cC-mlO"/>
+                            <constraint firstItem="mUJ-rP-Qud" firstAttribute="top" secondItem="xkY-1d-zSl" secondAttribute="bottom" constant="17" id="rju-HE-MoU"/>
+                            <constraint firstAttribute="trailing" secondItem="mUJ-rP-Qud" secondAttribute="trailing" id="yLK-Xi-jJs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="initialBtn" destination="xkY-1d-zSl" id="zsQ-Tu-Dpq"/>
+                        <outlet property="nextBtn" destination="mUJ-rP-Qud" id="Qr2-jo-uxO"/>
+                        <outlet property="playBtn" destination="bQ6-SH-4bZ" id="fWj-DL-m0z"/>
+                        <outlet property="videoContainerView" destination="xJU-he-ji6" id="wPS-y1-Nm9"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="421-JR-dPA" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4.3478260869565224" y="93.75"/>
+            <point key="canvasLocation" x="20" y="82"/>
         </scene>
     </scenes>
     <resources>

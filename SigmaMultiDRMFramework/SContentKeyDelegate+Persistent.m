@@ -55,20 +55,43 @@
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
-    NSData *certificate = [self serverCetificate];
+    NSError* certError = nil;
+    NSData *certificate = [self getCertificateWithError:&certError];
+    if (certError) {
+        [keyRequest processContentKeyResponseError:certError];
+        return;
+    }
+    if(!certificate){
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    AVContentKeySession *strongSession = session;
     [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-        // Check validate
-        NSData *licenseData = [self requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-        NSError *err = nil;
-        NSData *persistentKey = [keyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&err];
-        if (err != nil)
-        {
-            NSLog(@"Persisten Error: %@", err);
+        if(!strongSession){
+            NSLog(@"*** Prevent request license because ContentKeySession was released");
+            return;
         }
-        // Save key
-        [self saveContentKey:persistentKey withName:assetIDString];
-        AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
-        [keyRequest processContentKeyResponse:response];
+        if (error){
+            NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
+            [keyRequest processContentKeyResponseError:error];
+            return;
+        }
+        
+        NSData *licenseData = [weakSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+        if(weakSelf && licenseData) {
+            NSError *pstError = nil;
+            NSData *persistentKey = [keyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&pstError];
+            if (pstError)
+            {
+                NSLog(@"Persisten Error: %@", pstError);
+                [keyRequest processContentKeyResponseError:pstError];
+            } else if(persistentKey){
+                [weakSelf saveContentKey:persistentKey withName:assetIDString];
+                AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
+                [keyRequest processContentKeyResponse:response];
+            }
+        }
     }];
 }
 

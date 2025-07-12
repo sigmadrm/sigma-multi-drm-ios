@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(NSDictionary *)query: (NSString *)url;
 -(void)processOnlineKey:(AVContentKeySession *)session request:(AVContentKeyRequest *)keyRequest;
--(NSData *)serverCetificate;
+-(NSData *)getCertificateWithError:(NSError **)certError;
 -(NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *) assetId keyId:(NSString *)variantId;
 @end
 
