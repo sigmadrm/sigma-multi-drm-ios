@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SContentKeyDelegate (Persistent)
 
-- (BOOL)saveContentKey:(NSData *)contentKey withName:(NSString *)contentKeyName;
-
 @end
 
 NS_ASSUME_NONNULL_END

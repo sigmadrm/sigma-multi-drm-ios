@@ -26,6 +26,16 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 
 
 @implementation SContentKeyDelegate
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _certRequestTask = nil;
+        _licenseRequestTask = nil;
+    }
+    return self;
+}
+
 #pragma AVContentKeySession Delegate
 - (void)contentKeySession:(AVContentKeySession *)session didProvideContentKeyRequest:(AVContentKeyRequest *)keyRequest
 {
@@ -74,7 +84,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     __block NSError *blockError = nil;
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    self.certRequestTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         NSInteger statusCode = httpResponse.statusCode;
         if (error) {
@@ -90,7 +100,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
         }
         dispatch_semaphore_signal(semaphore);
     }];
-    [task resume];
+    [self.certRequestTask resume];
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
     
     *certError = blockError;
@@ -199,9 +209,8 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];  // default empty license
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
+    __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         @try {
             do {
                 if (error || !data) break;
@@ -224,7 +233,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
         
         dispatch_semaphore_signal(semaphore);
     }];
-    [dataTask resume];
+    [self.licenseRequestTask resume];
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
     return result;
 }
@@ -264,6 +273,21 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     }
     else { // PRODUCTION MODE
         return [NSString stringWithFormat:@"https://license.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
+    }
+}
+
+- (void) dealloc {
+    NSLog(@"*** SContentKeyDelegate dealloc!");
+    if (self.certRequestTask && self.certRequestTask.state == NSURLSessionTaskStateRunning) {
+        NSLog(@"[Dealloc] Cancelling certificate request task");
+        [self.certRequestTask cancel];
+        self.certRequestTask = nil;
+    }
+    
+    if (self.licenseRequestTask && self.licenseRequestTask.state == NSURLSessionTaskStateRunning) {
+        NSLog(@"[Dealloc] Cancelling license request task");
+        [self.licenseRequestTask cancel];
+        self.licenseRequestTask = nil;
     }
 }
 @end

@@ -31,7 +31,6 @@ class ViewController: UIViewController {
         playBtn.isEnabled = false
         nextBtn.isEnabled = false
 
-        // Khởi tạo danh sách media
         mediaItems = [
             MediaItem(
                 manifestUrl: "https://sdrm-test.gviet.vn:9080/static/vod_production/big_bug_bunny/master.m3u8",
@@ -91,6 +90,7 @@ class ViewController: UIViewController {
     // MARK: - Play Logic
     func playCurrentIndex() {
         let item = mediaItems[currentIndex]
+        print("-----------------------------------");
         print("Manifest URL: \(item.manifestUrl)")
         print("Merchant ID: \(item.merchantId)")
         print("App ID: \(item.appId)")

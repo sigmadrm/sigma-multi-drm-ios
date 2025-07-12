@@ -55,9 +55,7 @@
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
-    
-    NSLog(@"[RequestOnlineKey] Start processing persistent key - Asset: %@ | KeyId: %@", assetIDString, keyId);
-    
+
     // Get certificate with error handling
     NSError* certError = nil;
     NSData *certificate = [self getCertificateWithError:&certError];
@@ -75,9 +73,7 @@
         [keyRequest processContentKeyResponseError:certDataError];
         return;
     }
-    
-    NSLog(@"[RequestOnlineKey] Certificate obtained - Size: %lu bytes", (unsigned long)certificate.length);
-    
+
     // Use strong references for manual reference counting
     SContentKeyDelegate *strongSelf = self;
     AVContentKeySession *strongSession = session;
@@ -86,7 +82,7 @@
     [strongKeyRequest makeStreamingContentKeyRequestDataForApp:certificate 
                                             contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] 
                                                       options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} 
-                                            completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
+                                            completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {  
         if (!strongSession) {
             NSLog(@"[RequestOnlineKey] ContentKeySession was released");
             return;
@@ -123,10 +119,10 @@
                 [strongKeyRequest processContentKeyResponseError:licenseError];
                 return;
             }
-            
             // Create persistent key from license data
             NSError *pstError = nil;
             NSData *persistentKey = [strongKeyRequest persistableContentKeyFromKeyVendorResponse:licenseData options:nil error:&pstError];
+            
             if (pstError) {
                 NSLog(@"[RequestOnlineKey] Persistent key creation error: %@", pstError.localizedDescription);
                 [strongKeyRequest processContentKeyResponseError:pstError];
@@ -141,6 +137,7 @@
                 [strongKeyRequest processContentKeyResponseError:persistentError];
                 return;
             }
+            
             // Save persistent key to disk
             NSString *contentKeyName = [strongSelf keyNameWithAssetId:assetIDString];
             BOOL saveSuccess = [strongSelf saveContentKey:persistentKey withName:contentKeyName];
@@ -152,7 +149,8 @@
                 [strongKeyRequest processContentKeyResponseError:saveError];
                 return;
             }
-
+            
+            // Create content key response
             AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:persistentKey];
             if (!response) {
                 NSLog(@"[RequestOnlineKey] Failed to create ContentKeyResponse");
@@ -162,7 +160,8 @@
                 [strongKeyRequest processContentKeyResponseError:responseError];
                 return;
             }
-
+            
+            // Process the response
             [strongKeyRequest processContentKeyResponse:response];
         } @catch(NSException *exception) {
             NSLog(@"[RequestOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
