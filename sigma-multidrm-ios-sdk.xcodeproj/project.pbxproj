@@ -10,7 +10,6 @@
 		8446841F2CE7405600D75B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446841E2CE7405600D75B4B /* AppDelegate.swift */; };
 		844684212CE7405600D75B4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684202CE7405600D75B4B /* SceneDelegate.swift */; };
 		844684232CE7405600D75B4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684222CE7405600D75B4B /* ViewController.swift */; };
-		844684262CE7405600D75B4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844684242CE7405600D75B4B /* Main.storyboard */; };
 		844684282CE7405900D75B4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844684272CE7405900D75B4B /* Assets.xcassets */; };
 		8446842B2CE7405900D75B4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844684292CE7405900D75B4B /* LaunchScreen.storyboard */; };
 		844684362CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844684352CE7405900D75B4B /* sigma_multidrm_ios_sdkTests.swift */; };
@@ -26,6 +25,7 @@
 		844684B32CE7492B00D75B4B /* SContentKeyDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */; };
 		844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845D2CE7409700D75B4B /* SContentKeySession.m */; };
 		844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684652CE740A900D75B4B /* SigmaMultiDRM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		846698F02E2106730041CD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844684242CE7405600D75B4B /* Main.storyboard */; };
 		84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
 /* End PBXBuildFile section */
 
@@ -230,8 +230,8 @@
 				8446845D2CE7409700D75B4B /* SContentKeySession.m */,
 				844684652CE740A900D75B4B /* SigmaMultiDRM.h */,
 				8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */,
-				844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */,
 				844684972CE7491700D75B4B /* SigmaMultiDRMFramework.docc */,
+				844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */,
 			);
 			path = SigmaMultiDRMFramework;
 			sourceTree = "<group>";
@@ -413,7 +413,7 @@
 			files = (
 				8446842B2CE7405900D75B4B /* LaunchScreen.storyboard in Resources */,
 				844684282CE7405900D75B4B /* Assets.xcassets in Resources */,
-				844684262CE7405600D75B4B /* Main.storyboard in Resources */,
+				846698F02E2106730041CD76 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

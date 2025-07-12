@@ -7,11 +7,35 @@
 //
 
 #import "SContentKeyDelegate.h"
+
+// Error Domain
+NSString *const kSigmaMultiDRMErrorDomain = @"com.sigma.multidrm";
+
+// Error Codes
+NSInteger const kSigmaMultiDRMErrorCertificateNil = -1;
+NSInteger const kSigmaMultiDRMErrorSPCNil = -2;
+NSInteger const kSigmaMultiDRMErrorLicenseNil = -3;
+NSInteger const kSigmaMultiDRMErrorPersistentKeyNil = -4;
+NSInteger const kSigmaMultiDRMErrorSaveFailed = -5;
+NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
+NSInteger const kSigmaMultiDRMErrorException = -7;
+
 @interface SContentKeyDelegate()
+
 @end
 
 
 @implementation SContentKeyDelegate
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _certRequestTask = nil;
+        _licenseRequestTask = nil;
+    }
+    return self;
+}
+
 #pragma AVContentKeySession Delegate
 - (void)contentKeySession:(AVContentKeySession *)session didProvideContentKeyRequest:(AVContentKeyRequest *)keyRequest
 {
@@ -23,7 +47,7 @@
 }
 - (void)contentKeySession:(AVContentKeySession *)session contentKeyRequest:(AVContentKeyRequest *)keyRequest didFailWithError:(NSError *)err
 {
-    NSLog(@"contentKeySession: %@", err);
+    NSLog(@"ContentKeySession with error: %@", err.localizedDescription);
 }
 - (BOOL)contentKeySession:(AVContentKeySession *)session shouldRetryContentKeyRequest:(AVContentKeyRequest *)keyRequest reason:(AVContentKeyRequestRetryReason)retryReason
 {
@@ -53,17 +77,33 @@
 }
 
 /// Deprecated: This method blocks the thread and does not handle errors.
--(NSData *)serverCetificate
+-(NSData *)getCertificateWithError:(NSError **)certError
 {
     NSString *url = [self certUrl];
     __block NSData *result = nil;
+    __block NSError *blockError = nil;
+    
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        result = data;
+    self.certRequestTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSInteger statusCode = httpResponse.statusCode;
+        if (error) {
+            NSLog(@"[Cert Request Error] URL: %@ | Network Error: %@", url, error.localizedDescription);
+            blockError = error;
+        } else if (!data || statusCode != 200) {
+            NSLog(@"[Cert Request Error] URL: %@ | Status Code: %ld | Error: Data is nil or invalid status code", url, (long)statusCode);
+            blockError = [NSError errorWithDomain:@"com.sigma.cert"
+                                             code:statusCode
+                                         userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Certificate request failed with status code %ld", (long)statusCode]}];
+        } else {
+            result = data;
+        }
         dispatch_semaphore_signal(semaphore);
     }];
-    [task resume];
+    [self.certRequestTask resume];
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
+    
+    *certError = blockError;
     return result;
 }
 
@@ -73,42 +113,86 @@
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     NSString *assetIDString = [queries objectForKey:@"assetId"];
     NSString *keyId = [queries objectForKey:@"keyId"];
-    NSString *url = [self certUrl];
     
-    __weak typeof(self) weakSelf = self;
+    // Get certificate with error handling
+    NSError *certError = nil;
+    NSData* certificate = [self getCertificateWithError:&certError];
+    if (certError) {
+        NSLog(@"[ProcessOnlineKey] Certificate error: %@", certError.localizedDescription);
+        [keyRequest processContentKeyResponseError:certError];
+        return;
+    }
     
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    if (!certificate || certificate.length == 0) {
+        NSLog(@"[ProcessOnlineKey] Certificate is nil or empty");
+        NSError *certDataError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                      code:kSigmaMultiDRMErrorCertificateNil 
+                                                  userInfo:@{NSLocalizedDescriptionKey: @"Certificate data is nil or empty"}];
+        [keyRequest processContentKeyResponseError:certDataError];
+        return;
+    }
+    // Use strong references for manual reference counting
+    SContentKeyDelegate *strongSelf = self;
+    AVContentKeySession *strongSession = session;
+    AVContentKeyRequest *strongKeyRequest = keyRequest;
+    [strongKeyRequest makeStreamingContentKeyRequestDataForApp:certificate 
+                                            contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] 
+                                                      options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} 
+                                            completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
+        if (!strongSession) {
+            NSLog(@"[ProcessOnlineKey] ContentKeySession was released");
+            return;
+        }
+        
+        if (!strongKeyRequest) {
+            NSLog(@"[ProcessOnlineKey] ContentKeyRequest was released");
+            return;
+        }
+        
         if (error) {
-            NSLog(@"[Cert Request Error] URL: %@ | Error: %@", url, error.localizedDescription);
-            [keyRequest processContentKeyResponseError:error];
+            NSLog(@"[ProcessOnlineKey] SPC Request Error: %@", error.localizedDescription);
+            [strongKeyRequest processContentKeyResponseError:error];
             return;
         }
-
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        NSInteger statusCode = httpResponse.statusCode;
-        if (!data || statusCode != 200) {
-            NSLog(@"[Cert Request Error] URL: %@ | Status Code: %ld | Error: Data is nil or invalid status code", url, (long)statusCode);
-            NSError *dataError = [NSError errorWithDomain:@"com.sigma.cert"
-                                                     code:statusCode
-                                                 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Certificate request failed with status code %ld", (long)statusCode]}];
-            [keyRequest processContentKeyResponseError:dataError];
+        
+        if (!contentKeyRequestData || contentKeyRequestData.length == 0) {
+            NSLog(@"[ProcessOnlineKey] SPC data is nil or empty");
+            NSError *spcError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                     code:kSigmaMultiDRMErrorSPCNil 
+                                                 userInfo:@{NSLocalizedDescriptionKey: @"SPC data is nil or empty"}];
+            [strongKeyRequest processContentKeyResponseError:spcError];
             return;
         }
-
-        NSData* certificate = data;
-        [keyRequest makeStreamingContentKeyRequestDataForApp:certificate contentIdentifier:[NSData dataWithBytes:[assetIDString UTF8String] length:[assetIDString length]] options:@{AVContentKeyRequestProtocolVersionsKey: @[[NSNumber numberWithInt:1]]} completionHandler:^(NSData * _Nullable contentKeyRequestData, NSError * _Nullable error) {
-            if (error){
-                NSLog(@"[SPC Request Error] Failed to generate SPC data: %@", error.localizedDescription);
-                [keyRequest processContentKeyResponseError:error];
-            } else {
-                NSData *licenseData = [weakSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
-                AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
-                [keyRequest processContentKeyResponse:response];
-            }
-        }];
-    }];
     
-    [task resume];
+        @try {
+            // Request license from server
+            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+            if (!licenseData || licenseData.length == 0) {
+                NSLog(@"[ProcessOnlineKey] License data is nil or empty");
+                NSError *licenseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                             code:kSigmaMultiDRMErrorLicenseNil
+                                                         userInfo:@{NSLocalizedDescriptionKey: @"License data is nil or empty"}];
+                [strongKeyRequest processContentKeyResponseError:licenseError];
+                return;
+            }
+            
+            AVContentKeyResponse *response = [AVContentKeyResponse contentKeyResponseWithFairPlayStreamingKeyResponseData:licenseData];
+            if (!response) {
+                NSError *responseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                              code:kSigmaMultiDRMErrorResponseCreationFailed
+                                                          userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ContentKeyResponse"}];
+                [strongKeyRequest processContentKeyResponseError:responseError];
+                return;
+            }
+            [strongKeyRequest processContentKeyResponse:response];
+        } @catch(NSException *exception) {
+            NSLog(@"[ProcessOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
+            NSError *exceptionError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
+                                                           code:kSigmaMultiDRMErrorException 
+                                                       userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Exception: %@", exception.reason]}];
+            [strongKeyRequest processContentKeyResponseError:exceptionError];
+        }
+    }];
 }
 -(NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *) assetId keyId:(NSString *)keyId
 {
@@ -125,19 +209,20 @@
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];  // default empty license
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
+    __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         @try {
             do {
                 if (error || !data) break;
                 
                 NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
-                NSLog(@"NSData: %@", licenseObj);
                 if(!licenseObj) break;
                 
                 NSString *license = [licenseObj objectForKey:@"license"];
-                if(!license) break;
+                if(!license) {
+                    NSLog(@"License request error: %@", licenseObj);
+                    break;
+                }
                 
                 result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
             }
@@ -148,7 +233,7 @@
         
         dispatch_semaphore_signal(semaphore);
     }];
-    [dataTask resume];
+    [self.licenseRequestTask resume];
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
     return result;
 }
@@ -188,6 +273,21 @@
     }
     else { // PRODUCTION MODE
         return [NSString stringWithFormat:@"https://license.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
+    }
+}
+
+- (void) dealloc {
+    NSLog(@"*** SContentKeyDelegate dealloc!");
+    if (self.certRequestTask && self.certRequestTask.state == NSURLSessionTaskStateRunning) {
+        NSLog(@"[Dealloc] Cancelling certificate request task");
+        [self.certRequestTask cancel];
+        self.certRequestTask = nil;
+    }
+    
+    if (self.licenseRequestTask && self.licenseRequestTask.state == NSURLSessionTaskStateRunning) {
+        NSLog(@"[Dealloc] Cancelling license request task");
+        [self.licenseRequestTask cancel];
+        self.licenseRequestTask = nil;
     }
 }
 @end

@@ -13,9 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SigmaMultiDRM : NSObject
-{
-    
-}
 +(SigmaMultiDRM *)getInstance;
 -(AVURLAsset *)assetWithUrl:(NSString *)url;
 -(void)setUserId:(NSString *)userId;

@@ -10,13 +10,12 @@
 #import "SContentKeySession.h"
 #import "SContentKeyDelegate.h"
 @interface SigmaMultiDRM()
-{
-    BOOL _debug;
-}
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *sessionId;
 @property (nonatomic, strong) NSString *merchant;
 @property (nonatomic, strong) NSString *appId;
+@property (nonatomic, assign) BOOL debugMode;
+
 @property (nonatomic, strong) SContentKeySession *contentKey;
 @property (nonatomic, strong) SContentKeyDelegate *contentKeyDelegate;
 
@@ -36,7 +35,7 @@ static SigmaMultiDRM *gSigmaSDK = nil;
     if (self){
         _merchant = [[NSBundle mainBundle].infoDictionary objectForKey:@"merchant"];
         _appId = [[NSBundle mainBundle].infoDictionary objectForKey:@"appId"];
-        _debug = [[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] != nil ? [[[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] boolValue] : false;
+        _debugMode = [[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] != nil ? [[[NSBundle mainBundle].infoDictionary objectForKey:@"sigma_debug"] boolValue] : false;
     }
     
     return self;
@@ -47,15 +46,19 @@ static SigmaMultiDRM *gSigmaSDK = nil;
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
     SContentKeyDelegate *contentKeyDelegate = [[SContentKeyDelegate alloc] init];
     SContentKeySession *contentKey = [[SContentKeySession alloc] init];
+    
     [contentKeyDelegate setUserId:_userId];
     [contentKeyDelegate setSessionId:_sessionId];
     [contentKeyDelegate setAppId:_appId];
     [contentKeyDelegate setMerchant:_merchant];
-    [contentKeyDelegate setDebugMode:_debug];
+    [contentKeyDelegate setDebugMode:_debugMode];
+    
     [contentKey addDelegate:contentKeyDelegate];
     [contentKey addAsset:asset];
+    
     self.contentKeyDelegate = contentKeyDelegate;
     self.contentKey = contentKey;
+    
     return asset;
 }
 -(void)setUserId:(NSString *)userId
@@ -76,8 +79,8 @@ static SigmaMultiDRM *gSigmaSDK = nil;
 {
     _appId = appId;
 }
--(void)setDebugMode:(BOOL)debug
+-(void)setDebugMode:(BOOL)debugMode
 {
-    _debug = debug;
+    _debugMode = debugMode;
 }
 @end

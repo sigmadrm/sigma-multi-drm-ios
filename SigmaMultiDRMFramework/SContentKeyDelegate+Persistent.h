@@ -10,7 +10,7 @@
 #import "SContentKeyDelegate.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SContentKeyDelegate(Persistent)
+@interface SContentKeyDelegate (Persistent)
 
 @end
 
