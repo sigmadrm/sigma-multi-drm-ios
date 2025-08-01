@@ -2,7 +2,7 @@ import UIKit
 import AVKit
 import SigmaMultiDRMFramework
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SigmaMultiDRMDelegate {
     // MARK: - UI Outlets
     @IBOutlet weak var videoContainerView: UIView!
     @IBOutlet weak var initialBtn: UIButton!
@@ -72,6 +72,8 @@ class ViewController: UIViewController {
 
     // MARK: - Player Setup
     func initializePlayer() {
+        SigmaMultiDRM.getInstance().delegate = self;
+        
         player = AVPlayer()
         initializeWithAVPlayerViewController()
     }
@@ -108,5 +110,76 @@ class ViewController: UIViewController {
         let currentItem = AVPlayerItem(asset: asset)
         player.replaceCurrentItem(with: currentItem)
         player.play()
+    }
+    
+    
+  
+    // MARK: - SigmaMultiDRMDelegate Methods
+    
+    /**
+     * Called when license request completes (success or failure)
+     */
+    func didCompleteLicenseRequest(forAssetUrl assetUrl: String, license licenseData: Data?, response: URLResponse?, error: Error?) {
+        // Log HTTP response information
+        if let httpResponse = response as? HTTPURLResponse {
+            print("🌐 HTTP Response:")
+            print("   Status Code: \(httpResponse.statusCode)")
+        }
+        
+        if error != nil {
+            print("❌ License request failed")
+            print("   Asset URL: \(assetUrl)")
+            print("   Error: \(String(describing: error?.localizedDescription))")
+            
+            // Handle license request failure
+            DispatchQueue.main.async {
+                // Show error to user
+                self.showErrorAlert(error?.localizedDescription ?? "Request License Error")
+                self.playBtn.isEnabled = false
+            }
+        }
+        
+        if let licenseData = licenseData {
+            print("✅ License received successfully")
+            print("   Asset URL: \(assetUrl)")
+            print("   License data size: \(licenseData.count) bytes")
+            
+            // Convert license data to JSON string
+            let licenseJsonString = self.convertDataToJsonString(licenseData)
+            print("   License JSON: \(licenseJsonString)")
+        }
+    }
+    
+    // MARK: - Helper Methods
+    
+    /**
+     * Convert Data to JSON string for logging
+     */
+    private func convertDataToJsonString(_ data: Data) -> String {
+        do {
+            // Try to parse as JSON first
+            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+                return String(data: jsonData, encoding: .utf8) ?? "Unable to convert to string"
+            }
+        } catch {
+            // If not valid JSON, try as plain string
+            if let stringData = String(data: data, encoding: .utf8) {
+                return stringData
+            }
+        }
+        
+        // If all else fails, return base64 representation
+        return "Base64: \(data.base64EncodedString())"
+    }
+    
+    
+    // MARK: - Error Handling
+    
+    private func showErrorAlert(_ message: String) {
+        let alert = UIAlertController(title: "License Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }

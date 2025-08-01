@@ -26,6 +26,7 @@
 		844684B42CE7492B00D75B4B /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845D2CE7409700D75B4B /* SContentKeySession.m */; };
 		844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684652CE740A900D75B4B /* SigmaMultiDRM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		846698F02E2106730041CD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844684242CE7405600D75B4B /* Main.storyboard */; };
+		8488C7CE2E3C6F8300BEB97C /* SigmaMultiDRMDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8488C7CD2E3C6F8300BEB97C /* SigmaMultiDRMDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84DB3CAC2D082762004D948A /* SigmaMultiDRMFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844684942CE7491700D75B4B /* SigmaMultiDRMFramework.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		8446849D2CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SigmaMultiDRMFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		844684A42CE7491700D75B4B /* SigmaMultiDRMFrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SigmaMultiDRMFrameworkTests.m; sourceTree = "<group>"; };
 		844684C72CEACEFF00D75B4B /* sigma-multidrm-spm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "sigma-multidrm-spm"; path = "/Users/admin/Library/Developer/Xcode/DerivedData/sigma-multidrm-ios-sdk-clfkvospckgadxdgvyyigpfljqtp/SourcePackages/checkouts/sigma-multidrm-spm"; sourceTree = "<absolute>"; };
+		8488C7CD2E3C6F8300BEB97C /* SigmaMultiDRMDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigmaMultiDRMDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 				8446845D2CE7409700D75B4B /* SContentKeySession.m */,
 				844684652CE740A900D75B4B /* SigmaMultiDRM.h */,
 				8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */,
+				8488C7CD2E3C6F8300BEB97C /* SigmaMultiDRMDelegate.h */,
 				844684972CE7491700D75B4B /* SigmaMultiDRMFramework.docc */,
 				844684962CE7491700D75B4B /* SigmaMultiDRMFramework.h */,
 			);
@@ -251,6 +254,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8488C7CE2E3C6F8300BEB97C /* SigmaMultiDRMDelegate.h in Headers */,
 				844684B72CE7500700D75B4B /* SigmaMultiDRM.h in Headers */,
 				844684A62CE7491800D75B4B /* SigmaMultiDRMFramework.h in Headers */,
 			);

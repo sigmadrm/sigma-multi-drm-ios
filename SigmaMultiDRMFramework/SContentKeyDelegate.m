@@ -7,6 +7,7 @@
 //
 
 #import "SContentKeyDelegate.h"
+#import "SigmaMultiDRMDelegate.h"
 
 // Error Domain
 NSString *const kSigmaMultiDRMErrorDomain = @"com.sigma.multidrm";
@@ -210,17 +211,33 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    __block NSError *licenseError = nil;
+
+    __weak typeof(self) weakSelf = self;
     self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         @try {
             do {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!weakSelf || !weakSelf.delegate) return;
+                    
+                    // Cast to protocol to ensure method signature is recognized
+                    id<SigmaMultiDRMDelegate> delegate = weakSelf.delegate;
+                    if (delegate && [delegate respondsToSelector:@selector(didCompleteLicenseRequestForAssetUrl:licenseData:response:error:)]) {
+                        [delegate didCompleteLicenseRequestForAssetUrl:weakSelf.assetUrl licenseData:data response:response error:error];
+                    }
+                });
+                
                 if (error || !data) break;
                 
                 NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
-                if(!licenseObj) break;
+                if(!licenseObj) {
+                    NSLog(@"License response is empty: %@", licenseObj);
+                    break;
+                }
                 
                 NSString *license = [licenseObj objectForKey:@"license"];
                 if(!license) {
-                    NSLog(@"License request error: %@", licenseObj);
+                    NSLog(@"License is empty: %@", licenseObj);
                     break;
                 }
                 
@@ -277,15 +294,12 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 }
 
 - (void) dealloc {
-    NSLog(@"*** SContentKeyDelegate dealloc!");
     if (self.certRequestTask && self.certRequestTask.state == NSURLSessionTaskStateRunning) {
-        NSLog(@"[Dealloc] Cancelling certificate request task");
         [self.certRequestTask cancel];
         self.certRequestTask = nil;
     }
     
     if (self.licenseRequestTask && self.licenseRequestTask.state == NSURLSessionTaskStateRunning) {
-        NSLog(@"[Dealloc] Cancelling license request task");
         [self.licenseRequestTask cancel];
         self.licenseRequestTask = nil;
     }

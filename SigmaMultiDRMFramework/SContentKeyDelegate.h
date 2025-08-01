@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+#import "SigmaMultiDRMDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,11 +24,15 @@ extern NSInteger const kSigmaMultiDRMErrorResponseCreationFailed;
 extern NSInteger const kSigmaMultiDRMErrorException;
 
 @interface SContentKeyDelegate : NSObject <AVContentKeySessionDelegate>
+
+@property(nonatomic, assign) id<SigmaMultiDRMDelegate> delegate;
+
 @property(nonatomic, retain) NSString *userId;
 @property(nonatomic, retain) NSString *sessionId;
 @property(nonatomic, retain) NSString *merchant;
 @property(nonatomic, retain) NSString *appId;
 @property(nonatomic, assign) BOOL debugMode;
+@property(nonatomic, retain) NSString *assetUrl;
 
 @property(nonatomic, strong, nullable) NSURLSessionTask *certRequestTask;
 @property(nonatomic, strong, nullable) NSURLSessionTask *licenseRequestTask;
