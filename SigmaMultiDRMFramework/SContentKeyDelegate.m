@@ -21,9 +21,23 @@ NSInteger const kSigmaMultiDRMErrorSaveFailed = -5;
 NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
 NSInteger const kSigmaMultiDRMErrorException = -7;
 
+/// Seconds before JSON `expireTime` to invoke `renewExpiringResponseDataForContentKeyRequest:`.
+static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 5.0;
+
 @interface SContentKeyDelegate()
 @property (atomic, copy, nullable) dispatch_block_t pendingLicenseRenewalBlock;
 @end
+
+/// FairPlay app certificate is static per `certUrl`; keep for process lifetime (no eviction).
+static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
+{
+    static NSMutableDictionary<NSString *, NSData *> *store;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        store = [NSMutableDictionary dictionary];
+    });
+    return store;
+}
 
 
 @implementation SContentKeyDelegate
@@ -84,6 +98,27 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 -(NSData *)getCertificateWithError:(NSError **)certError
 {
     NSString *url = [self certUrl];
+    if (url.length == 0) {
+        if (certError) {
+            *certError = [NSError errorWithDomain:@"com.sigma.cert"
+                                             code:-2
+                                         userInfo:@{NSLocalizedDescriptionKey: @"Certificate URL is empty"}];
+        }
+        return nil;
+    }
+
+    NSData *cached = nil;
+    @synchronized (SigmaCertificateStore()) {
+        cached = [SigmaCertificateStore() objectForKey:url];
+    }
+    if (cached.length > 0) {
+        NSLog(@"[Cert] Using in-memory FairPlay certificate (%lu bytes)", (unsigned long)cached.length);
+        if (certError) {
+            *certError = nil;
+        }
+        return cached;
+    }
+
     __block NSData *result = nil;
     __block NSError *blockError = nil;
     
@@ -101,13 +136,21 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
                                          userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Certificate request failed with status code %ld", (long)statusCode]}];
         } else {
             result = data;
+            if (data.length > 0) {
+                @synchronized (SigmaCertificateStore()) {
+                    [SigmaCertificateStore() setObject:data forKey:url];
+                }
+                NSLog(@"[Cert] Fetched FairPlay certificate (%lu bytes); stored for app lifetime", (unsigned long)data.length);
+            }
         }
         dispatch_semaphore_signal(semaphore);
     }];
     [self.certRequestTask resume];
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
     
-    *certError = blockError;
+    if (certError) {
+        *certError = blockError;
+    }
     return result;
 }
 
@@ -240,7 +283,6 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
                 
                 NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
                 if(!licenseObj) {
-                    NSLog(@"License response is empty: %@", licenseObj);
                     break;
                 }
 
@@ -331,8 +373,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
         return;
     }
     dispatch_queue_t q = self.drmKeyQueue ?: dispatch_get_main_queue();
-    static const NSTimeInterval kLeadSeconds = 5.0;
-    NSTimeInterval delay = (NSTimeInterval)leaseSeconds - kLeadSeconds;
+    NSTimeInterval delay = (NSTimeInterval)leaseSeconds - kSigmaFairPlayLicenseRenewLeadSeconds;
     if (delay < 0.5) {
         delay = MAX(0.2, (NSTimeInterval)leaseSeconds * 0.5);
     }
@@ -358,7 +399,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     });
     self.pendingLicenseRenewalBlock = work;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), q, work);
-    NSLog(@"[SigmaMultiDRM] Scheduled license renewal in %.1fs (expireTime=%lds, lead=%.0fs).", delay, (long)leaseSeconds, (double)kLeadSeconds);
+    NSLog(@"[SigmaMultiDRM] Scheduled license renewal in %.1fs (expireTime=%lds, lead=%.0fs).", delay, (long)leaseSeconds, (double)kSigmaFairPlayLicenseRenewLeadSeconds);
 }
 
 - (void) dealloc {
