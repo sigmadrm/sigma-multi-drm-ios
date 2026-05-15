@@ -110,7 +110,8 @@
     
         @try {
             // Request license from server
-            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+            NSInteger leaseSecondsHint = -1;
+            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId leaseSeconds:&leaseSecondsHint];
             if (!licenseData || licenseData.length == 0) {
                 NSLog(@"[RequestOnlineKey] License data is nil or empty");
                 NSError *licenseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
@@ -163,6 +164,7 @@
             
             // Process the response
             [strongKeyRequest processContentKeyResponse:response];
+            [strongSelf scheduleLicenseRenewalAfterSeconds:leaseSecondsHint session:strongSession keyRequest:strongKeyRequest];
         } @catch(NSException *exception) {
             NSLog(@"[RequestOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
             NSError *exceptionError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 

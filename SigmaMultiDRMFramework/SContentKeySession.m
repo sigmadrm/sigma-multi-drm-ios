@@ -21,7 +21,8 @@
     self = [super init];
     if (self){
 #if TARGET_OS_SIMULATOR
-    NSLog(@"FairPlay Streaming is not supported on simulators.");
+        NSLog(@"FairPlay Streaming is not supported on simulators.");
+        _keyQueue = dispatch_queue_create("com.sigma.fairplay.sim", DISPATCH_QUEUE_SERIAL);
 #else
     if (@available(iOS 11.0, *)) {
         _sessionKey = [AVContentKeySession contentKeySessionWithKeySystem:AVContentKeySystemFairPlayStreaming];
@@ -31,21 +32,41 @@
         NSURL *documentsURL = [paths lastObject];
         _sessionKey = [AVContentKeySession contentKeySessionWithKeySystem:AVContentKeySystemFairPlayStreaming storageDirectoryAtURL:documentsURL];
     }
-    _keyQueue = dispatch_queue_create("com.sigma.fairplay", nil);
+    _keyQueue = dispatch_queue_create("com.sigma.fairplay", DISPATCH_QUEUE_SERIAL);
 #endif
     }
     return self;
 }
--(void)addAsset:(AVURLAsset *)asset
-{
-    [_sessionKey addContentKeyRecipient:asset];
-}
 -(void)addDelegate:(id<AVContentKeySessionDelegate>) delegate
 {
+    if (!_sessionKey) {
+        return;
+    }
     [_sessionKey setDelegate:delegate queue:_keyQueue];
+}
+-(void)addAsset:(AVURLAsset *)asset
+{
+    if (!_sessionKey) {
+        return;
+    }
+    [_sessionKey addContentKeyRecipient:asset];
 }
 -(void)removeAsset:(AVURLAsset *)asset
 {
+    if (!_sessionKey) {
+        return;
+    }
     [_sessionKey removeContentKeyRecipient:asset];
 }
+
+- (nullable dispatch_queue_t)drmKeyQueue
+{
+    return _keyQueue;
+}
+
+- (nullable AVContentKeySession *)avContentKeySession
+{
+    return _sessionKey;
+}
+
 @end

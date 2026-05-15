@@ -33,6 +33,8 @@ extern NSInteger const kSigmaMultiDRMErrorException;
 @property(nonatomic, retain) NSString *appId;
 @property(nonatomic, assign) BOOL debugMode;
 @property(nonatomic, retain) NSString *assetUrl;
+/// Same queue as `AVContentKeySession` delegate; used to schedule `renewExpiringResponseDataForContentKeyRequest:`.
+@property (atomic, nullable) dispatch_queue_t drmKeyQueue;
 
 @property(nonatomic, strong, nullable) NSURLSessionTask *certRequestTask;
 @property(nonatomic, strong, nullable) NSURLSessionTask *licenseRequestTask;
@@ -40,7 +42,12 @@ extern NSInteger const kSigmaMultiDRMErrorException;
 - (NSDictionary *)query:(NSString *)url;
 - (void)processOnlineKey:(AVContentKeySession *)session request:(AVContentKeyRequest *)keyRequest;
 - (NSData *)getCertificateWithError:(NSError **)certError;
-- (NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *)assetId keyId:(NSString *)variantId;
+- (NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *)assetId keyId:(NSString *)variantId leaseSeconds:(NSInteger * _Nullable)outLeaseSeconds;
+
+/// Cancels a pending `renewExpiringResponseDataForContentKeyRequest:` scheduled from JSON `expireTime`.
+- (void)cancelScheduledLicenseRenewal;
+/// Schedules proactive renewal using `-[AVContentKeySession renewExpiringResponseDataForContentKeyRequest:]`.
+- (void)scheduleLicenseRenewalAfterSeconds:(NSInteger)leaseSeconds session:(AVContentKeySession *)session keyRequest:(AVContentKeyRequest *)keyRequest;
 @end
 
 NS_ASSUME_NONNULL_END

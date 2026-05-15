@@ -22,7 +22,7 @@ NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
 NSInteger const kSigmaMultiDRMErrorException = -7;
 
 @interface SContentKeyDelegate()
-
+@property (atomic, copy, nullable) dispatch_block_t pendingLicenseRenewalBlock;
 @end
 
 
@@ -49,6 +49,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 - (void)contentKeySession:(AVContentKeySession *)session contentKeyRequest:(AVContentKeyRequest *)keyRequest didFailWithError:(NSError *)err
 {
     NSLog(@"ContentKeySession with error: %@", err.localizedDescription);
+    [self cancelScheduledLicenseRenewal];
 }
 - (BOOL)contentKeySession:(AVContentKeySession *)session shouldRetryContentKeyRequest:(AVContentKeyRequest *)keyRequest reason:(AVContentKeyRequestRetryReason)retryReason
 {
@@ -73,6 +74,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 /// Implement
 -(void)handleContentKeyRequest:(AVContentKeySession *)session request:(AVContentKeyRequest *)keyRequest
 {
+    [self cancelScheduledLicenseRenewal];
     NSString *contentKeyIdentifierString = keyRequest.identifier;
     NSDictionary *queries = [self query:contentKeyIdentifierString];
     [self processOnlineKey:session request:keyRequest];
@@ -168,7 +170,8 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     
         @try {
             // Request license from server
-            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId];
+            NSInteger leaseSecondsHint = -1;
+            NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId leaseSeconds:&leaseSecondsHint];
             if (!licenseData || licenseData.length == 0) {
                 NSLog(@"[ProcessOnlineKey] License data is nil or empty");
                 NSError *licenseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
@@ -187,6 +190,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
                 return;
             }
             [strongKeyRequest processContentKeyResponse:response];
+            [strongSelf scheduleLicenseRenewalAfterSeconds:leaseSecondsHint session:strongSession keyRequest:strongKeyRequest];
         } @catch(NSException *exception) {
             NSLog(@"[ProcessOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
             NSError *exceptionError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
@@ -196,8 +200,11 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
         }
     }];
 }
--(NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *) assetId keyId:(NSString *)keyId
+-(NSData *)requestKeyFromServer:(NSData *)spcData forAssetId:(NSString *) assetId keyId:(NSString *)keyId leaseSeconds:(NSInteger *)outLeaseSeconds
 {
+    if (outLeaseSeconds) {
+        *outLeaseSeconds = -1;
+    }
     NSString *url = [self licenseUrl:assetId keyId:keyId];
     NSCharacterSet *queryCharacter = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSMutableCharacterSet *allowUrlCharacter = [NSMutableCharacterSet characterSetWithBitmapRepresentation:[queryCharacter bitmapRepresentation]];
@@ -213,6 +220,7 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];
     __block NSError *licenseError = nil;
+    __block NSInteger leaseParsed = -1;
 
     __weak typeof(self) weakSelf = self;
     self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -235,6 +243,13 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
                     NSLog(@"License response is empty: %@", licenseObj);
                     break;
                 }
+
+                id expiryVal = licenseObj[@"expireTime"] ?: licenseObj[@"expire_time"] ?: licenseObj[@"expiredTime"];
+                if ([expiryVal isKindOfClass:[NSNumber class]]) {
+                    leaseParsed = [(NSNumber *)expiryVal longValue];
+                } else if ([expiryVal isKindOfClass:[NSString class]]) {
+                    leaseParsed = [(NSString *)expiryVal integerValue];
+                }
                 
                 NSString *license = [licenseObj objectForKey:@"license"];
                 if(!license) {
@@ -253,6 +268,9 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     }];
     [self.licenseRequestTask resume];
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
+    if (outLeaseSeconds) {
+        *outLeaseSeconds = leaseParsed;
+    }
     return result;
 }
 -(NSDictionary *)query: (NSString *)url
@@ -294,7 +312,57 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
     }
 }
 
+- (void)cancelScheduledLicenseRenewal
+{
+    dispatch_block_t block = self.pendingLicenseRenewalBlock;
+    if (block) {
+        dispatch_block_cancel(block);
+        self.pendingLicenseRenewalBlock = nil;
+    }
+}
+
+- (void)scheduleLicenseRenewalAfterSeconds:(NSInteger)leaseSeconds session:(AVContentKeySession *)session keyRequest:(AVContentKeyRequest *)keyRequest
+{
+    [self cancelScheduledLicenseRenewal];
+    if (leaseSeconds <= 0 || !session || !keyRequest) {
+        if (leaseSeconds <= 0) {
+            NSLog(@"[SigmaMultiDRM] No license renewal schedule (missing or non-positive expireTime from JSON).");
+        }
+        return;
+    }
+    dispatch_queue_t q = self.drmKeyQueue ?: dispatch_get_main_queue();
+    static const NSTimeInterval kLeadSeconds = 5.0;
+    NSTimeInterval delay = (NSTimeInterval)leaseSeconds - kLeadSeconds;
+    if (delay < 0.5) {
+        delay = MAX(0.2, (NSTimeInterval)leaseSeconds * 0.5);
+    }
+    __weak typeof(self) weakSelf = self;
+    AVContentKeySession *sess = session;
+    AVContentKeyRequest *req = keyRequest;
+    dispatch_block_t work = dispatch_block_create(0, ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) {
+            return;
+        }
+        @try {
+            if (@available(iOS 10.3, *)) {
+                [sess renewExpiringResponseDataForContentKeyRequest:req];
+                NSLog(@"[SigmaMultiDRM] Called renewExpiringResponseDataForContentKeyRequest (lease hint %lds).", (long)leaseSeconds);
+            }
+        } @catch (NSException *ex) {
+            NSLog(@"[SigmaMultiDRM] renewExpiringResponseDataForContentKeyRequest exception: %@", ex.reason);
+        }
+        if (strongSelf.pendingLicenseRenewalBlock == work) {
+            strongSelf.pendingLicenseRenewalBlock = nil;
+        }
+    });
+    self.pendingLicenseRenewalBlock = work;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), q, work);
+    NSLog(@"[SigmaMultiDRM] Scheduled license renewal in %.1fs (expireTime=%lds, lead=%.0fs).", delay, (long)leaseSeconds, (double)kLeadSeconds);
+}
+
 - (void) dealloc {
+    [self cancelScheduledLicenseRenewal];
     if (self.certRequestTask && self.certRequestTask.state == NSURLSessionTaskStateRunning) {
         [self.certRequestTask cancel];
         self.certRequestTask = nil;

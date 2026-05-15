@@ -56,6 +56,7 @@ static SigmaMultiDRM *gSigmaSDK = nil;
     
     // Set the delegate to forward license request callbacks
     contentKeyDelegate.delegate = self.delegate;
+    contentKeyDelegate.drmKeyQueue = contentKey.drmKeyQueue;
     
     [contentKey addDelegate:contentKeyDelegate];
     [contentKey addAsset:asset];
