@@ -52,9 +52,10 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 }
 - (BOOL)contentKeySession:(AVContentKeySession *)session shouldRetryContentKeyRequest:(AVContentKeyRequest *)keyRequest reason:(AVContentKeyRequestRetryReason)retryReason
 {
-    return retryReason == AVContentKeyRequestRetryReasonTimedOut ||
+    BOOL ret = retryReason == AVContentKeyRequestRetryReasonTimedOut ||
         retryReason == AVContentKeyRequestRetryReasonReceivedResponseWithExpiredLease ||
         retryReason == AVContentKeyRequestRetryReasonReceivedObsoleteContentKey;
+    return ret;
 }
 - (void)contentKeySession:(AVContentKeySession *)session contentKeyRequestDidSucceed:(AVContentKeyRequest *)keyRequest
 {
@@ -62,11 +63,11 @@ NSInteger const kSigmaMultiDRMErrorException = -7;
 }
 - (void)contentKeySessionContentProtectionSessionIdentifierDidChange:(AVContentKeySession *)session
 {
-
+    
 }
 - (void)contentKeySessionDidGenerateExpiredSessionReport:(AVContentKeySession *)session
 {
-
+    
 }
 
 /// Implement

@@ -5,6 +5,7 @@ import SigmaMultiDRMFramework
 class ViewController: UIViewController, SigmaMultiDRMDelegate {
     // MARK: - UI Outlets
     @IBOutlet weak var videoContainerView: UIView!
+    @IBOutlet weak var mediaTitleLabel: UILabel!
     @IBOutlet weak var initialBtn: UIButton!
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var nextBtn: UIButton!
@@ -14,12 +15,19 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
     var playerViewController: AVPlayerViewController!
 
     // MARK: - Media Data
+    enum SmEnvironment {
+        case production
+        case staging
+    }
+
     struct MediaItem {
+        let title: String
         let manifestUrl: String
         let merchantId: String
         let appId: String
         let userId: String
         let sessionId: String
+        let env: SmEnvironment
     }
 
     var mediaItems: [MediaItem] = []
@@ -32,22 +40,47 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         nextBtn.isEnabled = false
 
         mediaItems = [
+            // staging
             MediaItem(
-                manifestUrl: "https://sdrm-test.gviet.vn:9080/static/vod_production/big_bug_bunny/master.m3u8",
-                merchantId: "sigma_packager_lite",
-                appId: "demo",
-                userId: "fairplay_userId",
-                sessionId: "fairplay_sessionId"
+                title: "The Box (staging)",
+                manifestUrl: "https://sdrm-test.gviet.vn:9080/drm/static/vod_staging/the_box/master.m3u8",
+                merchantId: "sctv",
+                appId: "RedTV",
+                userId: "renew_license_userId",
+                sessionId: "renew_license_sessionId",
+                env: .staging
             ),
             MediaItem(
-                manifestUrl: "https://sdrm-test.gviet.vn:9080/static/vod_production/godzilla_kong/master.m3u8",
+                title: "Big Buck Bunny (Staging)",
+                manifestUrl: "https://sdrm-test.gviet.vn:9080/drm/static/vod_staging/big_bug_bunny/master.m3u8",
+                merchantId: "sctv",
+                appId: "RedTV",
+                userId: "renew_license_userId",
+                sessionId: "renew_license_sessionId",
+                env: .staging
+            ),
+            // production
+            MediaItem(
+                title: "Big Buck Bunny (production)",
+                manifestUrl: "https://sdrm-test.gviet.vn:9080/drm/static/vod_production/big_bug_bunny/master.m3u8",
                 merchantId: "sigma_packager_lite",
                 appId: "demo",
                 userId: "fairplay_userId",
-                sessionId: "fairplay_sessionId"
-            )
+                sessionId: "fairplay_sessionId",
+                env: .production
+            ),
+            MediaItem(
+                title: "Godzilla x Kong (production)",
+                manifestUrl: "https://sdrm-test.gviet.vn:9080/drm/static/vod_production/godzilla_kong/master.m3u8",
+                merchantId: "sigma_packager_lite",
+                appId: "demo",
+                userId: "fairplay_userId",
+                sessionId: "fairplay_sessionId",
+                env: .production
+            ),
         ]
         currentIndex = 0
+        mediaTitleLabel.text = mediaItems.first?.title ?? "—"
     }
 
     // MARK: - Actions
@@ -93,18 +126,22 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
     func playCurrentIndex() {
         let item = mediaItems[currentIndex]
         print("-----------------------------------");
+        print("Title: \(item.title)")
         print("Manifest URL: \(item.manifestUrl)")
         print("Merchant ID: \(item.merchantId)")
         print("App ID: \(item.appId)")
         print("User ID: \(item.userId)")
         print("Session ID: \(item.sessionId)")
+        print("Env: \(item.env == .staging ? "staging" : "production")")
+
+        mediaTitleLabel.text = item.title
 
         let sigmaSdk = SigmaMultiDRM.getInstance()
         sigmaSdk.setMerchant(item.merchantId)
         sigmaSdk.setAppId(item.appId)
         sigmaSdk.setUserId(item.userId)
         sigmaSdk.setSessionId(item.sessionId)
-        sigmaSdk.setDebugMode(false)
+        sigmaSdk.setDebugMode(item.env == .staging)
 
         let asset = sigmaSdk.asset(withUrl: item.manifestUrl)
         let currentItem = AVPlayerItem(asset: asset)

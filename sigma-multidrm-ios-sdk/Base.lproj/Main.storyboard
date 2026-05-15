@@ -16,6 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" translatesAutoresizingMaskIntoConstraints="NO" id="7Zp-ti-Ttl">
+                                <rect key="frame" x="16" y="52" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkY-1d-zSl">
                                 <rect key="frame" x="0.0" y="391" width="414" height="36"/>
                                 <constraints>
@@ -72,13 +78,17 @@
                             <constraint firstItem="xkY-1d-zSl" firstAttribute="top" secondItem="xJU-he-ji6" secondAttribute="bottom" constant="36" id="fcf-oR-dYH"/>
                             <constraint firstItem="xJU-he-ji6" firstAttribute="width" secondItem="CmB-6a-drJ" secondAttribute="width" multiplier="1.04" id="gNc-8H-LdG"/>
                             <constraint firstItem="xkY-1d-zSl" firstAttribute="trailing" secondItem="CmB-6a-drJ" secondAttribute="trailing" id="kWR-mD-H5w"/>
-                            <constraint firstItem="xJU-he-ji6" firstAttribute="top" secondItem="CmB-6a-drJ" secondAttribute="top" constant="16" id="ks7-7a-3CO"/>
+                            <constraint firstItem="7Zp-ti-Ttl" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" constant="16" id="Lbl-Ld-16"/>
+                            <constraint firstItem="CmB-6a-drJ" firstAttribute="trailing" secondItem="7Zp-ti-Ttl" secondAttribute="trailing" constant="16" id="Lbl-Tr-16"/>
+                            <constraint firstItem="7Zp-ti-Ttl" firstAttribute="top" secondItem="CmB-6a-drJ" secondAttribute="top" constant="8" id="Lbl-Top-8"/>
+                            <constraint firstItem="xJU-he-ji6" firstAttribute="top" secondItem="7Zp-ti-Ttl" secondAttribute="bottom" constant="8" id="ks7-7a-3CO"/>
                             <constraint firstItem="bQ6-SH-4bZ" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" id="rc7-cC-mlO"/>
                             <constraint firstItem="mUJ-rP-Qud" firstAttribute="top" secondItem="xkY-1d-zSl" secondAttribute="bottom" constant="17" id="rju-HE-MoU"/>
                             <constraint firstAttribute="trailing" secondItem="mUJ-rP-Qud" secondAttribute="trailing" id="yLK-Xi-jJs"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="mediaTitleLabel" destination="7Zp-ti-Ttl" id="out-Ttl-Lbl"/>
                         <outlet property="initialBtn" destination="xkY-1d-zSl" id="zsQ-Tu-Dpq"/>
                         <outlet property="nextBtn" destination="mUJ-rP-Qud" id="Qr2-jo-uxO"/>
                         <outlet property="playBtn" destination="bQ6-SH-4bZ" id="fWj-DL-m0z"/>
