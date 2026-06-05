@@ -142,7 +142,7 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         let tv = UITextView()
         tv.backgroundColor = UIColor(red: 0.05, green: 0.05, blue: 0.08, alpha: 1)
         tv.textColor = .green
-        tv.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
+        tv.font = UIFont(name: "Menlo", size: 12) ?? UIFont.systemFont(ofSize: 12)
         tv.isEditable = false
         tv.layer.cornerRadius = 4
         tv.layoutManager.allowsNonContiguousLayout = false
@@ -179,7 +179,7 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -453,15 +453,12 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
     func setupPlayerObservers() {
         guard let p = player else { return }
         
-        timeControlObservation = p.observe(\.timeControlStatus, options: [.new]) { [weak self] player, _ in
+        timeControlObservation = p.observe(\.rate, options: [.new]) { [weak self] player, _ in
             guard let self = self else { return }
-            switch player.timeControlStatus {
-            case .playing:
-                self.logToUI(">>> EVENT: Play")
-            case .paused:
+            if player.rate == 0 {
                 self.logToUI(">>> EVENT: Pause")
-            default:
-                break
+            } else {
+                self.logToUI(">>> EVENT: Play")
             }
         }
         
