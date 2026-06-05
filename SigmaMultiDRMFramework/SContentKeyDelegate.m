@@ -440,6 +440,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     self.pendingLicenseRenewalBlock = work;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), q, work);
     NSLog(@"[SigmaMultiDRM] Scheduled license renewal in %.1fs (expireTime=%lds, lead=%.0fs).", delay, (long)leaseSeconds, (double)kSigmaFairPlayLicenseRenewLeadSeconds);
+    POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Scheduled next license renewal in %.0f seconds", delay]);
 }
 
 - (void) dealloc {
