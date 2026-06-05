@@ -342,6 +342,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
             delay = delay + randomFuzz;
             
             NSLog(@"[SigmaMultiDRM] Request failed. Retrying attempt %d in %.2f seconds...", attempt + 1, delay);
+            POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Request failed. Retrying attempt %d in %.2f seconds...", attempt + 1, delay]);
             [NSThread sleepForTimeInterval:delay];
         }
     }
