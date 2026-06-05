@@ -272,56 +272,88 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    int maxAttempts = 4;
+    double baseDelay = 3.0; // seconds
+    double backoffFactor = 2.0;
+    double fuzzFactor = 0.5;
+    double timeout = 10.0;
+    
+    request.timeoutInterval = timeout;
+
     __block NSData *result = [[NSData alloc] initWithBase64EncodedString:@"" options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    __block NSError *licenseError = nil;
     __block NSInteger leaseParsed = -1;
+    __block NSData *lastData = nil;
+    __block NSURLResponse *lastResponse = nil;
+    __block NSError *lastError = nil;
 
     __weak typeof(self) weakSelf = self;
-    self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        @try {
-            do {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (!weakSelf || !weakSelf.delegate) return;
+    
+    for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        
+        self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            lastData = data;
+            lastResponse = response;
+            lastError = error;
+            
+            @try {
+                do {
+                    if (error || !data) break;
                     
-                    // Cast to protocol to ensure method signature is recognized
-                    id<SigmaMultiDRMDelegate> delegate = weakSelf.delegate;
-                    if (delegate && [delegate respondsToSelector:@selector(didCompleteLicenseRequestForAssetUrl:licenseData:response:error:)]) {
-                        [delegate didCompleteLicenseRequestForAssetUrl:weakSelf.assetUrl licenseData:data response:response error:error];
+                    NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
+                    if(!licenseObj) {
+                        break;
                     }
-                });
-                
-                if (error || !data) break;
-                
-                NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
-                if(!licenseObj) {
-                    break;
-                }
 
-                id expiryVal = licenseObj[@"expireTime"] ?: licenseObj[@"expire_time"] ?: licenseObj[@"expiredTime"];
-                if ([expiryVal isKindOfClass:[NSNumber class]]) {
-                    leaseParsed = [(NSNumber *)expiryVal longValue];
-                } else if ([expiryVal isKindOfClass:[NSString class]]) {
-                    leaseParsed = [(NSString *)expiryVal integerValue];
+                    id expiryVal = licenseObj[@"expireTime"] ?: licenseObj[@"expire_time"] ?: licenseObj[@"expiredTime"];
+                    if ([expiryVal isKindOfClass:[NSNumber class]]) {
+                        leaseParsed = [(NSNumber *)expiryVal longValue];
+                    } else if ([expiryVal isKindOfClass:[NSString class]]) {
+                        leaseParsed = [(NSString *)expiryVal integerValue];
+                    }
+                    
+                    NSString *license = [licenseObj objectForKey:@"license"];
+                    if(!license) {
+                        NSLog(@"License is empty: %@", licenseObj);
+                        break;
+                    }
+                    
+                    result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
                 }
-                
-                NSString *license = [licenseObj objectForKey:@"license"];
-                if(!license) {
-                    NSLog(@"License is empty: %@", licenseObj);
-                    break;
-                }
-                
-                result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                while (FALSE);
+            } @catch (NSException *exception) {
+                NSLog(@"Exception while parsing license: %@ - %@", exception.name, exception.reason);
             }
-            while (FALSE);
-        } @catch (NSException *exception) {
-            NSLog(@"Exception while parsing license: %@ - %@", exception.name, exception.reason);
+            
+            dispatch_semaphore_signal(semaphore);
+        }];
+        
+        [self.licenseRequestTask resume];
+        dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
+        
+        if (result && result.length > 0) {
+            break; // Success!
         }
         
-        dispatch_semaphore_signal(semaphore);
-    }];
-    [self.licenseRequestTask resume];
-    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
+        if (attempt < maxAttempts) {
+            double delay = baseDelay * pow(backoffFactor, attempt - 1);
+            double fuzz = delay * fuzzFactor;
+            double randomFuzz = ((double)arc4random() / 0x100000000) * (2 * fuzz) - fuzz;
+            delay = delay + randomFuzz;
+            
+            NSLog(@"[SigmaMultiDRM] Request failed. Retrying attempt %d in %.2f seconds...", attempt + 1, delay);
+            [NSThread sleepForTimeInterval:delay];
+        }
+    }
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!weakSelf || !weakSelf.delegate) return;
+        id<SigmaMultiDRMDelegate> delegate = weakSelf.delegate;
+        if (delegate && [delegate respondsToSelector:@selector(didCompleteLicenseRequestForAssetUrl:licenseData:response:error:)]) {
+            [delegate didCompleteLicenseRequestForAssetUrl:weakSelf.assetUrl licenseData:lastData response:lastResponse error:lastError];
+        }
+    });
+
     if (outLeaseSeconds) {
         *outLeaseSeconds = leaseParsed;
     }
