@@ -20,6 +20,7 @@
 				</dict>
 			</array>
 		</dict>
-	</dict>
+	<key>sigma_debug</key>
+	<true/>
 </dict>
 </plist>
