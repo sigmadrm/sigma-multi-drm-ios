@@ -375,7 +375,7 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         sigmaSdk.setAppId(appId)
         sigmaSdk.setUserId(userId)
         sigmaSdk.setSessionId(sessionId)
-        sigmaSdk.setDebugMode(false) // DebugMode = true for staging
+        sigmaSdk.setDebugMode(true) // DebugMode = true for staging
         
         let asset = sigmaSdk.asset(withUrl: manifest)
         
