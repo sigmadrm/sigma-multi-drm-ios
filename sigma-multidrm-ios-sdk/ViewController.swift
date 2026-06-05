@@ -177,6 +177,17 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         setupActions()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDRMLog(_:)), name: NSNotification.Name("SigmaDRMLogEvent"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func appDidEnterBackground() {
+        playerViewController?.player = nil
+    }
+    
+    @objc func appWillEnterForeground() {
+        playerViewController?.player = player
     }
     
     deinit {
