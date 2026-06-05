@@ -349,7 +349,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 }
 -(NSString *)certUrl
 {
-    if (_debugMode) {//STAGING MODE
+    if (self.debugMode) {//STAGING MODE
         return [NSString stringWithFormat:@"https://cert-staging.sigmadrm.com/app/fairplay/%@/%@", _merchant, _appId];
     }
     else { // PRODUCTION MODE
@@ -358,7 +358,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 }
 -(NSString *)licenseUrl:(NSString *)assetId keyId:(NSString *)keyId
 {
-    if (_debugMode) {//STAGING MODE
+    if (self.debugMode) {//STAGING MODE
         return [NSString stringWithFormat:@"https://license-staging.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
     }
     else { // PRODUCTION MODE
