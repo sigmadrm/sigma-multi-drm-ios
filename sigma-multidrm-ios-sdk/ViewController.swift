@@ -160,6 +160,14 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback, options: [])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio session category: \(error)")
+        }
+        
         setupUI()
         resetFields()
         setupActions()
@@ -385,6 +393,7 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         playerViewController = AVPlayerViewController()
         playerViewController?.player = player
         playerViewController?.showsPlaybackControls = false // Using custom controls
+        playerViewController?.allowsPictureInPicturePlayback = true
         
         if let pvc = playerViewController {
             addChild(pvc)
