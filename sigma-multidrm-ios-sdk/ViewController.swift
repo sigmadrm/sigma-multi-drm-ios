@@ -370,17 +370,14 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         let sessionId = sessionIdTF.text ?? ""
         
         let sigmaSdk = SigmaMultiDRM.getInstance()
-        sigmaSdk?.delegate = self
-        sigmaSdk?.setMerchant(merchantId)
-        sigmaSdk?.setAppId(appId)
-        sigmaSdk?.setUserId(userId)
-        sigmaSdk?.setSessionId(sessionId)
-        sigmaSdk?.setDebugMode(false) // DebugMode = true for staging
+        sigmaSdk.delegate = self
+        sigmaSdk.setMerchant(merchantId)
+        sigmaSdk.setAppId(appId)
+        sigmaSdk.setUserId(userId)
+        sigmaSdk.setSessionId(sessionId)
+        sigmaSdk.setDebugMode(false) // DebugMode = true for staging
         
-        guard let asset = sigmaSdk?.asset(withUrl: manifest) else {
-            logToUI("!!! ERROR: Could not create AVURLAsset")
-            return
-        }
+        let asset = sigmaSdk.asset(withUrl: manifest)
         
         let currentItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: currentItem)

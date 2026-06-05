@@ -11,8 +11,7 @@
 
 // Error Domain
 NSString *const kSigmaMultiDRMErrorDomain = @"com.sigma.multidrm";
-
-#define POST_DRM_LOG(msg) dispatch_async(dispatch_get_main_queue(), ^{ [[NSNotificationCenter defaultCenter] postNotificationName:@"SigmaDRMLogEvent" object:nil userInfo:@{@"message": msg}]; })
+#define POST_DRM_LOG(...) dispatch_async(dispatch_get_main_queue(), ^{ [[NSNotificationCenter defaultCenter] postNotificationName:@"SigmaDRMLogEvent" object:nil userInfo:@{@"message": __VA_ARGS__}]; })
 
 // Error Codes
 NSInteger const kSigmaMultiDRMErrorCertificateNil = -1;
