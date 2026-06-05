@@ -15,85 +15,9 @@
                     <view key="view" contentMode="scaleToFill" id="n23-zJ-tBx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" translatesAutoresizingMaskIntoConstraints="NO" id="7Zp-ti-Ttl">
-                                <rect key="frame" x="16" y="52" width="382" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkY-1d-zSl">
-                                <rect key="frame" x="0.0" y="391" width="414" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="GPB-uM-Sqk"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="InitAVPlayer"/>
-                                <connections>
-                                    <action selector="initialize:" destination="I4e-Kd-fLu" eventType="touchUpInside" id="j38-Us-EIW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQ6-SH-4bZ">
-                                <rect key="frame" x="0.0" y="444" width="172" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="172" id="8aJ-ul-kq0"/>
-                                    <constraint firstAttribute="height" constant="36" id="zXX-80-9Tn"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Play" titleAlignment="automatic"/>
-                                <connections>
-                                    <action selector="play:" destination="I4e-Kd-fLu" eventType="touchUpInside" id="Slm-LN-nWF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-rP-Qud">
-                                <rect key="frame" x="235" y="444" width="179" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="179" id="kJP-Wm-eWl"/>
-                                    <constraint firstAttribute="height" constant="36" id="vvd-74-chP"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Next" titleAlignment="automatic"/>
-                                <connections>
-                                    <action selector="next:" destination="I4e-Kd-fLu" eventType="touchUpInside" id="Sob-EG-BMk"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xJU-he-ji6">
-                                <rect key="frame" x="-8.5" y="60" width="431" height="295"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="295" id="A25-YY-ese"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="qdv-f3-2d0"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="295" id="yfJ-C5-vkC"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="CmB-6a-drJ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="xJU-he-ji6" firstAttribute="centerX" secondItem="CmB-6a-drJ" secondAttribute="centerX" id="FP3-9i-bN4"/>
-                            <constraint firstItem="bQ6-SH-4bZ" firstAttribute="top" secondItem="xkY-1d-zSl" secondAttribute="bottom" constant="17" id="Iek-Qn-K6x"/>
-                            <constraint firstItem="xkY-1d-zSl" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" id="Q1J-MA-CsS"/>
-                            <constraint firstItem="xJU-he-ji6" firstAttribute="width" secondItem="n23-zJ-tBx" secondAttribute="width" multiplier="1.04" id="Qyf-iP-tda"/>
-                            <constraint firstItem="xkY-1d-zSl" firstAttribute="width" secondItem="CmB-6a-drJ" secondAttribute="width" id="V2s-0a-wd1"/>
-                            <constraint firstItem="xkY-1d-zSl" firstAttribute="top" secondItem="xJU-he-ji6" secondAttribute="bottom" constant="36" id="fcf-oR-dYH"/>
-                            <constraint firstItem="xJU-he-ji6" firstAttribute="width" secondItem="CmB-6a-drJ" secondAttribute="width" multiplier="1.04" id="gNc-8H-LdG"/>
-                            <constraint firstItem="xkY-1d-zSl" firstAttribute="trailing" secondItem="CmB-6a-drJ" secondAttribute="trailing" id="kWR-mD-H5w"/>
-                            <constraint firstItem="7Zp-ti-Ttl" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" constant="16" id="Lbl-Ld-16"/>
-                            <constraint firstItem="CmB-6a-drJ" firstAttribute="trailing" secondItem="7Zp-ti-Ttl" secondAttribute="trailing" constant="16" id="Lbl-Tr-16"/>
-                            <constraint firstItem="7Zp-ti-Ttl" firstAttribute="top" secondItem="CmB-6a-drJ" secondAttribute="top" constant="8" id="Lbl-Top-8"/>
-                            <constraint firstItem="xJU-he-ji6" firstAttribute="top" secondItem="7Zp-ti-Ttl" secondAttribute="bottom" constant="8" id="ks7-7a-3CO"/>
-                            <constraint firstItem="bQ6-SH-4bZ" firstAttribute="leading" secondItem="CmB-6a-drJ" secondAttribute="leading" id="rc7-cC-mlO"/>
-                            <constraint firstItem="mUJ-rP-Qud" firstAttribute="top" secondItem="xkY-1d-zSl" secondAttribute="bottom" constant="17" id="rju-HE-MoU"/>
-                            <constraint firstAttribute="trailing" secondItem="mUJ-rP-Qud" secondAttribute="trailing" id="yLK-Xi-jJs"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <connections>
-                        <outlet property="mediaTitleLabel" destination="7Zp-ti-Ttl" id="out-Ttl-Lbl"/>
-                        <outlet property="initialBtn" destination="xkY-1d-zSl" id="zsQ-Tu-Dpq"/>
-                        <outlet property="nextBtn" destination="mUJ-rP-Qud" id="Qr2-jo-uxO"/>
-                        <outlet property="playBtn" destination="bQ6-SH-4bZ" id="fWj-DL-m0z"/>
-                        <outlet property="videoContainerView" destination="xJU-he-ji6" id="wPS-y1-Nm9"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="421-JR-dPA" sceneMemberID="firstResponder"/>
             </objects>

@@ -12,6 +12,8 @@
 // Error Domain
 NSString *const kSigmaMultiDRMErrorDomain = @"com.sigma.multidrm";
 
+#define POST_DRM_LOG(msg) dispatch_async(dispatch_get_main_queue(), ^{ [[NSNotificationCenter defaultCenter] postNotificationName:@"SigmaDRMLogEvent" object:nil userInfo:@{@"message": msg}]; })
+
 // Error Codes
 NSInteger const kSigmaMultiDRMErrorCertificateNil = -1;
 NSInteger const kSigmaMultiDRMErrorSPCNil = -2;
@@ -88,6 +90,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 /// Implement
 -(void)handleContentKeyRequest:(AVContentKeySession *)session request:(AVContentKeyRequest *)keyRequest
 {
+    POST_DRM_LOG(@">>> DRM: Requesting SPC (Challenge)....");
     [self cancelScheduledLicenseRenewal];
     NSString *contentKeyIdentifierString = keyRequest.identifier;
     NSDictionary *queries = [self query:contentKeyIdentifierString];
@@ -121,6 +124,8 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 
     __block NSData *result = nil;
     __block NSError *blockError = nil;
+    
+    POST_DRM_LOG(@">>> DRM: Loading App Certificate....");
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     self.certRequestTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -175,6 +180,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
         NSError *certDataError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
                                                       code:kSigmaMultiDRMErrorCertificateNil 
                                                   userInfo:@{NSLocalizedDescriptionKey: @"Certificate data is nil or empty"}];
+        POST_DRM_LOG([NSString stringWithFormat:@"!!! DRM ERROR: Certificate data is nil or empty"]);
         [keyRequest processContentKeyResponseError:certDataError];
         return;
     }
@@ -198,6 +204,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
         
         if (error) {
             NSLog(@"[ProcessOnlineKey] SPC Request Error: %@", error.localizedDescription);
+            POST_DRM_LOG([NSString stringWithFormat:@"!!! DRM ERROR: SPC Request Error: %@", error.localizedDescription]);
             [strongKeyRequest processContentKeyResponseError:error];
             return;
         }
@@ -207,12 +214,14 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
             NSError *spcError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
                                                      code:kSigmaMultiDRMErrorSPCNil 
                                                  userInfo:@{NSLocalizedDescriptionKey: @"SPC data is nil or empty"}];
+            POST_DRM_LOG([NSString stringWithFormat:@"!!! DRM ERROR: SPC data is nil or empty"]);
             [strongKeyRequest processContentKeyResponseError:spcError];
             return;
         }
     
         @try {
             // Request license from server
+            POST_DRM_LOG(@">>> DRM: Requesting CKC (License)....");
             NSInteger leaseSecondsHint = -1;
             NSData *licenseData = [strongSelf requestKeyFromServer:contentKeyRequestData forAssetId:assetIDString keyId:keyId leaseSeconds:&leaseSecondsHint];
             if (!licenseData || licenseData.length == 0) {
@@ -220,6 +229,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
                 NSError *licenseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
                                                              code:kSigmaMultiDRMErrorLicenseNil
                                                          userInfo:@{NSLocalizedDescriptionKey: @"License data is nil or empty"}];
+                POST_DRM_LOG([NSString stringWithFormat:@"!!! DRM ERROR: License data is nil or empty"]);
                 [strongKeyRequest processContentKeyResponseError:licenseError];
                 return;
             }
@@ -229,16 +239,19 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
                 NSError *responseError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
                                                               code:kSigmaMultiDRMErrorResponseCreationFailed
                                                           userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ContentKeyResponse"}];
+                POST_DRM_LOG([NSString stringWithFormat:@"!!! DRM ERROR: Failed to create ContentKeyResponse"]);
                 [strongKeyRequest processContentKeyResponseError:responseError];
                 return;
             }
             [strongKeyRequest processContentKeyResponse:response];
+            POST_DRM_LOG(@">>> DRM: License Loaded Successfully.");
             [strongSelf scheduleLicenseRenewalAfterSeconds:leaseSecondsHint session:strongSession keyRequest:strongKeyRequest];
         } @catch(NSException *exception) {
             NSLog(@"[ProcessOnlineKey] Exception while processing: %@ - %@", exception.name, exception.reason);
             NSError *exceptionError = [NSError errorWithDomain:kSigmaMultiDRMErrorDomain 
                                                            code:kSigmaMultiDRMErrorException 
                                                        userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Exception: %@", exception.reason]}];
+            POST_DRM_LOG([NSString stringWithFormat:@"!!! DRM ERROR: Exception while processing: %@", exception.reason]);
             [strongKeyRequest processContentKeyResponseError:exceptionError];
         }
     }];
