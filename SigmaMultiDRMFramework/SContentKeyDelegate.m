@@ -272,10 +272,8 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
-    int maxAttempts = 4;
-    double baseDelay = 3.0; // seconds
-    double backoffFactor = 2.0;
-    double fuzzFactor = 0.5;
+    NSArray *retryDelays = @[@3.0, @5.0, @10.0];
+    int maxAttempts = (int)retryDelays.count + 1;
     double timeout = 10.0;
     
     request.timeoutInterval = timeout;
@@ -336,13 +334,10 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
         }
         
         if (attempt < maxAttempts) {
-            double delay = baseDelay * pow(backoffFactor, attempt - 1);
-            double fuzz = delay * fuzzFactor;
-            double randomFuzz = ((double)arc4random() / 0x100000000) * (2 * fuzz) - fuzz;
-            delay = delay + randomFuzz;
+            double delay = [retryDelays[attempt - 1] doubleValue];
             
-            NSLog(@"[SigmaMultiDRM] Request failed. Retrying attempt %d in %.2f seconds...", attempt + 1, delay);
-            POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Request failed. Retrying attempt %d in %.2f seconds...", attempt + 1, delay]);
+            NSLog(@"[SigmaMultiDRM] Request failed. Retrying attempt %d in %.0f seconds...", attempt + 1, delay);
+            POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Request failed. Retrying attempt %d in %.0f seconds...", attempt + 1, delay]);
             [NSThread sleepForTimeInterval:delay];
         }
     }
