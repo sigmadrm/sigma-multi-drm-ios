@@ -162,7 +162,11 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         super.viewDidLoad()
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback, options: [])
+            if #available(iOS 10.0, *) {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback, options: [])
+            } else {
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+            }
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("Failed to set audio session category: \(error)")
