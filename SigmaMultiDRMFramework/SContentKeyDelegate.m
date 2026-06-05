@@ -23,7 +23,7 @@ NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
 NSInteger const kSigmaMultiDRMErrorException = -7;
 
 /// Seconds before JSON `expireTime` to invoke `renewExpiringResponseDataForContentKeyRequest:`.
-static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 5.0;
+static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 30.0;
 
 @interface SContentKeyDelegate()
 @property (atomic, copy, nullable) dispatch_block_t pendingLicenseRenewalBlock;
