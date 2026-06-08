@@ -70,6 +70,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setDebugMode:(BOOL)debug;
 
+/**
+ * Release DRM session resources and cancel any pending license renewals
+ */
+- (void)releaseResources;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -41,6 +41,7 @@ class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
     private var timeObserverToken: Any?
     private var statusObservation: NSKeyValueObservation?
     private var rateObservation: NSKeyValueObservation?
+    private var playerDidPlayToEndObserverToken: Any?
     
     override init() {
         super.init()
@@ -141,6 +142,7 @@ class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
         removePlayerObservers()
         player?.pause()
         player = nil
+        SigmaMultiDRM.getInstance().releaseResources()
     }
     
     private func setupPlayerObservers() {
@@ -173,6 +175,15 @@ class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
             self.currentTime = self.formatTime(curSeconds)
             self.durationTime = self.formatTime(durSeconds)
         }
+        
+        playerDidPlayToEndObserverToken = NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: p.currentItem,
+            queue: .main
+        ) { [weak self] _ in
+            self?.logToUI(">>> EVENT: Video đã phát hết. Tự động giải phóng Player...")
+            self?.releasePlayer()
+        }
     }
     
     private func removePlayerObservers() {
@@ -184,6 +195,11 @@ class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
         if let token = timeObserverToken {
             player?.removeTimeObserver(token)
             timeObserverToken = nil
+        }
+        
+        if let token = playerDidPlayToEndObserverToken {
+            NotificationCenter.default.removeObserver(token)
+            playerDidPlayToEndObserverToken = nil
         }
     }
     

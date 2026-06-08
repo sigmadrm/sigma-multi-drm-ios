@@ -88,4 +88,12 @@ static SigmaMultiDRM *gSigmaSDK = nil;
 {
     _debugMode = debugMode;
 }
+-(void)releaseResources
+{
+    if (self.contentKeyDelegate) {
+        [self.contentKeyDelegate cancelScheduledLicenseRenewal];
+        self.contentKeyDelegate = nil;
+    }
+    self.contentKey = nil;
+}
 @end

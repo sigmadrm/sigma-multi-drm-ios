@@ -156,6 +156,7 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
     var statusObservation: NSKeyValueObservation?
     var timeControlObservation: NSKeyValueObservation?
     var timeObserverToken: Any?
+    var playerDidPlayToEndObserverToken: Any?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -471,6 +472,7 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         playerViewController?.removeFromParent()
         playerViewController = nil
         player = nil
+        SigmaMultiDRM.getInstance().releaseResources()
     }
     
     // MARK: - Observers
@@ -503,6 +505,15 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
             if durSeconds.isNaN || curSeconds.isNaN { return }
             self.timeLabel.text = "\(self.formatTime(curSeconds)) / \(self.formatTime(durSeconds))"
         }
+        
+        playerDidPlayToEndObserverToken = NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: p.currentItem,
+            queue: .main
+        ) { [weak self] _ in
+            self?.logToUI(">>> EVENT: Video đã phát hết. Tự động giải phóng Player...")
+            self?.releasePlayer()
+        }
     }
     
     func removePlayerObservers() {
@@ -514,6 +525,11 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
         if let token = timeObserverToken {
             player?.removeTimeObserver(token)
             timeObserverToken = nil
+        }
+        
+        if let token = playerDidPlayToEndObserverToken {
+            NotificationCenter.default.removeObserver(token)
+            playerDidPlayToEndObserverToken = nil
         }
     }
     
