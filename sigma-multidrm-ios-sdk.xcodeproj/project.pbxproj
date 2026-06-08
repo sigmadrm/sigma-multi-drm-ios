@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		42123B062FD6522D0004F65D /* SigmaMultiDRM.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845E2CE7409700D75B4B /* SigmaMultiDRM.m */; };
+		FF42123B10000001 /* SContentKeySession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845D2CE7409700D75B4B /* SContentKeySession.m */; };
+		FF42123B10000002 /* SContentKeyDelegate+Persistent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845B2CE7409700D75B4B /* SContentKeyDelegate+Persistent.m */; };
 		42123B072FD6523B0004F65D /* SContentKeyDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 844684662CE740A900D75B4B /* SContentKeyDelegate.h */; };
 		42123B082FD652420004F65D /* SContentKeyDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446845C2CE7409700D75B4B /* SContentKeyDelegate.m */; };
 		8446841F2CE7405600D75B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446841E2CE7405600D75B4B /* AppDelegate.swift */; };
@@ -509,6 +511,8 @@
 			files = (
 				42123B082FD652420004F65D /* SContentKeyDelegate.m in Sources */,
 				42123B062FD6522D0004F65D /* SigmaMultiDRM.m in Sources */,
+				FF42123B10000001 /* SContentKeySession.m in Sources */,
+				FF42123B10000002 /* SContentKeyDelegate+Persistent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
