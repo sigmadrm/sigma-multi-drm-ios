@@ -46,15 +46,16 @@ struct ContentView: View {
     
     func setupDRMAndPlay() {
         // Cấu hình DRM
-        SigmaMultiDRM.shared().userId = "tvos-user"
-        SigmaMultiDRM.shared().merchantId = "sigma"
-        SigmaMultiDRM.shared().appId = "sctv"
-        SigmaMultiDRM.shared().sessionId = "tvos-session"
-        SigmaMultiDRM.shared().setDebugMode(true) // Lấy URL Staging
+        let sigmaSdk = SigmaMultiDRM.getInstance()
+        sigmaSdk.setUserId("tvos-user")
+        sigmaSdk.setMerchant("sigma")
+        sigmaSdk.setAppId("sctv")
+        sigmaSdk.setSessionId("tvos-session")
+        sigmaSdk.setDebugMode(true) // Lấy URL Staging
         
         // Tạo Asset DRM (Sử dụng luồng demo hiện tại)
         let assetUrl = "https://fps.sigmadrm.com/dash/sctv/RedTV.m3u8"
-        if let asset = SigmaMultiDRM.shared().asset(withUrl: assetUrl) {
+        if let asset = sigmaSdk.asset(withUrl: assetUrl) {
             let playerItem = AVPlayerItem(asset: asset)
             self.player = AVPlayer(playerItem: playerItem)
         }
