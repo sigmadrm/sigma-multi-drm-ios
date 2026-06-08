@@ -8,19 +8,33 @@
 import SwiftUI
 import AVKit
 
+struct PlayerView: UIViewControllerRepresentable {
+    var player: AVPlayer
+    
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let controller = AVPlayerViewController()
+        controller.player = player
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
+        uiViewController.player = player
+    }
+}
+
 struct ContentView: View {
     @State private var player: AVPlayer?
     
     var body: some View {
         Group {
             if let player = player {
-                VideoPlayer(player: player)
+                PlayerView(player: player)
                     .onAppear {
                         player.play()
                     }
             } else {
                 VStack {
-                    ProgressView("Đang tải cấu hình DRM...")
+                    Text("Đang tải cấu hình DRM...")
                 }
             }
         }
