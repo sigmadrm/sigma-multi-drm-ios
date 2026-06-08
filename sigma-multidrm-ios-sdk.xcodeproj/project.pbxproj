@@ -638,6 +638,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "sigma-multidrm-ios-sdk/sigma-multidrm-ios-sdk-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -674,6 +675,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "sigma-multidrm-ios-sdk/sigma-multidrm-ios-sdk-Bridging-Header.h";
 			};
 			name = Release;
 		};
