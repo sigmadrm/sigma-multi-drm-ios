@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(tvOS 14.0, *)
 @main
 struct sigma_multidrm_tvos_sdkApp: App {
     var body: some Scene {
