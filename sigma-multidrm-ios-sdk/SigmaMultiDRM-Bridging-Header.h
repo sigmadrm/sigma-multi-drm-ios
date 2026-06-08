@@ -8,7 +8,7 @@
 #ifndef SigmaMultiDRM_Bridging_Header_h
 #define SigmaMultiDRM_Bridging_Header_h
 
-#import "sigma-multidrm-sdk/SigmaMultiDRM.h"
+#import "SigmaMultiDRMFramework/SigmaMultiDRM.h"
 
 
 #endif /* SigmaMultiDRM_Bridging_Header_h */
