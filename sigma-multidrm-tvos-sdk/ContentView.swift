@@ -22,6 +22,7 @@ struct PlayerView: UIViewControllerRepresentable {
     }
 }
 
+@available(tvOS 14.0, *)
 struct ContentView: View {
     @State private var player: AVPlayer?
     
@@ -63,5 +64,9 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    if #available(tvOS 14.0, *) {
+        ContentView()
+    } else {
+        // Fallback on earlier versions
+    }
 }
