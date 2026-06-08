@@ -56,10 +56,9 @@ struct ContentView: View {
         
         // Tạo Asset DRM (Sử dụng luồng demo hiện tại)
         let assetUrl = "https://fps.sigmadrm.com/dash/sctv/RedTV.m3u8"
-        if let asset = sigmaSdk.asset(withUrl: assetUrl) {
-            let playerItem = AVPlayerItem(asset: asset)
-            self.player = AVPlayer(playerItem: playerItem)
-        }
+        let asset = sigmaSdk.asset(withUrl: assetUrl)
+        let playerItem = AVPlayerItem(asset: asset)
+        self.player = AVPlayer(playerItem: playerItem)
     }
 }
 
