@@ -554,12 +554,12 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
             let timeStr = timeFormatter.string(from: Date())
             let line = "[\(timeStr)] \(message)\n"
             
-            self.logTextView.text = (self.logTextView.text ?? "") + line
+            self.logTextView.text = line + (self.logTextView.text ?? "")
             
-            // Scroll to bottom safely
+            // Scroll to top safely (since new logs are at the top)
             if self.logTextView.text.count > 0 {
-                let bottom = NSMakeRange(self.logTextView.text.count - 1, 1)
-                self.logTextView.scrollRangeToVisible(bottom)
+                let top = NSMakeRange(0, 1)
+                self.logTextView.scrollRangeToVisible(top)
             }
         }
     }

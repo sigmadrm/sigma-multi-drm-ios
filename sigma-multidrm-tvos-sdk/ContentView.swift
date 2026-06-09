@@ -65,7 +65,7 @@ class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
             formatter.dateFormat = "HH:mm:ss"
             let timeStr = formatter.string(from: Date())
             let line = "[\(timeStr)] \(message)\n"
-            self.logs += line
+            self.logs = line + self.logs
         }
     }
     
