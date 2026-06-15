@@ -23,7 +23,7 @@ NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
 NSInteger const kSigmaMultiDRMErrorException = -7;
 
 /// Seconds before JSON `expireTime` to invoke `renewExpiringResponseDataForContentKeyRequest:`.
-static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 30.0;
+static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 60.0;
 
 @interface SContentKeyDelegate()
 @property (atomic, copy, nullable) dispatch_block_t pendingLicenseRenewalBlock;
@@ -406,9 +406,9 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 - (void)scheduleLicenseRenewalAfterSeconds:(NSInteger)leaseSeconds session:(AVContentKeySession *)session keyRequest:(AVContentKeyRequest *)keyRequest
 {
     [self cancelScheduledLicenseRenewal];
-    if (leaseSeconds <= 0 || !session || !keyRequest) {
-        if (leaseSeconds <= 0) {
-            NSLog(@"[SigmaMultiDRM] No license renewal schedule (missing or non-positive expireTime from JSON).");
+    if (leaseSeconds <= 60 || !session || !keyRequest) {
+        if (leaseSeconds <= 60) {
+            NSLog(@"[SigmaMultiDRM] No license renewal schedule (expireTime is %ld seconds, which is <= 60s).", (long)leaseSeconds);
         }
         return;
     }
