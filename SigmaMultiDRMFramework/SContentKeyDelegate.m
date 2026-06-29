@@ -23,10 +23,10 @@ NSInteger const kSigmaMultiDRMErrorResponseCreationFailed = -6;
 NSInteger const kSigmaMultiDRMErrorException = -7;
 
 /// Seconds before JSON `expireTime` to invoke `renewExpiringResponseDataForContentKeyRequest:`.
-static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 60.0;
+static const NSTimeInterval kSigmaFairPlayLicenseRenewLeadSeconds = 30.0;
 
 @interface SContentKeyDelegate()
-@property (atomic, copy, nullable) dispatch_block_t pendingLicenseRenewalBlock;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, dispatch_block_t> *pendingLicenseRenewalBlocks;
 @end
 
 /// FairPlay app certificate is static per `certUrl`; keep for process lifetime (no eviction).
@@ -48,6 +48,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     if (self) {
         _certRequestTask = nil;
         _licenseRequestTask = nil;
+        _pendingLicenseRenewalBlocks = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -264,7 +265,12 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     NSCharacterSet *queryCharacter = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSMutableCharacterSet *allowUrlCharacter = [NSMutableCharacterSet characterSetWithBitmapRepresentation:[queryCharacter bitmapRepresentation]];
     [allowUrlCharacter removeCharactersInString:@"+/=\\"];
-    NSString *spcEncoding = [[spcData base64EncodedStringWithOptions:0] stringByAddingPercentEncodingWithAllowedCharacters:allowUrlCharacter];
+    NSString *spcBase64 = [spcData base64EncodedStringWithOptions:0];
+    NSString *spcSuffix = spcBase64.length >= 8 ? [spcBase64 substringFromIndex:spcBase64.length - 8] : spcBase64;
+    NSString *reqId = [[[NSUUID UUID] UUIDString] substringToIndex:6];
+    POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Sending License Request [%@] (Key: %@, SPC Suffix: ...%@)", reqId, keyId, spcSuffix]);
+    
+    NSString *spcEncoding = [spcBase64 stringByAddingPercentEncodingWithAllowedCharacters:allowUrlCharacter];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     request.HTTPMethod = @"POST";
     NSString *body = [NSString stringWithFormat:@"spc=%@&assetId=%@&keyId=%@", spcEncoding, assetId, keyId];
@@ -272,8 +278,6 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request addValue:[self customData] forHTTPHeaderField:@"custom-data"];
 
-    NSArray *retryDelays = @[@3.0, @5.0, @10.0];
-    int maxAttempts = (int)retryDelays.count + 1;
     double timeout = 10.0;
     
     request.timeoutInterval = timeout;
@@ -286,61 +290,47 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 
     __weak typeof(self) weakSelf = self;
     
-    for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        lastData = data;
+        lastResponse = response;
+        lastError = error;
         
-        self.licenseRequestTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            lastData = data;
-            lastResponse = response;
-            lastError = error;
-            
-            @try {
-                do {
-                    if (error || !data) break;
-                    
-                    NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
-                    if(!licenseObj) {
-                        break;
-                    }
-
-                    id expiryVal = licenseObj[@"expireTime"] ?: licenseObj[@"expire_time"] ?: licenseObj[@"expiredTime"];
-                    if ([expiryVal isKindOfClass:[NSNumber class]]) {
-                        leaseParsed = [(NSNumber *)expiryVal longValue];
-                    } else if ([expiryVal isKindOfClass:[NSString class]]) {
-                        leaseParsed = [(NSString *)expiryVal integerValue];
-                    }
-                    
-                    NSString *license = [licenseObj objectForKey:@"license"];
-                    if(!license) {
-                        NSLog(@"License is empty: %@", licenseObj);
-                        break;
-                    }
-                    
-                    result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        @try {
+            do {
+                if (error || !data) break;
+                
+                NSDictionary *licenseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:nil];
+                if(!licenseObj) {
+                    break;
                 }
-                while (FALSE);
-            } @catch (NSException *exception) {
-                NSLog(@"Exception while parsing license: %@ - %@", exception.name, exception.reason);
+
+                id expiryVal = licenseObj[@"expireTime"] ?: licenseObj[@"expire_time"] ?: licenseObj[@"expiredTime"];
+                if ([expiryVal isKindOfClass:[NSNumber class]]) {
+                    leaseParsed = [(NSNumber *)expiryVal longValue];
+                } else if ([expiryVal isKindOfClass:[NSString class]]) {
+                    leaseParsed = [(NSString *)expiryVal integerValue];
+                }
+                
+                NSString *license = [licenseObj objectForKey:@"license"];
+                if(!license) {
+                    NSLog(@"License is empty: %@", licenseObj);
+                    break;
+                }
+                
+                result = [[NSData alloc] initWithBase64EncodedString:license options:NSDataBase64DecodingIgnoreUnknownCharacters];
             }
-            
-            dispatch_semaphore_signal(semaphore);
-        }];
-        
-        [self.licenseRequestTask resume];
-        dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
-        
-        if (result && result.length > 0) {
-            break; // Success!
+            while (FALSE);
+        } @catch (NSException *exception) {
+            NSLog(@"Exception while parsing license: %@ - %@", exception.name, exception.reason);
         }
         
-        if (attempt < maxAttempts) {
-            double delay = [retryDelays[attempt - 1] doubleValue];
-            
-            NSLog(@"[SigmaMultiDRM] Request failed. Retrying attempt %d in %.0f seconds...", attempt + 1, delay);
-            POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Request failed. Retrying attempt %d in %.0f seconds...", attempt + 1, delay]);
-            [NSThread sleepForTimeInterval:delay];
-        }
-    }
+        dispatch_semaphore_signal(semaphore);
+    }];
+    
+    [self.licenseRequestTask resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 30 * 10E9));
 
     dispatch_async(dispatch_get_main_queue(), ^{
         if (!weakSelf || !weakSelf.delegate) return;
@@ -378,7 +368,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 -(NSString *)certUrl
 {
     if (self.debugMode) {//STAGING MODE
-        return [NSString stringWithFormat:@"https://cert-staging.sigmadrm.com/app/fairplay/%@/%@", _merchant, _appId];
+        return [NSString stringWithFormat:@"https://api-dev.sigmadrm.com/app/fairplay/%@/%@", _merchant, _appId];
     }
     else { // PRODUCTION MODE
         return [NSString stringWithFormat:@"https://cert.sigmadrm.com/app/fairplay/%@/%@", _merchant, _appId];
@@ -387,7 +377,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 -(NSString *)licenseUrl:(NSString *)assetId keyId:(NSString *)keyId
 {
     if (self.debugMode) {//STAGING MODE
-        return [NSString stringWithFormat:@"https://license-staging.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
+        return [NSString stringWithFormat:@"https://api-dev.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
     }
     else { // PRODUCTION MODE
         return [NSString stringWithFormat:@"https://license.sigmadrm.com/license/verify/fairplay?assetId=%@&keyId=%@", assetId, keyId];
@@ -396,22 +386,41 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
 
 - (void)cancelScheduledLicenseRenewal
 {
-    dispatch_block_t block = self.pendingLicenseRenewalBlock;
-    if (block) {
-        dispatch_block_cancel(block);
-        self.pendingLicenseRenewalBlock = nil;
+    @synchronized (self) {
+        for (NSString *key in self.pendingLicenseRenewalBlocks) {
+            dispatch_block_t block = self.pendingLicenseRenewalBlocks[key];
+            if (block) {
+                dispatch_block_cancel(block);
+            }
+        }
+        [self.pendingLicenseRenewalBlocks removeAllObjects];
     }
 }
 
 - (void)scheduleLicenseRenewalAfterSeconds:(NSInteger)leaseSeconds session:(AVContentKeySession *)session keyRequest:(AVContentKeyRequest *)keyRequest
 {
-    [self cancelScheduledLicenseRenewal];
-    if (leaseSeconds <= 60 || !session || !keyRequest) {
-        if (leaseSeconds <= 60) {
-            NSLog(@"[SigmaMultiDRM] No license renewal schedule (expireTime is %ld seconds, which is <= 60s).", (long)leaseSeconds);
+    if (leaseSeconds <= 0 || !session || !keyRequest) {
+        if (leaseSeconds <= 0) {
+            NSLog(@"[SigmaMultiDRM] No license renewal schedule (expireTime is %ld seconds).", (long)leaseSeconds);
         }
         return;
     }
+    
+    NSString *reqId = nil;
+    if ([keyRequest.identifier isKindOfClass:[NSString class]]) {
+        reqId = (NSString *)keyRequest.identifier;
+    } else if (keyRequest.identifier) {
+        reqId = [NSString stringWithFormat:@"%@", keyRequest.identifier];
+    }
+    if (!reqId) reqId = [[NSUUID UUID] UUIDString];
+
+    @synchronized (self) {
+        dispatch_block_t existingBlock = self.pendingLicenseRenewalBlocks[reqId];
+        if (existingBlock) {
+            dispatch_block_cancel(existingBlock);
+        }
+    }
+    
     dispatch_queue_t q = self.drmKeyQueue ?: dispatch_get_main_queue();
     NSTimeInterval delay = (NSTimeInterval)leaseSeconds - kSigmaFairPlayLicenseRenewLeadSeconds;
     if (delay < 0.5) {
@@ -420,6 +429,7 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
     __weak typeof(self) weakSelf = self;
     AVContentKeySession *sess = session;
     AVContentKeyRequest *req = keyRequest;
+    
     dispatch_block_t work = dispatch_block_create(0, ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) {
@@ -433,13 +443,16 @@ static NSMutableDictionary<NSString *, NSData *> *SigmaCertificateStore(void)
         } @catch (NSException *ex) {
             NSLog(@"[SigmaMultiDRM] renewExpiringResponseDataForContentKeyRequest exception: %@", ex.reason);
         }
-        if (strongSelf.pendingLicenseRenewalBlock == work) {
-            strongSelf.pendingLicenseRenewalBlock = nil;
+        @synchronized (strongSelf) {
+            [strongSelf.pendingLicenseRenewalBlocks removeObjectForKey:reqId];
         }
     });
-    self.pendingLicenseRenewalBlock = work;
+    
+    @synchronized (self) {
+        self.pendingLicenseRenewalBlocks[reqId] = work;
+    }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), q, work);
-    NSLog(@"[SigmaMultiDRM] Scheduled license renewal in %.1fs (expireTime=%lds, lead=%.0fs).", delay, (long)leaseSeconds, (double)kSigmaFairPlayLicenseRenewLeadSeconds);
+    NSLog(@"[SigmaMultiDRM] Scheduled license renewal for reqId in %.1fs (expireTime=%lds, lead=%.0fs).", delay, (long)leaseSeconds, (double)kSigmaFairPlayLicenseRenewLeadSeconds);
     POST_DRM_LOG([NSString stringWithFormat:@">>> DRM: Scheduled next license renewal in %.0f seconds", delay]);
 }
 

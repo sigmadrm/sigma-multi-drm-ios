@@ -26,11 +26,11 @@ struct PlayerView: UIViewControllerRepresentable {
 }
 
 class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
-    @Published var manifest: String = "https://sdrm-test.gviet.vn:9080/drm/static/vod_staging/the_box/master.m3u8"
-    @Published var merchantId: String = "sctv"
-    @Published var appId: String = "RedTV"
-    @Published var userId: String = "U_Pnh_tvOS"
-    @Published var sessionId: String = "S_Pnh_tvOS"
+    @Published var manifest: String = "https://sdrm-test.gviet.vn:9080/drm/static/sigmademo_dev/mdrm3profile/master.m3u8"
+    @Published var merchantId: String = "smd"
+    @Published var appId: String = "demo"
+    @Published var userId: String = "userPnhId"
+    @Published var sessionId: String = "OPHCSAF63J"
     
     @Published var player: AVPlayer?
     @Published var logs: String = ""
@@ -123,11 +123,11 @@ class ContentViewModel: NSObject, ObservableObject, SigmaMultiDRMDelegate {
     
     func reset() {
         releasePlayer()
-        manifest = "https://sdrm-test.gviet.vn:9080/drm/static/vod_staging/the_box/master.m3u8"
-        merchantId = "sctv"
-        appId = "RedTV"
-        userId = "U_Pnh_tvOS"
-        sessionId = "S_Pnh_tvOS"
+        manifest = "https://sdrm-test.gviet.vn:9080/drm/static/sigmademo_dev/3videodrm_audioclear/master.mpd"
+        merchantId = "sdm"
+        appId = "demo"
+        userId = "userPnhId"
+        sessionId = "PHCSAF63J"
         logs = ""
         currentTime = "00:00"
         durationTime = "00:00"

@@ -366,12 +366,12 @@ class ViewController: UIViewController, SigmaMultiDRMDelegate {
     }
     
     func resetFields() {
-        manifestTF.text = "https://sdrm-test.gviet.vn:9080/drm/static/vod_staging/the_box/master.m3u8"
-        baseUrlTF.text = "https://license-staging.sigmadrm.com/license/verify/fairplay"
-        merchantIdTF.text = "sctv"
-        appIdTF.text = "RedTV"
-        userIdTF.text = "U_Pnh_Ios"
-        sessionIdTF.text = "S_Pnh_Ios"
+        manifestTF.text = "https://sdrm-test.gviet.vn:9080/drm/static/sigmademo_dev/mdrm3profile/master.m3u8"
+        baseUrlTF.text = "https://api-dev.sigmadrm.com/license/verify/fairplay"
+        merchantIdTF.text = "smd"
+        appIdTF.text = "demo"
+        userIdTF.text = "userPnhId"
+        sessionIdTF.text = "OPHCSAF63J"
     }
     
     @objc func resetTapped() {
